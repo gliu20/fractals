@@ -27,3 +27,4 @@ Generating images of fractals directly in the browser. Gpu-accelerated via WebGL
 
 ## Limitations
  * Currently, only quadratic complex equations are supported
+ * Better coloring functions need to be developed
