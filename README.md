@@ -1,5 +1,8 @@
 # Fractals
 Generating images of fractals directly in the browser. Gpu-accelerated via WebGL.
+## Demo
+ * [Mandelbrot Set Generator](https://gliu20.github.io/fractals/mandelbrot.html)
+ * [Julia Set Generator](https://gliu20.github.io/fractals/julia.html)
 
 ## Examples
 ![](https://gliu20.github.io/fractals/img/download.png)
@@ -21,3 +24,6 @@ Generating images of fractals directly in the browser. Gpu-accelerated via WebGL
 ![](https://gliu20.github.io/fractals/img/download%20(16).png)
 ![](https://gliu20.github.io/fractals/img/download%20(17).png)
 ![](https://gliu20.github.io/fractals/img/download%20(18).png)
+
+## Limitations
+ * Currently, only quadratic complex equations are supported
