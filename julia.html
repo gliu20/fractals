@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1, width=device-width">
+	<meta content="IE=edge" http-equiv="X-UA-Compatible">
+	
+	<title>Math hw</title>
+	
+	<!--<meta name="keywords" content="{{ page.keywords }}">
+	<meta name="description" content="{{ page.description }}">
+	
+	<meta property="og:title" content="{{ page.title }}">
+	<meta property="og:type" content="{{ page.type }}">
+	<meta property="og:site_name" content="{{ site.name }}">
+	<meta property="og:url" content="{{ page.url }}">
+	<meta property="og:description" content="{{ page.description }}">
+	
+	
+	<meta property="og:image" content="{{ page.hero.img.src }}">
+	<meta property="og:image:width" content="{{ page.hero.img.width }}">
+	<meta property="og:image:height" content="{{ page.hero.img.height }}">
+	
+	<link rel="shortcut icon" href="m.svg">-->
+
+</head>
+<body>
+	
+	<label>x<input id="xpos" type="number"/></label>
+	<label>y<input id="ypos" type="number"/></label>
+	<label>zoom<input id="zoom" type="number"/></label>
+	<label>cx<input id="cx" type="number"/></label>
+	<label>cy<input id="cy" type="number"/></label>
+	
+	<button onclick="viewer.display();">Gen High Res</button>
+	
+	<br>
+
+	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.1.2/dist/tf.min.js"></script>
+	<!--<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis@1.0.2/dist/tfjs-vis.umd.min.js"></script>-->
+	
+	
+	<script src="fractal.js"></script>
+	<script>
+const viewer = new js.interactiveJulia(800,800,500);
+
+const xpos = document.getElementById("xpos");
+const ypos = document.getElementById("ypos");
+const zoom = document.getElementById("zoom");
+const complexX = document.getElementById("cx");
+const complexY = document.getElementById("cy");
+
+let updateViewer = () => {
+	viewer.x = Number(xpos.value || "0");
+	viewer.y = Number(ypos.value || "0");
+	viewer.z = Number(zoom.value || "1");
+	viewer.cx = Number(complexX.value || "-1");
+	viewer.cy = Number(complexY.value || "0");
+}
+
+xpos.onkeyup = updateViewer;
+ypos.onkeyup = updateViewer;
+zoom.onkeyup = updateViewer;
+complexX.onkeyup = updateViewer;
+complexY.onkeyup = updateViewer;
+
+viewer.display();
+
+
+
+	</script>
+</body>
+</html>
