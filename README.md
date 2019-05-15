@@ -1,5 +1,5 @@
 # Fractals
-Generating images of fractals directly in the browser. Gpu-accelerated via WebGL.
+Generating images of fractals directly in the browser. Gpu-accelerated via Tensorflow.js (which uses WebGL).
 ## Demo
  * [Mandelbrot Set Generator](https://gliu20.github.io/fractals/mandelbrot.html)
  * [Julia Set Generator](https://gliu20.github.io/fractals/julia.html)
