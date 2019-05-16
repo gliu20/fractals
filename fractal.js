@@ -486,6 +486,16 @@ js.interactiveJulia = function (w,h,res,x,y,z,threshold,cx,cy) {
 	
 
 }
+
+
+
+function magicRect (threshold,iterations) {
+	let rect = js.genLookupSpace(...js.viewBox(2,2,-0.5,0,2));
+	let results = await js.mandelbrot(rect,threshold,iterations);
+	
+	
+}
+
 // higher complex norms indicates that is increasing in size quite rapidly
 // therefore is not bounded and not in mandelbrot set
 // if is is not in mandelbrot set, then it is colored based on how fast it
