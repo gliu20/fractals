@@ -489,7 +489,7 @@ js.interactiveJulia = function (w,h,res,x,y,z,threshold,cx,cy) {
 
 
 
-function magicRect (threshold,iterations) {
+magicRect = async (threshold,iterations) => {
 	let rect = js.genLookupSpace(...js.viewBox(2,2,-0.5,0,2));
 	let results = await js.mandelbrot(rect,threshold,iterations);
 	
