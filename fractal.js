@@ -266,9 +266,9 @@ js.interactiveMandelbrot = function (w,h,res,x,y,z,threshold) {
 	this.threshold = threshold || 4;
 	this.res = res || 1000;
 	
-	this.x = x || -1.732;
+	this.x = x || 0;
 	this.y = y || 0;
-	this.z = z || 0.00005;// zoom factor
+	this.z = z || 2;// zoom factor
 	
 	this.ctx = js.util.renderer(w,h);
 	this.canvas = this.ctx.canvas;
@@ -380,9 +380,9 @@ js.interactiveJulia = function (w,h,res,x,y,z,threshold,cx,cy) {
 	this.cx = cx || -1;
 	this.cy = cy || 0;
 	
-	this.x = x || -1.732;
+	this.x = x || 0;
 	this.y = y || 0;
-	this.z = z || 0.00005;// zoom factor
+	this.z = z || 2;// zoom factor
 	
 	this.ctx = js.util.renderer(w,h);
 	this.canvas = this.ctx.canvas;
