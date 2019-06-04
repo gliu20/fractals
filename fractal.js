@@ -314,7 +314,7 @@ js.interactiveMandelbrot = function (w,h,res,x,y,z,threshold) {
 		
 		xpos.value = viewer.x;
 		ypos.value = viewer.y;
-		zoom.value = viewer.z;
+		window.zoom.value = viewer.z;
 	}
 	
 	this.displayLowRes = async (downsampleFactor,iterationDecreaseFactor) => {
@@ -428,7 +428,7 @@ js.interactiveJulia = function (w,h,res,x,y,z,threshold,cx,cy) {
 		
 		xpos.value = viewer.x;
 		ypos.value = viewer.y;
-		zoom.value = viewer.z;
+		window.zoom.value = viewer.z;
 		complexX.value = viewer.cx;
 		complexY.value = viewer.cy;
 	}
