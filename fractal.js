@@ -277,6 +277,8 @@ js.interactiveMandelbrot = function (w,h,res,x,y,z,threshold) {
 	this.downsampleFactor = 5;
 	this.iterationDecreaseFactor = 2;
 	
+	this.timer,this.timeOfPrevMouseMove = 0;;
+	
 	this.canvas.onmousewheel = async (e) => {
 		
 	
@@ -315,6 +317,64 @@ js.interactiveMandelbrot = function (w,h,res,x,y,z,threshold) {
 		xpos.value = viewer.x;
 		ypos.value = viewer.y;
 		window.zoom.value = viewer.z;
+	}
+	
+	this.canvas.onmousedown = (e) => {
+		
+		const mouseX0 = e.offsetX;
+		const mouseY0 = e.offsetY;
+		
+		
+		const viewBox0 = js.viewBox(w,h,this.x,this.y,this.z);
+		
+		const origX = this.x;
+		const origY = this.y;
+		
+		// convert to coordinates in the complex plane
+		// this is the coordinate where mouse is
+		const coordx0 = js.util.map(mouseX0,0,w,viewBox0[2],viewBox0[3]);
+		const coordy0 = js.util.map(mouseY0,h,0,viewBox0[4],viewBox0[5]);
+		
+		this.canvas.onmousemove = async (e) => {
+		
+			
+			if (Date.now() - this.timeOfPrevMouseMove < 100) {
+				clearTimeout(this.timer);
+			}
+			
+			const mouseX = e.offsetX;
+			const mouseY = e.offsetY;
+		
+			// now this is coordinate of where coordx0 and coordy0 should be
+			// after shift
+			const coordx = js.util.map(mouseX,0,w,viewBox0[2],viewBox0[3]);
+			const coordy = js.util.map(mouseY,h,0,viewBox0[4],viewBox0[5]);
+		
+		
+			this.x = origX + coordx0 - coordx;
+			this.y = origY + coordy0 - coordy;
+			
+			// debounce
+			this.timeOfPrevMouseMove = Date.now();
+			this.timer = setTimeout(() => {
+				this.displayLowRes(this.downsampleFactor,this.iterationDecreaseFactor);
+			},5);
+			
+			// UI CODE
+			// TODO remove ui code from here and make better solution for
+			// updating ui
+		
+			xpos.value = viewer.x;
+			ypos.value = viewer.y;
+			window.zoom.value = viewer.z;
+			
+		}
+		
+		
+	}
+	
+	this.canvas.onmouseup = async (e) => {
+		this.canvas.onmousemove = null;
 	}
 	
 	this.displayLowRes = async (downsampleFactor,iterationDecreaseFactor) => {
@@ -431,6 +491,64 @@ js.interactiveJulia = function (w,h,res,x,y,z,threshold,cx,cy) {
 		window.zoom.value = viewer.z;
 		complexX.value = viewer.cx;
 		complexY.value = viewer.cy;
+	}
+	
+	this.canvas.onmousedown = (e) => {
+		
+		const mouseX0 = e.offsetX;
+		const mouseY0 = e.offsetY;
+		
+		
+		const viewBox0 = js.viewBox(w,h,this.x,this.y,this.z);
+		
+		const origX = this.x;
+		const origY = this.y;
+		
+		// convert to coordinates in the complex plane
+		// this is the coordinate where mouse is
+		const coordx0 = js.util.map(mouseX0,0,w,viewBox0[2],viewBox0[3]);
+		const coordy0 = js.util.map(mouseY0,h,0,viewBox0[4],viewBox0[5]);
+		
+		this.canvas.onmousemove = async (e) => {
+		
+			
+			if (Date.now() - this.timeOfPrevMouseMove < 100) {
+				clearTimeout(this.timer);
+			}
+			
+			const mouseX = e.offsetX;
+			const mouseY = e.offsetY;
+		
+			// now this is coordinate of where coordx0 and coordy0 should be
+			// after shift
+			const coordx = js.util.map(mouseX,0,w,viewBox0[2],viewBox0[3]);
+			const coordy = js.util.map(mouseY,h,0,viewBox0[4],viewBox0[5]);
+		
+		
+			this.x = origX + coordx0 - coordx;
+			this.y = origY + coordy0 - coordy;
+			
+			// debounce
+			this.timeOfPrevMouseMove = Date.now();
+			this.timer = setTimeout(() => {
+				this.displayLowRes(this.downsampleFactor,this.iterationDecreaseFactor);
+			},5);
+			
+			// UI CODE
+			// TODO remove ui code from here and make better solution for
+			// updating ui
+		
+			xpos.value = viewer.x;
+			ypos.value = viewer.y;
+			window.zoom.value = viewer.z;
+			
+		}
+		
+		
+	}
+	
+	this.canvas.onmouseup = async (e) => {
+		this.canvas.onmousemove = null;
 	}
 	
 	this.displayLowRes = async (downsampleFactor,iterationDecreaseFactor) => {
