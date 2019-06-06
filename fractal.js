@@ -279,7 +279,7 @@ js.interactiveMandelbrot = function (w,h,res,x,y,z,threshold) {
 	
 	this.timer,this.timeOfPrevMouseMove = 0;;
 	
-	this.canvas.onscroll = this.canvas.onmousewheel = async (e) => {
+	this.canvas.onwheel = this.canvas.onmousewheel = async (e) => {
 		
 	
 		const mouseX = e.offsetX;
@@ -451,7 +451,7 @@ js.interactiveJulia = function (w,h,res,x,y,z,threshold,cx,cy) {
 	this.downsampleFactor = 5;
 	this.iterationDecreaseFactor = 2;
 	
-	this.canvas.onscroll = this.canvas.onmousewheel = async (e) => {
+	this.canvas.onwheel = this.canvas.onmousewheel = async (e) => {
 		
 	
 		const mouseX = e.offsetX;
