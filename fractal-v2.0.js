@@ -1,10 +1,11 @@
 function optimComplexSquare ({real,imag}) {
   const sum = real + imag;
   const diff = real - imag;
+  const prod = real * imag;
   
   return {
     real: sum * diff,
-    imag: real * imag * 2
+    imag: prod + prod
   }
 }
 
