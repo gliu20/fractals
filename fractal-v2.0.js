@@ -1,4 +1,11 @@
-function optimComplexSquare ({real,imag}) {
+/**
+ *  Quick Fractal Math library
+ *  @author github:gliu20
+ */
+
+const qfm = {}
+
+qfm.complexSquare = ({real,imag}) => {
   const sum = real + imag;
   const diff = real - imag;
   const prod = real * imag;
@@ -9,7 +16,7 @@ function optimComplexSquare ({real,imag}) {
   }
 }
 
-function optimComplexMult (complex1,complex2) {
+qfm.complexMult = (complex1,complex2) => {
   const {real:real1,imag:imag1} = complex1;
   const {real:real2,imag:imag2} = complex2;
   
@@ -22,4 +29,8 @@ function optimComplexMult (complex1,complex2) {
     real: realProd - imagProd,
     imag: sumProd - realProd - imagProd
   }
+}
+
+qfm.complexHalfNorm = ({real,imag}) => {
+  return real * real + imag * imag;
 }
