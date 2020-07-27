@@ -5,6 +5,28 @@
 
 const qfm = {}
 
+qfm.mandelbrot = (x,y,maxIterations) => {
+  let z = {
+    real: x - x, // same thing as 0, but may be slower
+    imag: y - y // purpose is to be type flexible
+  }
+  
+  const c = {
+    real:x,
+    imag:y
+  }
+  
+  for (let i = 0; i < maxIterations; i++) {
+    if (qfm.complexHalfNorm(z) > 4) {
+      return i;
+    }
+      
+    z = qfm.zSquaredPlusC(z,c);
+  }
+  
+  return maxIterations;
+}
+
 qfm.zSquaredPlusC = (zComplex,cComplex) => {
   const zSquared = qfm.complexSquare(zComplex);
   
