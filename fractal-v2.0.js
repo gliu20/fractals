@@ -5,6 +5,29 @@
 
 const qfm = {}
 
+qfm.julia = (x,y,cx,cy,maxIterations) => {
+  let z = {
+    real: x, 
+    imag: y 
+  }
+  
+  const c = {
+    real: cx,
+    imag: cy
+  };
+  
+  for (let i = 0; i < maxIterations; i++) {
+    if (qfm.complexHalfNorm(z) > 4) {
+      return i;
+    }
+      
+    z = qfm.zSquaredPlusC(z,c);
+  }
+  
+  return maxIterations;
+}
+
+
 qfm.mandelbrot = (x,y,maxIterations) => {
   let z = {
     real: x - x, // same thing as 0, but may be slower
