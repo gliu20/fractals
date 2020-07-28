@@ -32,6 +32,18 @@
 		const canvas = document.getElementById("viewer");
 	  	const ctx = canvas.getContext('2d', { alpha: false });
 	  
+	  	lookupFunc = (x,y) => {
+			const xi = fv.map(x,0,100,-2,1);
+			const yi = fv.map(y,0,100,-1.5,1.5);
+			
+			const i = qfm.mandelbrot(xi,yi,maxIterations);
+			
+			if (i === maxIterations) { return "#000000"; }
+  			return "hsl(0,100%,"+(i%100)+"%)";
+		}
+		
+		fv.draw(lookupFunc,lookupTable,ctx,canceller);
+	  
 		
 	
   </script>
