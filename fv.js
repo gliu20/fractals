@@ -16,9 +16,58 @@ fv.map = (val,inMin,inMax,outMin,outMax) => {
 }
 
 fv.pixelLookup = ({callback,lookupFunc,viewModel}) => {
-  // params is for julia set
-  
+  lookupFunc(x,y)
  
+ 
+}
+
+fv.genLookup = (xi,yi,xf,yf) => {
+ const lookup = [];
+ 
+ 
+ 
+}
+
+fv.mergeCoordDims = (subdividedCoordXs, subdividedCoordYs) => {
+ const lookup = [];
+ 
+ for (var i = 0; i < subdividedCoordXs.length - 1; i++) {
+  for (var j = 0; j < subdividedCoordYs.length - 1; j++) {
+   const xi = subdividedCoordXs[i];
+   const xf = subdividedCoordXs[i+1];
+   
+   const yi = subdividedCoordYs[j];
+   const yf = subdividedCoordYs[j+1]
+   
+   lookup.push([xi,yi,xf,yf]);
+  }
+ }
+ 
+ // case 2x2
+ if (lookup.length === 4) {
+  // switch last and second element
+  const tmp = lookup[1];
+  lookup[1] = lookup[lookup.length - 1];
+  lookup[lookup.length - 1] = lookup[1];
+ }
+ 
+ return lookup;
+} 
+
+// ci = coord initial
+// cf = coord final
+fv.subdivideCoord1d = (ci,cf) => {
+ const dist = cf - ci;
+ 
+ // it's a single pixel can't divide further
+ if (dist === 1) {
+  return [ci, ci+1];
+ }
+ 
+ // get second coordinate
+ const ci2 = Math.floor(dist / 2);
+ 
+ return [ci, ci2, cf];
 }
 
 /*
