@@ -26,7 +26,7 @@ fv.draw = async (lookupFunc,lookupTable,ctx,canceller) => {
   ctx.fillRect(xi,yi,w,h);
   
   if (canceller.cancel) { break; }
-  if (i % 100 === 0) { await fv._wait(); }
+  if (i % 100 === 50) { await fv._wait(); }
  }
 }
 
