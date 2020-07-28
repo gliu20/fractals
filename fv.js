@@ -17,7 +17,10 @@ fv.map = (val,inMin,inMax,outMin,outMax) => {
 
 
 fv.genLookupTable = (w,h) => {
- let lookup = [[0,0,w,h]];
+ const lookup = [[0,0,w,h]];
+ const cleanLookup = [];
+ 
+ const index = {};
  
  const iterationsX = Math.ceil(Math.log2(w));
  const iterationsY = Math.ceil(Math.log2(h));
@@ -30,8 +33,18 @@ fv.genLookupTable = (w,h) => {
   }
  }
  
- // TODO add clean up to lookup table for duplicate coordinates
- return lookup;
+ // clean up time
+ for (var i = 0; i < lookup.length; i++) {
+  if (!index.hasOwnProperty(`${lookup[i][0]},${lookup[i][1]}`)) {
+   // mark as done
+   index[`${lookup[i][0]},${lookup[i][1]}`] = true;
+   
+   // move old lookup to cleanLookup
+   cleanLookup.push(lookup[i]);
+  }
+ }
+ 
+ return cleanLookup;
 }
 
 
