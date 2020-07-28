@@ -15,13 +15,17 @@
 </head>
 <body>
 	<canvas id="viewer" width="800" height="800" style="border:#eee;"></canvas><br>
-	<label for="progress" id="progresslabel"></label>
+
   	<progress id="progress" value="0" min="0" max="100"></progress>
+	<label for="progress" id="progresslabel"></label>
 	<br>
-  	<label for="subprogress" id="subprogresslabel">
-	</label>
+	
+
   	<progress id="subprogress" value="0" min="0" max="100"></progress>
+	<label for="subprogress" id="subprogresslabel">
+	</label>
 	<br>
+	
 	<button onclick="draw()">Draw</button>
   <script src="qfm.js"></script>
   <script src="fv.js"></script>
@@ -31,18 +35,15 @@
 	  var maxIterations = 500;
 	  var lookupTable;
 	  
-	  (async function () {
-		lookupTable = await fv.genLookupTable(800,800,function (subprogress,subprogressTotal,progress,progressTotal) {
+	  window.onload = async function () {
+		  lookupTable = await fv.genLookupTable(800,800,function (subprogress,subprogressTotal,progress,progressTotal) {
 			subprogress.value = (subprogress / subprogressTotal) * 100
 			subprogresslabel.innerText = `${subprogress} of ${subprogressTotal} Iterations complete`
 			
 			progress.value = (progress / progressTotal) * 100
 			progresslabel.innerText = `${progress} of ${progressTotal} Rounds complete`
 		});
-		
-		  
-	  })();
-	  
+	  }
 		const canvas = document.getElementById("viewer");
 	  	const progress = document.getElementById("progress");
 	  	const subprogress = document.getElementById("subprogress");
