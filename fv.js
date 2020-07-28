@@ -11,6 +11,25 @@ fv._wait = () => {
  })
 }
 
+fv.draw = async (lookupFunc,lookupTable,ctx,) => {
+ for (var i = 0; i < lookupTable.length; i++) {
+  const xi = lookupTable[i][0];
+  const yi = lookupTable[i][1];
+  
+  const xf = lookupTable[i][2];
+  const yf = lookupTable[i][3];
+  
+  const w = xf - xi;
+  const h = yf - yi;
+  
+  ctx.fillStyle = lookupFunc(xi,yi);
+  ctx.fillRect(xi,yi,w,h);
+  
+  // throttle animation
+  if (i % 100 === 0) { await fv._wait(); }
+ }
+}
+
 fv.map = (val,inMin,inMax,outMin,outMax) => {
   const a = inMin,
        b = outMin,
