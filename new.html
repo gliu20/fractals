@@ -14,14 +14,14 @@
 
 </head>
 <body>
-	<canvas id="viewer" width="800" height="800" style="border:#eee;"></canvas>
-	<label id="progresslabel"></label>
+	<canvas id="viewer" width="800" height="800" style="border:#eee;"></canvas><br>
+	<label for="progress" id="progresslabel"></label>
   	<progress id="progress" value="0" min="0" max="100"></progress>
-	
-  	<label id="subprogresslabel">
+	<br>
+  	<label for="subprogress" id="subprogresslabel">
 	</label>
   	<progress id="subprogress" value="0" min="0" max="100"></progress>
-	
+	<br>
 	<button onclick="draw()">Draw</button>
   <script src="qfm.js"></script>
   <script src="fv.js"></script>
