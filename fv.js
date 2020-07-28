@@ -11,7 +11,7 @@ fv._wait = () => {
  })
 }
 
-fv.draw = async (lookupFunc,lookupTable,ctx,) => {
+fv.draw = async (lookupFunc,lookupTable,ctx) => {
  for (var i = 0; i < lookupTable.length; i++) {
   const xi = lookupTable[i][0];
   const yi = lookupTable[i][1];
