@@ -17,7 +17,7 @@ fv.map = (val,inMin,inMax,outMin,outMax) => {
 
 
 fv.genLookupTable = (w,h) => {
- let lookup = [];
+ let lookup = [[0,0,w,h]];
  
  const iterationsX = Math.ceil(Math.log2(w));
  const iterationsY = Math.ceil(Math.log2(h));
