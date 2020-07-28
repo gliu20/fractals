@@ -5,6 +5,12 @@
  
 const fv = {};
 
+fv._wait = () => {
+ return new Promise (function (resolve) {
+  requestAnimationFrame(resolve);
+ })
+}
+
 fv.map = (val,inMin,inMax,outMin,outMax) => {
   const a = inMin,
        b = outMin,
@@ -16,7 +22,7 @@ fv.map = (val,inMin,inMax,outMin,outMax) => {
 }
 
 
-fv.genLookupTable = (w,h) => {
+fv.genLookupTable = async (w,h) => {
  const lookup = [[0,0,w,h]];
  const cleanLookup = [];
  
@@ -30,6 +36,11 @@ fv.genLookupTable = (w,h) => {
   const currLength = lookup.length;
   for (var j = 0; j < currLength; j++) {
    lookup.push(...fv.genSubdividedLookup(...lookup[j]))
+   
+   // throttle genLookupTable every 100 steps
+   if (i * j % 1000 === 0) {
+    await fv._wait();
+   }
   }
  }
  
