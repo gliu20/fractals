@@ -15,16 +15,36 @@ fv.map = (val,inMin,inMax,outMin,outMax) => {
   return (b - d) / (a - c) * (x - a) + b;
 }
 
-fv.pixelLookup = ({callback,lookupFunc,viewModel}) => {
-  lookupFunc(x,y)
+
+fv.genLookupTable = (w,h) => {
+ let lookup = [];
  
+ const iterationsX = Math.ceil(Math.log2(w));
+ const iterationsY = Math.ceil(Math.log2(h));
+ const maxIterations = Math.max(iterationsX,iterationsY)
  
+ for (var i = 0; i < maxIterations; i++) {
+  const currLength = lookup.length;
+  for (var j = 0; j < currLength; j++) {
+   lookup.push(...fv.genSubdividedLookup(lookup[j]))
+  }
+ }
+ return lookup;
 }
 
-fv.genLookup = (xi,yi,xf,yf) => {
- const lookup = [];
+
+fv.genSubdividedLookup = (xi,yi,xf,yf) => {
  
+ const subdividedCoordXs = fv.subdivideCoord1d(xi,xf);
+ const subdividedCoordYs = fv.subdivideCoord1d(yi,yf);
  
+ if (subdividedCoordXs.length === 2 && 
+     subdividedCoordYs.length === 2) {
+  // this is just a single pixel so we return it
+  return [[xi,yi,xf,yf]];
+ }
+ 
+ return fv.mergeCoordDims(subdividedCoordXs, subdividedCoordYs);
  
 }
 
