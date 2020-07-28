@@ -25,4 +25,12 @@ fv.pixelLookup = ({callback,lookupFunc,viewModel}) => {
 perf optimizations
 var ctx = canvas.getContext('2d', { alpha: false });
 
+
+
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  
+  
 */
