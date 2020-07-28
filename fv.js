@@ -26,7 +26,7 @@ fv.genLookupTable = (w,h) => {
  for (var i = 0; i < maxIterations; i++) {
   const currLength = lookup.length;
   for (var j = 0; j < currLength; j++) {
-   lookup.push(...fv.genSubdividedLookup(lookup[j]))
+   lookup.push(...fv.genSubdividedLookup(...lookup[j]))
   }
  }
  return lookup;
