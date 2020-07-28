@@ -85,7 +85,7 @@ fv.subdivideCoord1d = (ci,cf) => {
  }
  
  // get second coordinate
- const ci2 = Math.floor(dist / 2);
+ const ci2 = ci + Math.ceil(dist / 2);
  
  return [ci, ci2, cf];
 }
