@@ -68,7 +68,7 @@ fv.mergeCoordDims = (subdividedCoordXs, subdividedCoordYs) => {
   // switch last and second element
   const tmp = lookup[1];
   lookup[1] = lookup[lookup.length - 1];
-  lookup[lookup.length - 1] = lookup[1];
+  lookup[lookup.length - 1] = tmp;
  }
  
  return lookup;
