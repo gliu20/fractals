@@ -11,7 +11,7 @@ fv._wait = () => {
  })
 }
 
-fv.draw = async (lookupFunc,lookupTable,ctx) => {
+fv.draw = async (lookupFunc,lookupTable,ctx,canceller) => {
  for (var i = 0; i < lookupTable.length; i++) {
   const xi = lookupTable[i][0];
   const yi = lookupTable[i][1];
@@ -25,7 +25,7 @@ fv.draw = async (lookupFunc,lookupTable,ctx) => {
   ctx.fillStyle = lookupFunc(xi,yi);
   ctx.fillRect(xi,yi,w,h);
   
-  // throttle animation
+  if (canceller.cancel) { break; }
   if (i % 100 === 0) { await fv._wait(); }
  }
 }
