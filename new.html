@@ -14,8 +14,15 @@
 
 </head>
 <body>
-	<canvas id="viewer" width="100" height="100" style="border:#eee;"></canvas>
-  
+	<canvas id="viewer" width="800" height="800" style="border:#eee;"></canvas>
+	<label id="progresslabel"></label>
+  	<progess id="progress" value="0" min="0" max="100"></progress>
+	
+  	<label id="subprogresslabel">
+	</label>
+  	<progess id="subprogress" value="0" min="0" max="100"></progress>
+	
+	<button onclick="draw()">Draw</button>
   <script src="qfm.js"></script>
   <script src="fv.js"></script>
   
@@ -25,16 +32,28 @@
 	  var lookupTable;
 	  
 	  (async function () {
-		lookupTable = await fv.genLookupTable(100,100);
+		lookupTable = await fv.genLookupTable(800,800,function (subprogress,subprogressTotal,progress,progressTotal) {
+			subprogress.value = (subprogress / subprogressTotal) * 100
+			subprogresslabel.innerText = `${subprogress} of ${subprogressTotal} Iterations complete`
+			
+			progress.value = (progress / progressTotal) * 100
+			progresslabel.innerText = `${progress} of ${progressTotal} Rounds complete`
+		});
 		
+		  
 	  })();
 	  
 		const canvas = document.getElementById("viewer");
+	  	const progress = document.getElementById("progress");
+	  	const subprogress = document.getElementById("subprogress");
+	  	const progresslabel = document.getElementById("progresslabel");
+	  	const subprogresslabel = document.getElementById("subprogresslabel");
+	  
 	  	const ctx = canvas.getContext('2d', { alpha: false });
 	  
 	  	lookupFunc = (x,y) => {
-			const xi = fv.map(x,0,100,-2,1);
-			const yi = fv.map(y,0,100,-1.5,1.5);
+			const xi = fv.map(x,0,800,-2,1);
+			const yi = fv.map(y,0,800,-1.5,1.5);
 			
 			const i = qfm.mandelbrot(xi,yi,maxIterations);
 			
@@ -42,7 +61,11 @@
   			return "hsl(0,100%,"+(i%100)+"%)";
 		}
 		
-		fv.draw(lookupFunc,lookupTable,ctx,canceller);
+		function draw () {
+			fv.draw(lookupFunc,lookupTable,ctx,canceller);
+		}
+		
+		
 	  
 		
 	
