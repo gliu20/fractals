@@ -15,8 +15,14 @@ fv.map = (val,inMin,inMax,outMin,outMax) => {
   return (b - d) / (a - c) * (x - a) + b;
 }
 
-fv.pixelLookup = ({callback,fractalFunc,viewBox,params}) => {
+fv.pixelLookup = ({callback,lookupFunc,viewModel}) => {
   // params is for julia set
   
-
+ 
 }
+
+/*
+perf optimizations
+var ctx = canvas.getContext('2d', { alpha: false });
+
+*/
