@@ -29,6 +29,8 @@ fv.genLookupTable = (w,h) => {
    lookup.push(...fv.genSubdividedLookup(...lookup[j]))
   }
  }
+ 
+ // TODO add clean up to lookup table for duplicate coordinates
  return lookup;
 }
 
