@@ -57,7 +57,7 @@ fv.genLookupTable = async (w,h,onprogress) => {
    lookup.push(...fv.genSubdividedLookup(...lookup[j]))
    
    // throttle genLookupTable every couple steps
-   if (i * j % 500 === 0) {
+   if (i * j % 2500 === 0) {
     onprogress(j,currLength,i,maxIterations);
     await fv._wait();
    }
