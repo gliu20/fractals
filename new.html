@@ -37,10 +37,10 @@
 	  
 	  window.onload = async function () {
 		  lookupTable = await fv.genLookupTable(800,800,function (subprogress,subprogressTotal,progress,progressTotal) {
-			subprogress.value = (subprogress / subprogressTotal) * 100
+			subprogress.value = Math.ceil((subprogress / subprogressTotal) * 100);
 			subprogresslabel.innerText = `${subprogress} of ${subprogressTotal} Iterations complete`
 			
-			progress.value = (progress / progressTotal) * 100
+			progress.value = Math.ceil((progress / progressTotal) * 100);
 			progresslabel.innerText = `${progress} of ${progressTotal} Rounds complete`
 		});
 	  }
