@@ -17,7 +17,7 @@ qfm.julia = (x,y,cx,cy,maxIterations) => {
   };
   
   for (let i = 0; i < maxIterations; i++) {
-    if (qfm.complexHalfNorm(z) > 4) {
+    if (qfm.complexHalfNorm(z) > 16) {
       return i;
     }
       
@@ -40,7 +40,7 @@ qfm.mandelbrot = (x,y,maxIterations) => {
   }
   
   for (let i = 0; i < maxIterations; i++) {
-    if (qfm.complexHalfNorm(z) > 4) {
+    if (qfm.complexHalfNorm(z) > 16) {
       return i;
     }
       
