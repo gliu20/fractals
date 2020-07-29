@@ -26,7 +26,7 @@ fv.draw = async (lookupFunc,lookupTable,ctx,canceller) => {
   ctx.fillRect(xi,yi,w,h);
   
   if (canceller.cancel) { break; }
-  if (i % 500 === 50) { await fv._wait(); }
+  if (i % 1000 === 50) { await fv._wait(); }
  }
 }
 
@@ -57,12 +57,14 @@ fv.genLookupTable = async (w,h,onprogress) => {
    lookup.push(...fv.genSubdividedLookup(...lookup[j]))
    
    // throttle genLookupTable every couple steps
-   if (i * j % 2500 === 0) {
+   if (i * j % 1500 === 0) {
     onprogress(j,currLength,i,maxIterations);
     await fv._wait();
    }
   }
  }
+
+ 
  
  // clean up time
  for (var i = 0; i < lookup.length; i++) {
@@ -74,6 +76,9 @@ fv.genLookupTable = async (w,h,onprogress) => {
    cleanLookup.push(lookup[i]);
   }
  }
+ 
+ // indicate done
+ onprogress(1,1,1,1);
  
  return cleanLookup;
 }
