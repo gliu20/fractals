@@ -56,11 +56,17 @@ fv.genLookupTable = async (w,h,onprogress) => {
   for (var j = 0; j < currLength; j++) {
    lookup.push(...fv.genSubdividedLookup(...lookup[j]))
    
-   // throttle genLookupTable every couple steps
-   if (i * j % 1500 === 0) {
+   
+   if (i * j % 10000 === 0) {
     onprogress(j,currLength,i,maxIterations);
+   }
+   
+   // throttle genLookupTable every couple steps
+   if (i * j % 1000 === 0) {
     await fv._wait();
    }
+   
+   
   }
  }
 
@@ -69,8 +75,11 @@ fv.genLookupTable = async (w,h,onprogress) => {
  // clean up time
  for (var i = 0; i < lookup.length; i++) {
   
-  if (i % 5000) {
+  if (i % 10000) {
    onprogress(1,1,i,lookup.length);
+  }
+  
+  if (i % 5000) {
    await fv._wait();
   }
   
