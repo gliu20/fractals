@@ -279,13 +279,13 @@ js.interactiveMandelbrot = function (w,h,res,x,y,z,threshold) {
 	
 	this.timer,this.timeOfPrevMouseMove = 0;;
 	
-	this.canvas.onwheel = this.canvas.onmousewheel = async (e) => {
+	this.canvas.onwheel = async (e) => {
 		
 	
 		const mouseX = e.offsetX;
 		const mouseY = e.offsetY;
 		
-		const zoom = e.wheelDelta;
+		const zoom = e.deltaY;
 		const viewBox = js.viewBox(w,h,this.x,this.y,this.z);
 		
 		// convert to coordinates in the complex plane
@@ -451,13 +451,13 @@ js.interactiveJulia = function (w,h,res,x,y,z,threshold,cx,cy) {
 	this.downsampleFactor = 5;
 	this.iterationDecreaseFactor = 2;
 	
-	this.canvas.onwheel = this.canvas.onmousewheel = async (e) => {
+	this.canvas.onwheel = async (e) => {
 		
 	
 		const mouseX = e.offsetX;
 		const mouseY = e.offsetY;
 		
-		const zoom = e.wheelDelta;
+		const zoom = e.deltaY;
 		const viewBox = js.viewBox(w,h,this.x,this.y,this.z);
 		
 		// convert to coordinates in the complex plane
