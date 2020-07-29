@@ -295,7 +295,7 @@ js.interactiveMandelbrot = function (w,h,res,x,y,z,threshold) {
 		
 		
 		
-		this.z *= 1 - 0.05 * (zoom / 120);
+		this.z *= 1 - 0.05 * (zoom / 80);
 		
 		const scaledViewBox = js.viewBox(w,h,this.x,this.y,this.z);
 		
@@ -467,7 +467,7 @@ js.interactiveJulia = function (w,h,res,x,y,z,threshold,cx,cy) {
 		
 		
 		
-		this.z *= 1 - 0.05 * (zoom / 120);
+		this.z *= 1 - 0.05 * (zoom / 80);
 		
 		const scaledViewBox = js.viewBox(w,h,this.x,this.y,this.z);
 		
