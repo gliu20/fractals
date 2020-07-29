@@ -54,8 +54,13 @@ fv.genLookupTable = async (w,h,onprogress) => {
  for (var i = 0; i < maxIterations; i++) {
   const currLength = lookup.length;
   for (var j = 0; j < currLength; j++) {
-   lookup.push(...fv.genSubdividedLookup(...lookup[j]))
    
+   // only if we didn't subdivide this then we subdivide this
+   if (!index[lookup[j].join(",")]) {
+    lookup.push(...fv.genSubdividedLookup(...lookup[j]))
+    index[lookup[j].join(",")] = true;
+    console.log("optimized!")
+   }
    
    if (i * j % 10000 === 0) {
     onprogress(j,currLength,i,maxIterations);
