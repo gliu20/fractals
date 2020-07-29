@@ -38,7 +38,8 @@
 	  var canceller = {cancel:false};
 	  var maxIterations = 500;
 	  var lookupTable;
-	  
+	  		// xi, xf, yi, yf
+	  var viewbox = [-2,1,-1.5,1.5];
 	  window.onload = async function () {
 		  lookupTable = await fv.genLookupTable(800,800,function (subprogressNum,subprogressTotal,progressNum,progressTotal) {
 			subprogress.value = Math.ceil((subprogressNum / subprogressTotal) * 100);
@@ -57,8 +58,8 @@
 	  	const ctx = canvas.getContext('2d', { alpha: false });
 	  
 	  	lookupFunc = (x,y) => {
-			const xi = fv.map(x,0,800,-2,1);
-			const yi = fv.map(y,0,800,-1.5,1.5);
+			const xi = fv.map(x,0,800,viewbox[0],viewbox[1]);
+			const yi = fv.map(y,0,800,viewbox[2],viewbox[3]);
 			
 			const i = qfm.mandelbrot(xi,yi,maxIterations);
 			
@@ -66,8 +67,69 @@
   			return "hsl(0,100%,"+(i%100)+"%)";
 		}
 		
-		function draw () {
-			fv.draw(lookupFunc,lookupTable,ctx,canceller);
+		async function draw () {
+			canceller.cancel = true;
+			await tf._wait();
+			canceller.cancel = false;
+			await fv.draw(lookupFunc,lookupTable,ctx,canceller);
+		}
+	  
+	  	function avg (a,b) {
+			const two = (a + a) / (a);
+			return (a + b) / two;
+		}
+	  	// TODO make func for convert to complex coords 
+	  	
+	  	canvas.onwheel = async (e) => {
+			
+			const mouseX = e.offsetX;
+			const mouseY = e.offsetY;
+			
+			const currSpan = viewbox[1] - viewbox[0];
+			
+			// convert to either -1 or 1
+			const scrollDelta = Math.min(Math.max(e.deltaY,-1),1);
+			const scrollDeltaScaled = (1 + (scrollDelta * .2))
+			
+			// target coordinates should still be where it is currently
+			const targetX = fv.map(mouseX,0,800,viewbox[0],viewbox[1]);
+			const targetY = fv.map(mouseY,0,800,viewbox[2],viewbox[3]);
+			
+
+			
+			const currCenterX = avg(viewbox[0],viewbox[1]);
+			const currCenterY = avg(viewbox[2],viewbox[3]);
+			
+			
+			
+			const targetSpan = currSpan * scrollDeltaScaled;
+			const targetHalfSpan = targetSpan / 2;
+			
+			const partialZoomedViewbox = [
+				currCenterX-targetHalfSpan,
+				currCenterX+targetHalfSpan,
+				currCenterY-targetHalfSpan,
+				currCenterY+targetHalfSpan,
+			]
+			
+			const mouseXAfterZoom = fv.map(mouseX,0,800,partialZoomedViewbox[0],partialZoomedViewbox[1]);
+			const mouseYAfterZoom = fv.map(mouseY,0,800,partialZoomedViewbox[2],partialZoomedViewbox[3]);
+			
+			const newCenterX = currCenterX + (targetX - mouseXAfterZoom);
+			const newCenterY = currCenterY + (targetY - mouseYAfterZoom);
+			
+			
+			viewbox = [
+				newCenterX-targetHalfSpan,
+				newCenterX+targetHalfSpan,
+				newCenterY-targetHalfSpan,
+				newCenterY+targetHalfSpan,
+			];
+			
+			
+			draw();
+			
+			
 		}
 		
 		
