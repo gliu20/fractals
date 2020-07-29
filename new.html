@@ -69,7 +69,7 @@
 		
 		async function draw () {
 			canceller.cancel = true;
-			await tf._wait();
+			await fv._wait();
 			canceller.cancel = false;
 			await fv.draw(lookupFunc,lookupTable,ctx,canceller);
 		}
