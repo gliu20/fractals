@@ -68,7 +68,15 @@ fv.genLookupTable = async (w,h,onprogress) => {
  
  // clean up time
  for (var i = 0; i < lookup.length; i++) {
+  
+  if (i % 5000) {
+   onprogress(1,1,i,lookup.length);
+   await fv._wait();
+  }
+  
+  
   if (!index.hasOwnProperty(`${lookup[i][0]},${lookup[i][1]}`)) {
+   
    // mark as done
    index[`${lookup[i][0]},${lookup[i][1]}`] = true;
    
