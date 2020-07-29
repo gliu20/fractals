@@ -162,16 +162,4 @@ fv.subdivideCoord1d = (ci,cf) => {
  return [ci, ci2, cf];
 }
 
-/*
-perf optimizations
-var ctx = canvas.getContext('2d', { alpha: false });
 
-
-
-  image-rendering: -moz-crisp-edges;
-  image-rendering: -webkit-crisp-edges;
-  image-rendering: pixelated;
-  image-rendering: crisp-edges;
-  
-  
-*/
