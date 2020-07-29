@@ -14,7 +14,11 @@
 
 </head>
 <body>
-	<canvas id="viewer" width="800" height="800" style="border:#eee;"></canvas><br>
+	<canvas id="viewer" width="800" height="800" style="border:#eee;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;"></canvas><br>
 
   	<progress id="progress" value="0" min="0" max="100"></progress>
 	<label for="progress" id="progresslabel"></label>
