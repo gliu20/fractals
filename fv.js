@@ -75,11 +75,11 @@ fv.genLookupTable = async (w,h,onprogress) => {
  // clean up time
  for (var i = 0; i < lookup.length; i++) {
   
-  if (i % 200000) {
+  if (i % 200000 === 0) {
    onprogress(1,1,i,lookup.length);
   }
   
-  if (i % 100000) {
+  if (i % 100000 === 0) {
    await fv._wait();
   }
   
