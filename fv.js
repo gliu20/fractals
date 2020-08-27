@@ -5,6 +5,81 @@
  
 const fv = {};
 
+
+fv._throttleAt = (fps, callback) => {
+	let start = performance.now();
+	let end = performance.now();
+	let averageDuration = 0;
+	let totalDuration = 0;
+	let skippedInvocations = 0;
+
+	function calcFreq (periodLength) {
+		// takes periodLength in ms; so need convert to sec
+		periodLength = periodLength / 1000;
+
+		// since periodLength is exactly 0, we get a NaN answer
+		// if we continue with answer so we break out
+		// and return Infinity
+		if (periodLength === 0) {
+			return Infinity;
+		}
+		
+		return Math.floor((1 / periodLength) * 1000) / 1000;
+	}
+
+	function timeCallback (callback) {
+		skippedInvocations = 0;
+
+		start = performance.now();
+
+		const shouldContinue = callback();
+
+		end = performance.now();
+
+		totalDuration = end - start;
+		averageDuration = totalDuration;
+
+		return shouldContinue;
+	}
+
+	requestAnimationFrame(function loop () {
+		
+		if (calcFreq(averageDuration) < fps) {
+			// we're not meeting target fps
+			// hence, we have to throttle by skipping invocations
+			skippedInvocations++;
+
+			// the previous end time is this frame's start time
+			start = end;
+			end = performance.now();
+
+			// add duration of how long it took to display this frame
+			// the totalDuration measures how long one invocation 
+			// and all skipped invocations afterward took
+			totalDuration += end - start;
+			averageDuration = totalDuration / skippedInvocations;
+
+			
+		}
+		else {
+			// we're meeting targets so we can run the callback
+			const shouldContinue = timeCallback(callback);
+
+			// if the callback wants us to stop there's no
+			// point in continuing to throttle so we break 
+			// out of the loop
+			if (!shouldContinue) { return; }
+		}
+
+		if (testing) {
+			console.log({avgFps: calcFreq(averageDuration)})
+		}
+
+		requestAnimationFrame(loop);
+	});
+}
+
+
 fv._wait = () => {
  return new Promise (function (resolve) {
   requestAnimationFrame(resolve);
@@ -12,7 +87,10 @@ fv._wait = () => {
 }
 
 fv.draw = async (lookupFunc,lookupTable,ctx,canceller) => {
- for (var i = 0; i < lookupTable.length; i++) {
+ let i = 0; 
+ 
+ function iterate () {
+  
   const xi = lookupTable[i][0];
   const yi = lookupTable[i][1];
   
@@ -25,9 +103,11 @@ fv.draw = async (lookupFunc,lookupTable,ctx,canceller) => {
   ctx.fillStyle = lookupFunc(xi,yi);
   ctx.fillRect(xi,yi,w,h);
   
-  if (canceller.cancel) { break; }
-  if (i % 10000 === 5000) { await fv._wait(); }
+  return !canceller.cancel && ++i < lookupTable.length;
  }
+ 
+ fv._throttleAt(40, iterate);
+ 
 }
 
 fv.map = (val,inMin,inMax,outMin,outMax) => {
