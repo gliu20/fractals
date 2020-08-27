@@ -42,13 +42,16 @@ fv._throttleAt = (fps, callback) => {
 		return shouldContinue;
 	}
 
-	requestAnimationFrame(function loop () {
+	(async function loop () {
 		
 		if (calcFreq(averageDuration) < fps) {
 			// we're not meeting target fps
 			// hence, we have to throttle by skipping invocations
 			skippedInvocations++;
-
+			
+			// skip invocation and wait instead
+			await fv._wait();
+			
 			// the previous end time is this frame's start time
 			start = end;
 			end = performance.now();
@@ -62,7 +65,9 @@ fv._throttleAt = (fps, callback) => {
 			
 		}
 		else {
+			
 			// we're meeting targets so we can run the callback
+			// instead of waiting
 			const shouldContinue = timeCallback(callback);
 
 			// if the callback wants us to stop there's no
@@ -75,8 +80,9 @@ fv._throttleAt = (fps, callback) => {
 			console.log({avgFps: calcFreq(averageDuration)})
 		}
 
-		requestAnimationFrame(loop);
-	});
+		// to avoid stack overflow by indirectly calling loop
+		setTimeout(loop,0);
+	})();
 }
 
 
