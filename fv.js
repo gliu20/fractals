@@ -114,6 +114,7 @@ fv._wait = () => {
 
 fv.draw = async (lookupFunc,lookupTable,ctx,canceller) => {
  let i = 0; 
+ let cancel = false;
  
  function iterate () {
   
@@ -129,10 +130,14 @@ fv.draw = async (lookupFunc,lookupTable,ctx,canceller) => {
   ctx.fillStyle = lookupFunc(xi,yi);
   ctx.fillRect(xi,yi,w,h);
   
-  return !canceller.cancel && ++i < lookupTable.length;
+  return !cancel && ++i < lookupTable.length;
  }
  
  fv._throttleAt(40, iterate);
+	
+ return function () {
+	 cancel = true;
+ }
  
 }
 
