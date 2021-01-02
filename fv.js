@@ -44,13 +44,15 @@ fv._throttleAt = (fps, callback) => {
 	}
 	
 	function mergedCallback(callback, numInvocations) {
-		for (var i = 0; i < numInvocations; i++) {
-			const shouldContinue = callback();
-			if (!shouldContinue) {
-				return false;
+		return function () {
+			for (var i = 0; i < numInvocations; i++) {
+				const shouldContinue = callback();
+				if (!shouldContinue) {
+					return false;
+				}
 			}
+			return true;
 		}
-		return true;
 	}
 
 	(async function loop () {
