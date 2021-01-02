@@ -14,13 +14,9 @@
 
 </head>
 <body>
-	<canvas id="viewer" width="800" height="800" style="border:#eee;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: -webkit-crisp-edges;
-  image-rendering: pixelated;
-  image-rendering: crisp-edges;"></canvas><br>
-
-  	<progress id="progress" value="0" min="0" max="100"></progress>
+	<p>Loading... When done (i.e. both progress bars are full), you can scroll to zoom in and out.</p>
+	
+	<progress id="progress" value="0" min="0" max="100"></progress>
 	<label for="progress" id="progresslabel"></label>
 	<br>
 	
@@ -30,15 +26,22 @@
 	</label>
 	<br>
 	
-	<button onclick="draw()">Draw</button>
-  <script src="qfm.js?refresh=4328489023"></script>
-  <script src="fv.js?refresh=483204894"></script>
+	<canvas id="viewer" width="800" height="800" style="border:#eee;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;"></canvas><br>
+
+  	
+	
+  <script src="qfm.js?refresh=84484842380"></script>
+  <script src="fv.js?refresh=84202384"></script>
   
   <script>
 	  var testing = false;
-	  var canceller = {cancel:false};
 	  var maxIterations = 500;
 	  var lookupTable;
+	  var cancelInstance = function () {};
 	  		// xi, xf, yi, yf
 	  var viewbox = [-2,1,-1.5,1.5];
 	  window.onload = async function () {
@@ -69,10 +72,9 @@
 		}
 		
 		async function draw () {
-			canceller.cancel = true;
+			cancelInstance();
 			await fv._wait();
-			canceller.cancel = false;
-			await fv.draw(lookupFunc,lookupTable,ctx,canceller);
+			cancelInstance = await fv.draw(lookupFunc,lookupTable,ctx);
 		}
 	  
 	  	function avg (a,b) {
