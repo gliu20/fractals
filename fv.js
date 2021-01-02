@@ -9,6 +9,7 @@ const fv = {};
 fv._throttleAt = (fps, callback) => {
 	let start = performance.now();
 	let end = performance.now();
+	let mergeInvocate = 1;
 	let averageDuration = 0;
 	let totalDuration = 0;
 	let skippedInvocations = 0;
@@ -41,6 +42,16 @@ fv._throttleAt = (fps, callback) => {
 
 		return shouldContinue;
 	}
+	
+	function mergedCallback(callback, numInvocations) {
+		for (var i = 0; i < numInvocations; i++) {
+			const shouldContinue = callback();
+			if (!shouldContinue) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 	(async function loop () {
 		
@@ -68,14 +79,21 @@ fv._throttleAt = (fps, callback) => {
 			
 			// we're meeting targets so we can run the callback
 			// instead of waiting
-			const shouldContinue = timeCallback(callback);
+			const shouldContinue = timeCallback(mergedCallback(callback, mergeInvocate));
 
 			// if the callback wants us to stop there's no
 			// point in continuing to throttle so we break 
 			// out of the loop
 			if (!shouldContinue) { return; }
+			
+			// we're so much faster than the desired average fps so we group the callback together
+			if (calcFreq(averageDuration) > fps * 5) {
+				mergeInvocate++;
+			}
 		}
 
+		
+		
 		if (testing) {
 			console.log({avgFps: calcFreq(averageDuration)})
 		}
