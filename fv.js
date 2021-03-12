@@ -75,7 +75,9 @@ fv._throttleAt = (fps, callback) => {
 			totalDuration += end - start;
 			averageDuration = totalDuration / skippedInvocations;
 
-			
+			// cut mergeInvocate by 2
+			// AIMD
+			mergeInvocate = Math.floor(mergeInvocate / 2) + 1;
 		}
 		else {
 			
@@ -88,6 +90,7 @@ fv._throttleAt = (fps, callback) => {
 			// out of the loop
 			if (!shouldContinue) { return; }
 			
+			// AIMD for merge invocate
 			// we're so much faster than the desired average fps so we group the callback together
 			if (calcFreq(averageDuration) > fps * 5) {
 				mergeInvocate++;
