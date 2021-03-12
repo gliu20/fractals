@@ -55,7 +55,11 @@
 		});
 		  
 		  refreshView = await fv.draw(lookupFunc,lookupTable,ctx, function (averageDuration, fps, mergeInvocate, skippedInvocations) {
-			  infoEle.innerText = `spf: ${averageDuration}	fps: ${fps}	pixelsPerFrame: ${mergeInvocate}	skippedFranes: ${skippedInvocations}`;
+			  infoEle.innerHTML = `spf: ${averageDuration}<br>
+fps: ${fps}<br>
+pixelsPerFrame: ${mergeInvocate}<br>
+skippedFranes: ${skippedInvocations}<br>
+`;
 		  });
 	  }
 		const canvas = document.getElementById("viewer");
