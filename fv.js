@@ -6,7 +6,7 @@
 const fv = {};
 
 
-fv._throttleAt = (fps, callback) => {
+fv._throttleAt = (fps, callback, infoCallback) => {
 	let start = performance.now();
 	let end = performance.now();
 	let mergeInvocate = 1;
@@ -98,10 +98,7 @@ fv._throttleAt = (fps, callback) => {
 		}
 
 		
-		
-		if (testing) {
-			console.log({averageDuration, avgFps: calcFreq(averageDuration), mergeInvocate, skippedInvocations })
-		}
+		infoCallback(averageDuration, calcFreq(averageDuration), mergeInvocate, skippedInvocations);
 
 		// to avoid stack overflow by indirectly calling loop
 		setTimeout(loop,0);
