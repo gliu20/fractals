@@ -100,7 +100,7 @@ fv._throttleAt = (fps, callback) => {
 		
 		
 		if (testing) {
-			console.log({avgFps: calcFreq(averageDuration), mergeInvocate })
+			console.log({averageDuration, avgFps: calcFreq(averageDuration), mergeInvocate, skippedInvocations })
 		}
 
 		// to avoid stack overflow by indirectly calling loop
