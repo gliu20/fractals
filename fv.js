@@ -112,31 +112,34 @@ fv._wait = () => {
  })
 }
 
-fv.draw = async (lookupFunc,lookupTable,ctx,canceller) => {
+fv.draw = async (lookupFunc,lookupTable,ctx) => {
  let i = 0; 
- let cancel = false;
  
  function iterate () {
   
-  const xi = lookupTable[i][0];
-  const yi = lookupTable[i][1];
   
-  const xf = lookupTable[i][2];
-  const yf = lookupTable[i][3];
   
-  const w = xf - xi;
-  const h = yf - yi;
-  
-  ctx.fillStyle = lookupFunc(xi,yi);
-  ctx.fillRect(xi,yi,w,h);
-  
-  return !cancel && ++i < lookupTable.length;
+  if (i < lookupTable.length) {
+	  const xi = lookupTable[i][0];
+	  const yi = lookupTable[i][1];
+
+	  const xf = lookupTable[i][2];
+	  const yf = lookupTable[i][3];
+
+	  const w = xf - xi;
+	  const h = yf - yi;
+
+	  ctx.fillStyle = lookupFunc(xi,yi);
+	  ctx.fillRect(xi,yi,w,h);
+  }
+	 
+	 return true;
  }
  
  fv._throttleAt(40, iterate);
 	
  return function () {
-	 cancel = true;
+	 i = 0;
  }
  
 }
