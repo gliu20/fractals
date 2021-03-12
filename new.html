@@ -36,6 +36,7 @@
 	
   <script src="qfm.js?refresh=49328409238904"></script>
   <script src="fv.js?refresh=10928493220"></script>
+  <script src="cf.js?refresh=10928493220"></script>
   
   <script>
 	  var testing = false;
@@ -45,35 +46,7 @@
 	  		// xi, xf, yi, yf
 	  var viewbox = [-2,1,-1.5,1.5];
 	  var infoEle = document.querySelector("#info");
-	  var lookupColoringFunc = js.util.rouge;
-	      
-	  var js = {util: {}};
-	  
-js.util.rouge = (i,maxIterations) => {
-  if (i === maxIterations) { return "#000000"; }
-  return "hsl(0,100%,"+(i%100)+"%)";
-}
-
-js.util.yellow = (i,maxIterations) => {
-  if (i === maxIterations) { return "#000000"; }
-  return "hsl("+(i%360)+",100%,"+(i%100)+"%)";
-}
-
-js.util.green = (i,maxIterations) => {
-  if (i === maxIterations) { return "#000000"; }
-  return "hsl("+(i * 10 %360)+",100%,"+(i%100)+"%)";
-}
-
-js.util.blueOrange = (i,maxIterations) => {
-  if (i === maxIterations) { return "#000000"; }
-  return "hsl("+(i * 0.9 % 360)+",100%,50%)";
-}
-
-js.util.rainbow = (i,maxIterations) => {
-  if (i === maxIterations) { return "#000000"; }
-  return "hsl("+(i * 10 %360)+",100%,50%)";
-}
-
+	  var lookupColoringFunc = cf.rouge;
 	      
 	  window.onload = async function () {
 		  lookupTable = await fv.genLookupTable(800,800,function (subprogressNum,subprogressTotal,progressNum,progressTotal) {
