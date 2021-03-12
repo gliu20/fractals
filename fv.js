@@ -112,7 +112,7 @@ fv._wait = () => {
  })
 }
 
-fv.draw = async (lookupFunc,lookupTable,ctx) => {
+fv.draw = async (lookupFunc,lookupTable,ctx, infoCallback) => {
  let i = 0; 
  
  function iterate () {
@@ -143,7 +143,7 @@ fv.draw = async (lookupFunc,lookupTable,ctx) => {
 	 return true;
  }
  
- fv._throttleAt(40, iterate);
+ fv._throttleAt(40, iterate, infoCallback);
 	
  return function () {
 	 i = 0;
