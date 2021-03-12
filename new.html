@@ -45,6 +45,36 @@
 	  		// xi, xf, yi, yf
 	  var viewbox = [-2,1,-1.5,1.5];
 	  var infoEle = document.querySelector("#info");
+	  var lookupColoringFunc = js.util.rouge;
+	      
+	  var js = {util: {}};
+	  
+js.util.rouge = (i,maxIterations) => {
+  if (i === maxIterations) { return "#000000"; }
+  return "hsl(0,100%,"+(i%100)+"%)";
+}
+
+js.util.yellow = (i,maxIterations) => {
+  if (i === maxIterations) { return "#000000"; }
+  return "hsl("+(i%360)+",100%,"+(i%100)+"%)";
+}
+
+js.util.green = (i,maxIterations) => {
+  if (i === maxIterations) { return "#000000"; }
+  return "hsl("+(i * 10 %360)+",100%,"+(i%100)+"%)";
+}
+
+js.util.blueOrange = (i,maxIterations) => {
+  if (i === maxIterations) { return "#000000"; }
+  return "hsl("+(i * 0.9 % 360)+",100%,50%)";
+}
+
+js.util.rainbow = (i,maxIterations) => {
+  if (i === maxIterations) { return "#000000"; }
+  return "hsl("+(i * 10 %360)+",100%,50%)";
+}
+
+	      
 	  window.onload = async function () {
 		  lookupTable = await fv.genLookupTable(800,800,function (subprogressNum,subprogressTotal,progressNum,progressTotal) {
 			subprogress.value = Math.ceil((subprogressNum / subprogressTotal) * 100);
@@ -76,8 +106,7 @@ skippedFrames: ${skippedInvocations}<br>
 			
 			const i = qfm.mandelbrot(xi,yi,maxIterations);
 			
-			if (i === maxIterations) { return "#000000"; }
-  			return "hsl(0,100%,"+(i%100)+"%)";
+			return lookupColoringFunc(i, maxIterations);
 		}
 		
 		/*async function draw () {
