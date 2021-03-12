@@ -134,6 +134,11 @@ fv.draw = async (lookupFunc,lookupTable,ctx) => {
 	  
 	  i++;
   }
+	 else {
+		 // call this function to make sure we're doing stuff
+		 // even when waiting
+		 lookupFunc(Math.random(),Math.random());
+	 }
 	 
 	 return true;
  }
