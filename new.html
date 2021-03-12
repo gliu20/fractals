@@ -52,6 +52,8 @@
 			progress.value = Math.ceil((progressNum / progressTotal) * 100);
 			progresslabel.innerText = `${progressNum} of ${progressTotal} Rounds complete`
 		});
+		  
+		  await draw();
 	  }
 		const canvas = document.getElementById("viewer");
 	  	const progress = document.getElementById("progress");
@@ -129,8 +131,6 @@
 				newCenterY+targetHalfSpan,
 			];
 			
-			
-			await draw();
 			
 			
 		}
