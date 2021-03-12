@@ -32,7 +32,7 @@
   image-rendering: pixelated;
   image-rendering: crisp-edges;"></canvas><br>
 
-  	
+  	<p id="info"></p>
 	
   <script src="qfm.js?refresh=49328409238904"></script>
   <script src="fv.js?refresh=10928493220"></script>
@@ -44,6 +44,7 @@
 	  var refreshView = function () {};
 	  		// xi, xf, yi, yf
 	  var viewbox = [-2,1,-1.5,1.5];
+	  var infoEle = document.querySelector("#info");
 	  window.onload = async function () {
 		  lookupTable = await fv.genLookupTable(800,800,function (subprogressNum,subprogressTotal,progressNum,progressTotal) {
 			subprogress.value = Math.ceil((subprogressNum / subprogressTotal) * 100);
@@ -53,7 +54,9 @@
 			progresslabel.innerText = `${progressNum} of ${progressTotal} Rounds complete`
 		});
 		  
-		  refreshView = await fv.draw(lookupFunc,lookupTable,ctx);
+		  refreshView = await fv.draw(lookupFunc,lookupTable,ctx, function (averageDuration, fps, mergeInvocate, skippedInvocations) {
+			  infoEle.innerText = `spf: ${averageDuration}	fps: ${fps}	pixelsPerFrame: ${mergeInvocate}	skippedFranes: ${skippedInvocations}`;
+		  });
 	  }
 		const canvas = document.getElementById("viewer");
 	  	const progress = document.getElementById("progress");
