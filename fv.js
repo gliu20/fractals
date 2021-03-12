@@ -131,6 +131,8 @@ fv.draw = async (lookupFunc,lookupTable,ctx) => {
 
 	  ctx.fillStyle = lookupFunc(xi,yi);
 	  ctx.fillRect(xi,yi,w,h);
+	  
+	  i++;
   }
 	 
 	 return true;
