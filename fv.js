@@ -63,7 +63,7 @@ fv._throttleAt = (fps, callback, infoCallback) => {
 			skippedInvocations++;
 			
 			// skip invocation and wait instead
-			await fv._wait();
+			// await fv._wait();
 			
 			// the previous end time is this frame's start time
 			start = end;
