@@ -75,9 +75,15 @@ fv._throttleAt = (fps, callback, infoCallback) => {
 			totalDuration += end - start;
 			averageDuration = totalDuration / skippedInvocations;
 
-			// cut mergeInvocate by 2
-			// AIMD
-			mergeInvocate = Math.floor(mergeInvocate / 2) + 1;
+			// decrease mergedInvocate by the amount of skipped frames
+			// as more frames are skipped, mergeInvocate decreases
+			// exponentially
+			// so it's like AIMD
+			mergeInvocate -= skippedInvocations;
+			
+			// make sure merge invocate is 1 or higher
+			if (mergeInvocate < 1)
+				mergeInvocate = 1;
 		}
 		else {
 			
