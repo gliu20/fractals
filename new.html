@@ -15,9 +15,9 @@
 
 </head>
 
-<body>
+<body style="position:relative;overflow:hidden;width:100%;height:100%;padding:0;margin:0;">
 
-
+	<div style="background:white;font-family:sans-serif;">
 	<progress id="progress" value="0" min="0" max="100"></progress>
 	<label for="progress" id="progresslabel"></label>
 	<progress id="subprogress" value="0" min="0" max="100"></progress>
@@ -27,19 +27,21 @@
 	<button onclick="resetThrottle()">Reset Adaptive Pixel</button>
 	<button onclick="switchColorFunc()">Switch color function</button>
 	<br>
+	<p id="info"></p>
+		</div>
 
-	<div style="width:100%;height:100%;position:absolute;z-index:-999;">
-	<canvas id="viewer" width="800" height="800" style="border:#eee;
+	<canvas id="viewer" width="800" height="800" style="
   image-rendering: -moz-crisp-edges;
   image-rendering: -webkit-crisp-edges;
   image-rendering: pixelated;
-  image-rendering: crisp-edges;
-  object-fit: cover;
-  object-position: center;
+  image-rendering: crisp-edges;width:100vmax;height:100vmax;
+							    position:absolute;
+							    top:0;left:0;
+							    transform: translateX(-50%) translateY(-50%);
+							    
 "></canvas>
-	</div>
 
-	<p id="info"></p>
+	
 
 	<script src="qfm.js?refresh=49328409238904"></script>
 	<script src="fv.js?refresh=10928493220"></script>
