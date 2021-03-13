@@ -77,7 +77,7 @@ fv._throttleAt = (fps, callback, infoCallback) => {
 			// exponentially
 			// so it's like AIMD
 			// we also decrease multiplicativly as well
-			mergeInvocate *= 0.8;
+			mergeInvocate *= 0.85;
 			mergeInvocate -= skippedInvocations;
 			mergeInvocate = Math.floor(mergeInvocate);
 
