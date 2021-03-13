@@ -17,18 +17,6 @@
 
 <body style="position:relative;overflow:hidden;width:100%;height:100%;padding:0;margin:0;">
 
-	<div style="background:white;font-family:sans-serif;">
-	<progress id="progress" value="0" min="0" max="100"></progress>
-	<label for="progress" id="progresslabel"></label>
-	<progress id="subprogress" value="0" min="0" max="100"></progress>
-	<label for="subprogress" id="subprogresslabel"></label>
-	<br>
-	<button onclick="refreshView()">Refresh View</button>
-	<button onclick="resetThrottle()">Reset Adaptive Pixel</button>
-	<button onclick="switchColorFunc()">Switch color function</button>
-	<br>
-	<p id="info"></p>
-		</div>
 
 	<canvas id="viewer" width="800" height="800" style="
   image-rendering: -moz-crisp-edges;
@@ -43,6 +31,20 @@
 
 	
 
+	<div style="background:white;font-family:sans-serif;">
+	<progress id="progress" value="0" min="0" max="100"></progress>
+	<label for="progress" id="progresslabel"></label>
+	<progress id="subprogress" value="0" min="0" max="100"></progress>
+	<label for="subprogress" id="subprogresslabel"></label>
+	<br>
+	<button onclick="refreshView()">Refresh View</button>
+	<button onclick="resetThrottle()">Reset Adaptive Pixel</button>
+	<button onclick="switchColorFunc()">Switch color function</button>
+	<br>
+	<p id="info"></p>
+		</div>
+	
+	
 	<script src="qfm.js?refresh=49328409238904"></script>
 	<script src="fv.js?refresh=10928493220"></script>
 	<script src="cf.js?refresh=10928493220"></script>
