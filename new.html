@@ -55,8 +55,9 @@
 		var lookupColoringFunc = cf.rouge;
 
 
-		function displayInfo (averageDuration, fps, mergeInvocate, skippedInvocations) {
+		function displayInfo (averageDuration, fps, mergeInvocate, skippedInvocations, isIdle) {
 			infoEle.innerHTML = `
+				${isIdle ? "Idle." : "Running."}<br>
 				pixelsPerFrame: ${mergeInvocate}<br>
 				skippedFrames: ${skippedInvocations}`;
 		}
@@ -88,7 +89,7 @@
 				cf.rainbow
 			];
 
-			coloringFuncIndex = coloringFuncIndex++ % colorFuncs.length;
+			coloringFuncIndex = (coloringFuncIndex + 1) % colorFuncs.length;
 			lookupColoringFunc = colorFuncs[coloringFuncIndex];
 		}
 

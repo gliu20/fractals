@@ -129,6 +129,7 @@ fv._wait = () => {
 
 fv.draw = async (lookupFunc, lookupTable, ctx, infoCallback) => {
 	let i = 0;
+	let isIdle = false; 
 
 	function iterate() {
 
@@ -148,9 +149,11 @@ fv.draw = async (lookupFunc, lookupTable, ctx, infoCallback) => {
 			ctx.fillRect(xi, yi, w, h);
 
 			i++;
+			isIdle = false;
 		}
 		else {
 			// stop doing stuff
+			isIdle = true;
 		}
 
 		return true;
@@ -162,7 +165,9 @@ fv.draw = async (lookupFunc, lookupTable, ctx, infoCallback) => {
 		refreshView: function () {
 			i = 0;
 		},
-		resetThrottle: fv._throttleAt(40, iterate, infoCallback)
+		resetThrottle: fv._throttleAt(40, iterate, function (averageDuration, averageFps, mergeInvocate, skippedInvocations) {
+			infoCallback(averageDuration, averageFps, mergeInvocate, skippedInvocations, isIdle);
+		})
 	}
 
 }
