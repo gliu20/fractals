@@ -28,11 +28,16 @@
 	<button onclick="switchColorFunc()">Switch color function</button>
 	<br>
 
+	<div style="width:100%;height:100%;position:absolute;z-index:-999;">
 	<canvas id="viewer" width="800" height="800" style="border:#eee;
   image-rendering: -moz-crisp-edges;
   image-rendering: -webkit-crisp-edges;
   image-rendering: pixelated;
-  image-rendering: crisp-edges;"></canvas><br>
+  image-rendering: crisp-edges;
+  object-fit: cover;
+  object-position: center;
+"></canvas>
+	</div>
 
 	<p id="info"></p>
 
