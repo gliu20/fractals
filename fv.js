@@ -76,7 +76,10 @@ fv._throttleAt = (fps, callback, infoCallback) => {
 			// as more frames are skipped, mergeInvocate decreases
 			// exponentially
 			// so it's like AIMD
+			// we also decrease multiplicativly as well
+			mergeInvocate *= 0.8;
 			mergeInvocate -= skippedInvocations;
+			mergeInvocate = Math.floor(mergeInvocate);
 
 			// make sure merge invocate is 1 or higher
 			if (mergeInvocate < 1)
@@ -94,8 +97,8 @@ fv._throttleAt = (fps, callback, infoCallback) => {
 			if (!shouldContinue) { return; }
 
 			// AIMD for merge invocate
-			// we're so much faster than the desired average fps so we group the callback together
-			if (calcFreq(averageDuration) > fps * 5) {
+			// we're faster than the desired average fps so we group the callback together
+			if (calcFreq(averageDuration) > fps) {
 				mergeInvocate++;
 			}
 		}
@@ -106,6 +109,15 @@ fv._throttleAt = (fps, callback, infoCallback) => {
 		// to avoid stack overflow by indirectly calling loop
 		setTimeout(loop, 0);
 	})();
+
+	return function () {
+		start = performance.now();
+		end = performance.now();
+		mergeInvocate = 1;
+		averageDuration = 0;
+		totalDuration = 0;
+		skippedInvocations = 0;
+	}
 }
 
 
@@ -138,18 +150,19 @@ fv.draw = async (lookupFunc, lookupTable, ctx, infoCallback) => {
 			i++;
 		}
 		else {
-			// call this function to make sure we're doing stuff
-			// even when waiting
-			lookupFunc(Math.random(), Math.random());
+			// stop doing stuff
 		}
 
 		return true;
 	}
 
-	fv._throttleAt(40, iterate, infoCallback);
+	
 
-	return function () {
-		i = 0;
+	return {
+		refreshView: function () {
+			i = 0;
+		},
+		resetThrottle: fv._throttleAt(40, iterate, infoCallback)
 	}
 
 }
