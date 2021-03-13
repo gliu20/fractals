@@ -14,16 +14,14 @@
 
 </head>
 <body>
-	<p>Loading... When done (i.e. both progress bars are full), you can scroll to zoom in and out.</p>
-	
-	<progress id="progress" value="0" min="0" max="100"></progress>
-	<label for="progress" id="progresslabel"></label>
-	<br>
-	
 
-  	<progress id="subprogress" value="0" min="0" max="100"></progress>
-	<label for="subprogress" id="subprogresslabel">
-	</label>
+	
+	<progress id="progress" value="0" min="0" max="100"></progress>  	
+	<progress id="subprogress" value="0" min="0" max="100"></progress>
+	<br>
+	<button onclick="refreshView()">Refresh View</button>
+	<label for="progress" id="progresslabel"></label>
+	<label for="subprogress" id="subprogresslabel"></label> 
 	<br>
 	
 	<canvas id="viewer" width="800" height="800" style="border:#eee;
@@ -58,10 +56,9 @@
 		});
 		  
 		  refreshView = await fv.draw(lookupFunc,lookupTable,ctx, function (averageDuration, fps, mergeInvocate, skippedInvocations) {
-			  infoEle.innerHTML = `spf: ${averageDuration}<br>
-fps: ${fps}<br>
+			  infoEle.innerHTML = `
 pixelsPerFrame: ${mergeInvocate}<br>
-skippedFrames: ${skippedInvocations}<br>
+skippedFrames: ${skippedInvocations}
 `;
 		  });
 	  }
