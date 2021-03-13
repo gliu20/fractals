@@ -24,6 +24,8 @@
 	<label for="subprogress" id="subprogresslabel"></label>
 	<br>
 	<button onclick="refreshView()">Refresh View</button>
+	<button onclick="resetThrottle()">Reset Adaptive Pixel</button>
+	<button onclick="switchColorFunc()">Switch color function</button>
 	<br>
 
 	<canvas id="viewer" width="800" height="800" style="border:#eee;
@@ -49,6 +51,7 @@
 		// xi, xf, yi, yf
 		var viewbox = [-2, 1, -1.5, 1.5];
 		var infoEle = document.querySelector("#info");
+		var coloringFuncIndex = 0;
 		var lookupColoringFunc = cf.rouge;
 
 
@@ -76,6 +79,18 @@
 			window.onfocus = resetThrottle;
 		}
 
+		function switchColorFunc () {
+			const colorFuncs = [ 
+				cf.rouge,
+				cf.yellow,
+				cf.green,
+				cf.blueOrange,
+				cf.rainbow
+			];
+
+			coloringFuncIndex = coloringFuncIndex++ % colorFuncs.length;
+			lookupColoringFunc = colorFuncs[coloringFuncIndex];
+		}
 
 		const canvas = document.getElementById("viewer");
 		const progress = document.getElementById("progress");
