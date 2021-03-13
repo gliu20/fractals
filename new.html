@@ -133,8 +133,32 @@
 
 		canvas.onwheel = async (e) => {
 
-			const mouseX = e.offsetX;
-			const mouseY = e.offsetY;
+			// stackoverflow:
+function getRelativeMousePosition(event, target) {
+  target = target || event.target;
+  var rect = target.getBoundingClientRect();
+
+  return {
+    x: event.clientX - rect.left,
+    y: event.clientY - rect.top,
+  }
+}
+
+// assumes target or event.target is canvas
+function getNoPaddingNoBorderCanvasRelativeMousePosition(event, target) {
+  target = target || event.target;
+  var pos = getRelativeMousePosition(event, target);
+
+  pos.x = pos.x * target.width  / canvas.clientWidth;
+  pos.y = pos.y * target.height / canvas.clientHeight;
+
+  return pos;  
+}//end stackoverflow
+			
+			const mouseX = getNoPaddingNoBorderCanvasRelativeMousePosition(e).x;
+			const mouseY = getNoPaddingNoBorderCanvasRelativeMousePosition(e).y;
+			
+
 
 			const currSpan = viewbox[1] - viewbox[0];
 
