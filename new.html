@@ -62,14 +62,14 @@
 		var infoEle = document.querySelector("#info");
 		var coloringFuncIndex = 0;
 		var lookupColoringFunc = cf.rouge;
-		var avgFps = 1;
+		var avgDuration = 1;
 
 
 		function displayInfo (averageDuration, fps, mergeInvocate, skippedInvocations, isIdle) {
-			avgFps = 201 / (200 / avgFps + 1 / Math.min(fps,10000));
+			avgDuration = (avgDuration * 49 + averageDuration) / 50;
 			infoEle.innerHTML = `
 				${isIdle ? "Idle." : "Running."}<br>
-				fps: ${avgFps.toFixed(1)}<br>
+				fps: ${(1 / avgDuration).toFixed(0)}<br>
 				pixelsPerFrame: ${mergeInvocate}<br>
 				skippedFrames: ${skippedInvocations}`;
 		}
