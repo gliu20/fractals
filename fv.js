@@ -184,7 +184,7 @@ fv.map = (val, inMin, inMax, outMin, outMax) => {
 
 
 fv.genLookupTable = async (w, h, onprogress) => {
-	const lookup = [[0, 0, w, h]];
+	let lookup = [[0, 0, w, h]];
 	const cleanLookup = [];
 
 	const index = {};
