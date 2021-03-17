@@ -184,7 +184,7 @@ fv.map = (val, inMin, inMax, outMin, outMax) => {
 
 
 fv.genLookupTable = async (w, h, onprogress) => {
-	let lookup = [[0, 0, w, h]];
+	const lookup = [[0, 0, w, h]];
 	const cleanLookup = [];
 
 	const index = {};
@@ -199,7 +199,7 @@ fv.genLookupTable = async (w, h, onprogress) => {
 
 			// only if we didn't subdivide this then we subdivide this
 			if (!index[lookup[j].join(",")]) {
-				lookup = lookup.concat(fv.genSubdividedLookup(
+				Array.prototype.push.apply(lookup, fv.genSubdividedLookup(
 					lookup[j][0],
 					lookup[j][1],
 					lookup[j][2],
