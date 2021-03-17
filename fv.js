@@ -199,7 +199,12 @@ fv.genLookupTable = async (w, h, onprogress) => {
 
 			// only if we didn't subdivide this then we subdivide this
 			if (!index[lookup[j].join(",")]) {
-				lookup.push(...fv.genSubdividedLookup(...lookup[j]))
+				lookup = lookup.concat(fv.genSubdividedLookup(
+					lookup[j][0],
+					lookup[j][1],
+					lookup[j][2],
+					lookup[j][3]
+				));
 				index[lookup[j].join(",")] = true;
 			}
 
