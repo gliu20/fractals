@@ -69,7 +69,7 @@
 			avgFps = (avgFps*5000 + Math.min(fps,10000)) / 5001;
 			infoEle.innerHTML = `
 				${isIdle ? "Idle." : "Running."}<br>
-				fps: ${avgFps}<br>
+				fps: ${avgFps.toFixed(1)}<br>
 				pixelsPerFrame: ${mergeInvocate}<br>
 				skippedFrames: ${skippedInvocations}`;
 		}
