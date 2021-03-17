@@ -66,7 +66,7 @@
 
 
 		function displayInfo (averageDuration, fps, mergeInvocate, skippedInvocations, isIdle) {
-			avgFps = 1001 / (1000 / avgFps + 1 / Math.min(fps,10000));
+			avgFps = 201 / (200 / avgFps + 1 / Math.min(fps,10000));
 			infoEle.innerHTML = `
 				${isIdle ? "Idle." : "Running."}<br>
 				fps: ${avgFps.toFixed(1)}<br>
