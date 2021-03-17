@@ -69,7 +69,7 @@
 			avgDuration = (avgDuration * 49 + averageDuration) / 50;
 			infoEle.innerHTML = `
 				${isIdle ? "Idle." : "Running."}<br>
-				fps: ${(1 / avgDuration).toFixed(0)}<br>
+				fps: ${(1 / avgDuration * 1000).toFixed(0)}<br>
 				pixelsPerFrame: ${mergeInvocate}<br>
 				skippedFrames: ${skippedInvocations}`;
 		}
