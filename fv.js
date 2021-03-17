@@ -213,7 +213,7 @@ fv.genLookupTable = async (w, h, onprogress) => {
 			}
 
 			// throttle genLookupTable every couple steps
-			if (i * j % 1000 === 0) {
+			if (i * j % 5000 === 0) {
 				await fv._wait();
 			}
 
