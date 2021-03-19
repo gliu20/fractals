@@ -32,10 +32,12 @@
 	
 
 	<div style="background:white;font-family:sans-serif;">
+		<div id="progressInfo">
 	<progress id="progress" value="0" min="0" max="100"></progress>
 	<label for="progress" id="progresslabel"></label>
 	<progress id="subprogress" value="0" min="0" max="100"></progress>
 	<label for="subprogress" id="subprogresslabel"></label>
+		</div>
 	<br>
 	<button onclick="refreshView()">Refresh View</button>
 	<button onclick="resetThrottle()">Reset Adaptive Pixel</button>
@@ -60,16 +62,14 @@
 		// xi, xf, yi, yf
 		var viewbox = [-2, 1, -1.5, 1.5];
 		var infoEle = document.querySelector("#info");
+		var progressInfoEle = document.querySelector("#progressInfo");
 		var coloringFuncIndex = 0;
 		var lookupColoringFunc = cf.rouge;
-		var avgDuration = 1;
 
 
 		function displayInfo (averageDuration, fps, mergeInvocate, skippedInvocations, isIdle) {
-			avgDuration = (avgDuration * 49 + averageDuration) / 50;
 			infoEle.innerHTML = `
 				${isIdle ? "Idle." : "Running."}<br>
-				fps: ${(1 / avgDuration * 1000).toFixed(0)}<br>
 				pixelsPerFrame: ${mergeInvocate}<br>
 				skippedFrames: ${skippedInvocations}`;
 		}
@@ -82,6 +82,13 @@
 
 				progress.value = Math.ceil((progressNum / progressTotal) * 100);
 				progresslabel.innerText = `${progressNum} of ${progressTotal} Rounds complete`
+				
+				if (subprogressNum === 1 &&
+				    subprogressTotal === 1 &&
+				    progressNum === 1 &&
+				    progressTotal === 1) {
+					progressInfoEle.remove();
+				}
 			});
 
 			const drawObj = await fv.draw(lookupFunc, lookupTable, ctx, displayInfo);
