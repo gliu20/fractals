@@ -37,10 +37,10 @@
 	<label for="progress" id="progresslabel"></label>
 	<progress id="subprogress" value="0" min="0" max="100"></progress>
 	<label for="subprogress" id="subprogresslabel"></label>
-		</div>
 	<br>
+			
+		</div>
 	<button onclick="refreshView()">Refresh View</button>
-	<button onclick="resetThrottle()">Reset Adaptive Pixel</button>
 	<button onclick="switchColorFunc()">Switch color function</button>
 	<br>
 	<p id="info"></p>
@@ -69,9 +69,9 @@
 
 		function displayInfo (averageDuration, fps, mergeInvocate, skippedInvocations, isIdle) {
 			infoEle.innerHTML = `
-				${isIdle ? "Idle." : "Running."}<br>
-				pixelsPerFrame: ${mergeInvocate}<br>
-				skippedFrames: ${skippedInvocations}`;
+				${isIdle ? "Idle." : "Running."} &nbsp;&nbsp;&nbsp;&nbsp;
+				skipped frames: ${skippedInvocations} &nbsp;&nbsp;&nbsp;&nbsp;
+				pixels per frame: ${mergeInvocate} `;
 		}
 
 
