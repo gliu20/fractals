@@ -34,6 +34,11 @@
 			left: 0;
 			z-index: -999;
 		}
+
+		#controls {
+			background: white;
+			font-family: sans-serif;
+		}
 	</style>
 
 </head>
@@ -45,7 +50,7 @@
 
 
 
-	<div style="background:white;font-family:sans-serif;">
+	<div id="controls">
 		<div id="progressInfo">
 			<progress id="progress" value="0" min="0" max="100"></progress>
 			<label for="progress" id="progresslabel"></label>
@@ -143,11 +148,6 @@
 			return lookupColoringFunc(i, maxIterations);
 		}
 
-		/*async function draw () {
-			cancelInstance();
-			await fv._wait();
-			cancelInstance = 
-		}*/
 
 		function avg(a, b) {
 			const two = (a + a) / (a);
