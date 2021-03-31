@@ -73,39 +73,27 @@
 	<script src="cf.js?refresh=8359840925"></script>
 
 	<script>
-		window.onload = async () => {
-			const canvas = document.getElementById("viewer");
+		let viewInstance = {};
 		
-			canvas.width = parseInt(prompt("Width?",800));
-			canvas.height = parseInt(prompt("Height?",800));
-
-			const view = await vc.init(canvas, console.log);
-
-			vc.makeMandelbrot(view);
-			vc.makeInteractive(view);
-			vc.makeColoring(view);
+		const onInfo = (function () {
+			const infoEle = document.querySelector("#info");
 			
-			await vc.makeLookup(view, console.log);
-			await vc.startView(view, console.log);
-		}
+			return function (averageDuration, fps, mergeInvocate, skippedInvocations, isIdle) {
+				infoEle.innerHTML = `
+					${isIdle ? "Idle." : "Running."} &nbsp;&nbsp;&nbsp;&nbsp;
+					skipped frames: ${skippedInvocations} &nbsp;&nbsp;&nbsp;&nbsp;
+					pixels per frame: ${mergeInvocate} `;
+			};
+		})();
 		
-		
-		/*
-
-
-		const infoEle = document.querySelector("#info");
-		const progressInfoEle = document.querySelector("#progressInfo");
-		
-		function displayInfo(averageDuration, fps, mergeInvocate, skippedInvocations, isIdle) {
-			infoEle.innerHTML = `
-				${isIdle ? "Idle." : "Running."} &nbsp;&nbsp;&nbsp;&nbsp;
-				skipped frames: ${skippedInvocations} &nbsp;&nbsp;&nbsp;&nbsp;
-				pixels per frame: ${mergeInvocate} `;
-		}
-
-
-		window.onload = async function () {
-			lookupTable = await fv.genLookupTable(width, height, function (subprogressNum, subprogressTotal, progressNum, progressTotal) {
+		const onProgress = (function () {
+			const progressInfoEle = document.querySelector("#progressInfo");
+			const progress = document.getElementById("progress");
+			const subprogress = document.getElementById("subprogress");
+			const progresslabel = document.getElementById("progresslabel");
+			const subprogresslabel = document.getElementById("subprogresslabel");
+			
+			return function (subprogressNum, subprogressTotal, progressNum, progressTotal) {
 				subprogress.value = Math.ceil((subprogressNum / subprogressTotal) * 100);
 				subprogresslabel.innerText = `${subprogressNum} of ${subprogressTotal} Iterations complete`
 
@@ -118,58 +106,26 @@
 					progressTotal === 1) {
 					progressInfoEle.remove();
 				}
-			});
-
-		}
-
-
-		const canvas = document.getElementById("viewer");
-		const progress = document.getElementById("progress");
-		const subprogress = document.getElementById("subprogress");
-		const progresslabel = document.getElementById("progresslabel");
-		const subprogresslabel = document.getElementById("subprogresslabel");
-
-		const ctx = canvas.getContext('2d', { alpha: false });
-
-		lookupFunc = (x, y) => {
-			const xi = fv.map(x, 0, width, viewbox[0], viewbox[1]);
-			const yi = fv.map(y, 0, height, viewbox[2], viewbox[3]);
-
-			const i = qfm.mandelbrot(xi, yi, maxIterations);
-
-			return lookupColoringFunc(i, maxIterations);
-		}
-
-		function switchColorFunc() {
-			coloringFuncIndex = (coloringFuncIndex + 1) % colorFuncs.length;
-			lookupColoringFunc = colorFuncs[coloringFuncIndex];
-			refreshView();
-		}
-		//////////// DONE///////////////////////////////////////
-		canvas.onwheel = async (event) => {
-			viewbox = vb.calcViewboxAfterZoom(event, viewbox, width, height);
-			refreshView();
-		}
+			}; 
+		})();
 		
-		canvas.onmousedown = (event) => {
-			const { 
-				mouseX: anchorMouseX, mouseY: anchorMouseY,
-				canvasX: anchorCanvasX, canvasY: anchorCanvasY
-			} = vb.getCanvasAndMouseCoords(event, viewbox, width, height);
-			
-			const anchorViewbox = viewbox.slice(0);
-			
-			canvas.onmousemove = (event) => {
-				viewbox = vb.calcViewboxAfterMove(event, viewbox, width, height, anchorMouseX, anchorMouseY, anchorViewbox, anchorCanvasX, anchorCanvasY)
-				refreshView();
-			}
-			
-			
-		}
+		window.onload = async () => {
+			const canvas = document.getElementById("viewer");
 		
-		canvas.onmouseleave = canvas.onmouseup = () => { canvas.onmousemove = null; }*/
+			canvas.width = parseInt(prompt("Width?",800));
+			canvas.height = parseInt(prompt("Height?",800));
 
+			const view = await vc.init(canvas);
 
+			vc.makeMandelbrot(view);
+			vc.makeInteractive(view);
+			vc.makeColoring(view);
+			
+			await vc.makeLookup(view, onProgress);
+			await vc.startView(view, onInfo);
+			
+			viewInstance = view;
+		}
 	</script>
 </body>
 
