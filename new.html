@@ -181,9 +181,7 @@
 			
 		}
 		
-		canvas.onmouseup = () => {
-			canvas.onmousemove = null;
-		}
+		canvas.onmouseleave = canvas.onmouseup = () => { canvas.onmousemove = null; }
 
 
 	</script>
