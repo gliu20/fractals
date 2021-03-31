@@ -20,7 +20,7 @@ cf.grayScale = (i,maxIterations, coloring) => {
   return "hsl(0,0%,"+(adjustedI % 100)+"%)";
 }
 
-cf.blueOrange = (i,maxIterations) => {
+cf.blueOrange = (i,maxIterations, coloring) => {
   const adjustedI = i * coloring.colorScale + coloring.offset;
   const hue = adjustedI % 160;
   const brightness = 4 * adjustedI ** 2 / 160 ** 2 - 4 * adjustedI / 160 + 1;
@@ -29,7 +29,7 @@ cf.blueOrange = (i,maxIterations) => {
   return "hsl("+(hue + 40)+",100%,"+Math.floor(brightness * 100)+"%)";
 }
 
-cf.rainbow = (i,maxIterations) => {
+cf.rainbow = (i,maxIterations, coloring) => {
   const adjustedI = i * coloring.colorScale + coloring.offset;
   if (i === maxIterations) { return "#000000"; }
   
