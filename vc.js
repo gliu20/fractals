@@ -26,7 +26,7 @@ vc.init = (canvas) => {
         cf.rainbow
       ],
       coloringIndex: 0,
-      colorScale: 100,
+      colorScale: 1,
       colorOffset: 0,
     },
     misc: { },
