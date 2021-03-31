@@ -95,6 +95,11 @@ vc.makeZoomable = (canvas, view) => {
   const handleDumbZoom = (event) => {
     event.preventDefault();
     
+    // only handle if pinchEvent
+    if (event.touches && event.touches.length !== 2) { 
+      return;
+    }
+    
     const { centerX, centerY } = vb.getCenter(view.dimensions.viewbox);
     const { spanX, spanY } = vb.getHalfSpan(view.dimensions.viewbox);
     
@@ -122,6 +127,12 @@ vc.makeMovable = (canvas, view) => {
     inDrag: false
   };
   const handleDragStart = (event) => {
+    // cancel if pinchEvent
+    if (event.touches && event.touches.length === 2) { 
+      eventCache.inDrag = false; 
+      return;
+    }
+    
     const coordsObj = vb.getCanvasAndMouseCoords(event, view.dimensions.viewbox, view.dimensions.width, view.dimensions.height);
     
     eventCache.anchorMouseX = coordsObj.mouseX;
@@ -135,6 +146,12 @@ vc.makeMovable = (canvas, view) => {
   
   const handleDrag = (event) => {
     if (!eventCache.inDrag) { return; }
+    
+    // cancel if pinchEvent
+    if (event.touches && event.touches.length === 2) { 
+      eventCache.inDrag = false; 
+      return;
+    }
     
     view.dimensions.viewbox = vb.calcViewboxAfterMove(
       event, view.dimensions.viewbox, view.dimensions.width, view.dimensions.height, 
