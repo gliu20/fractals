@@ -21,8 +21,7 @@ vc.init = (canvas) => {
     coloring: {
       coloringFunctions: [
         cf.rouge,
-        cf.yellow,
-        cf.green,
+        cf.grayScale,
         cf.blueOrange,
         cf.rainbow
       ],
