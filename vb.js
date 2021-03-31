@@ -19,6 +19,11 @@ vb.getTouchCoords = (event) => {
   return { touchX1, touchY1, touchX2, touchY2 };
 }
 
+vb.getTouchDist = (event) => {
+  const { touchX1, touchY1, touchX2, touchY2 } = vb.getTouchCoords(event);
+  return Math.hypot(touchX2 - touchX1, touchY2 - touchY1);
+}
+
 vb.getMouseCoords = (event) => {
   const ele = event.target;
   const bounds = ele.getBoundingClientRect();
