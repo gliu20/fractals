@@ -34,7 +34,7 @@ vb.mouseCoordsToCanvasCoords = (mouseX, mouseY, viewbox, width, height) => {
 }
 
 vb.getCanvasAndMouseCoords = (event, viewbox, width, height) => {
-  const { mouseX: x, mouseY: y } = vb.getMouseCoords(event);
+  const { x: mouseX, y: mouseY } = vb.getMouseCoords(event);
   const { canvasX, canvasY } = vb.mouseCoordsToCanvasCoords(mouseX, mouseY, viewbox, width, height);
 
   return { mouseX, mouseY, canvasX, canvasY };
