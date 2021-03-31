@@ -16,7 +16,7 @@ vb.getMouseCoords = (event) => {
   
   const coords = {
     x: (event.clientX || event.touches && event.touches[0] && event.touches[0].clientX || 0) - bounds.left,
-    y: (event.clientY || event.touches && event.touches[0] && event.touches[0].clientX || 0) - bounds.top
+    y: (event.clientY || event.touches && event.touches[0] && event.touches[0].clientY || 0) - bounds.top
   }
   
   // scales position to match canvas size
