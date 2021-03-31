@@ -39,6 +39,10 @@ vc.makeMandelbrot = (view) => {
 
     return view.lookup.lookupColoring(i, view.misc.maxIterations);
   }
+  
+  view.modifiers.changeMaxIterations = (maxIterations) => {
+    view.misc.maxIterations = maxIterations;
+  }
 }
 
 vc.makeZoomable = (canvas, view) => {
@@ -76,4 +80,13 @@ vc.makeMovable = (canvas, view) => {
 vc.makeInteractive = (view) => {
   vc.makeZoomable(view.canvas, view);
   vc.makeMovable(view.canvas, view);
+}
+
+vc.startView = async (view, onInfo) => {
+  const drawObj = await fv.draw(view.lookup.lookupFunction, view.lookup.lookupTable, view.ctx, onInfo);
+
+  view.modifiers.refreshView = drawObj.refreshView;
+  view.modifiers.resetThrottle = drawObj.resetThrottle;
+
+  window.onfocus = view.modifiers.resetThrottle;
 }
