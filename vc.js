@@ -87,7 +87,7 @@ vc.makeZoomable = (canvas, view) => {
 }
 
 vc.makeMovable = (canvas, view) => {
-  canvas.onmousedown = (event) => {
+  canvas.ontouchstart = canvas.onmousedown = (event) => {
     const { 
       mouseX: anchorMouseX, mouseY: anchorMouseY,
       canvasX: anchorCanvasX, canvasY: anchorCanvasY
@@ -98,7 +98,7 @@ vc.makeMovable = (canvas, view) => {
 			
     const anchorViewbox = view.dimensions.viewbox.slice(0);
 			
-    canvas.onmousemove = (event) => {
+    canvas.ontouchmove = canvas.onmousemove = (event) => {
       view.dimensions.viewbox = vb.calcViewboxAfterMove(
         event, view.dimensions.viewbox, view.dimensions.width, view.dimensions.height, 
         anchorMouseX, anchorMouseY, anchorViewbox, anchorCanvasX, anchorCanvasY
@@ -108,7 +108,7 @@ vc.makeMovable = (canvas, view) => {
     }
   }
 
-  canvas.onmouseleave = canvas.onmouseup = () => { canvas.onmousemove = null; }
+  canvas.ontouchend = canvas.onmouseup = () => { canvas.ontouchmove = canvas.onmousemove = null; }
 }
 
 vc.makeInteractive = (view) => {
