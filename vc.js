@@ -4,6 +4,7 @@ vc._zero = 0;
 
 vc.init = async (canvas, onProgress) => {
   const view = {
+    canvas: canvas,
     ctx: canvas.getContext("2d", { alpha: false }),
     dimensions: {
       width: canvas.width,
@@ -72,7 +73,7 @@ vc.makeMovable = (canvas, view) => {
   canvas.onmouseleave = canvas.onmouseup = () => { canvas.onmousemove = null; }
 }
 
-vc.makeInteractive = (canvas, view) => {
-  vc.makeZoomable(canvas, view);
-  vc.makeMovable(canvas, view);
+vc.makeInteractive = (view) => {
+  vc.makeZoomable(view.canvas, view);
+  vc.makeMovable(view.canvas, view);
 }
