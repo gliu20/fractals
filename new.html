@@ -61,6 +61,7 @@
 
 		<button onclick="refreshView()">Refresh View</button>
 		<button onclick="switchColorFunc()">Switch color function</button>
+		<button onclick="changeMaxIterations()">Change maxIterations</button>
 		<p id="info"></p>
 	</div>
 
@@ -83,7 +84,13 @@
 		var progressInfoEle = document.querySelector("#progressInfo");
 		var coloringFuncIndex = 0;
 		var lookupColoringFunc = cf.rouge;
+		
+		var width = parseInt(prompt("Width?"),800);
+		var height = parseInt(prompt("Height?",800));
 
+		function changeMaxIterations () {
+			maxIterations = parseInt(prompt("MaxIterations?", 1000));
+		}
 
 		function displayInfo(averageDuration, fps, mergeInvocate, skippedInvocations, isIdle) {
 			infoEle.innerHTML = `
@@ -94,7 +101,7 @@
 
 
 		window.onload = async function () {
-			lookupTable = await fv.genLookupTable(1600, 1600, function (subprogressNum, subprogressTotal, progressNum, progressTotal) {
+			lookupTable = await fv.genLookupTable(width, height, function (subprogressNum, subprogressTotal, progressNum, progressTotal) {
 				subprogress.value = Math.ceil((subprogressNum / subprogressTotal) * 100);
 				subprogresslabel.innerText = `${subprogressNum} of ${subprogressTotal} Iterations complete`
 
@@ -140,8 +147,8 @@
 		const ctx = canvas.getContext('2d', { alpha: false });
 
 		lookupFunc = (x, y) => {
-			const xi = fv.map(x, 0, 1600, viewbox[0], viewbox[1]);
-			const yi = fv.map(y, 0, 1600, viewbox[2], viewbox[3]);
+			const xi = fv.map(x, 0, width, viewbox[0], viewbox[1]);
+			const yi = fv.map(y, 0, height, viewbox[2], viewbox[3]);
 
 			const i = qfm.mandelbrot(xi, yi, maxIterations);
 
@@ -191,8 +198,8 @@
 			const scrollDeltaScaled = (1 + (scrollDelta * .2))
 
 			// target coordinates should still be where it is currently
-			const targetX = fv.map(mouseX, 0, 1600, viewbox[0], viewbox[1]);
-			const targetY = fv.map(mouseY, 0, 1600, viewbox[2], viewbox[3]);
+			const targetX = fv.map(mouseX, 0, width, viewbox[0], viewbox[1]);
+			const targetY = fv.map(mouseY, 0, height, viewbox[2], viewbox[3]);
 
 
 
@@ -211,8 +218,8 @@
 				currCenterY + targetHalfSpan,
 			]
 
-			const mouseXAfterZoom = fv.map(mouseX, 0, 1600, partialZoomedViewbox[0], partialZoomedViewbox[1]);
-			const mouseYAfterZoom = fv.map(mouseY, 0, 1600, partialZoomedViewbox[2], partialZoomedViewbox[3]);
+			const mouseXAfterZoom = fv.map(mouseX, 0, width, partialZoomedViewbox[0], partialZoomedViewbox[1]);
+			const mouseYAfterZoom = fv.map(mouseY, 0, height, partialZoomedViewbox[2], partialZoomedViewbox[3]);
 
 			const newCenterX = currCenterX + (targetX - mouseXAfterZoom);
 			const newCenterY = currCenterY + (targetY - mouseYAfterZoom);
