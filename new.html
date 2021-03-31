@@ -86,7 +86,9 @@
 		var lookupColoringFunc = cf.rouge;
 		
 		var width = parseInt(prompt("Width?",800));
+		document.getElementById("viewer").width = width;
 		var height = parseInt(prompt("Height?",800));
+		document.getElementById("viewer").height = height;
 
 		function changeMaxIterations () {
 			maxIterations = parseInt(prompt("MaxIterations?", maxIterations));
