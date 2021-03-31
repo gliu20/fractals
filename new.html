@@ -81,15 +81,16 @@
 
 		// xi, xf, yi, yf
 		var viewbox = [-2, 1, -1.5, 1.5];
-		var infoEle = document.querySelector("#info");
-		var progressInfoEle = document.querySelector("#progressInfo");
+		const infoEle = document.querySelector("#info");
+		const progressInfoEle = document.querySelector("#progressInfo");
 		var coloringFuncIndex = 0;
 		var lookupColoringFunc = cf.rouge;
 		
 		var width = parseInt(prompt("Width?",800));
-		document.getElementById("viewer").width = width;
 		var height = parseInt(prompt("Height?",800));
-		document.getElementById("viewer").height = height;
+		
+		canvas.width = width;
+		canvas.height = height;
 
 		function changeMaxIterations () {
 			maxIterations = parseInt(prompt("MaxIterations?", maxIterations));
@@ -128,19 +129,6 @@
 			window.onfocus = resetThrottle;
 		}
 
-		function switchColorFunc() {
-			const colorFuncs = [
-				cf.rouge,
-				cf.yellow,
-				cf.green,
-				cf.blueOrange,
-				cf.rainbow
-			];
-
-			coloringFuncIndex = (coloringFuncIndex + 1) % colorFuncs.length;
-			lookupColoringFunc = colorFuncs[coloringFuncIndex];
-			refreshView();
-		}
 
 		const canvas = document.getElementById("viewer");
 		const progress = document.getElementById("progress");
@@ -159,7 +147,19 @@
 			return lookupColoringFunc(i, maxIterations);
 		}
 
+		function switchColorFunc() {
+			const colorFuncs = [
+				cf.rouge,
+				cf.yellow,
+				cf.green,
+				cf.blueOrange,
+				cf.rainbow
+			];
 
+			coloringFuncIndex = (coloringFuncIndex + 1) % colorFuncs.length;
+			lookupColoringFunc = colorFuncs[coloringFuncIndex];
+			refreshView();
+		}
 		
 		canvas.onwheel = async (event) => {
 			viewbox = vb.calcViewboxAfterZoom(event, viewbox, width, height);
@@ -167,9 +167,10 @@
 		}
 		
 		canvas.onmousedown = (event) => {
-			const { mouseX: anchorMouseX, mouseY: anchorMouseY,
-			       canvasX: anchorCanvasX, canvasY: anchorCanvasY
-			      } = vb.getCanvasAndMouseCoords(event, viewbox, width, height);
+			const { 
+				mouseX: anchorMouseX, mouseY: anchorMouseY,
+				canvasX: anchorCanvasX, canvasY: anchorCanvasY
+			} = vb.getCanvasAndMouseCoords(event, viewbox, width, height);
 			
 			const anchorViewbox = viewbox.slice(0);
 			
