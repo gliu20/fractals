@@ -105,20 +105,18 @@ vb.calcViewboxAfterZoom = (event, viewbox, width, height) => {
 }
 
 vb.calcCenterAfterMove = (anchorCenterX, anchorCenterY, anchorCanvasX, anchorCanvasY, canvasX, canvasY) => {
-  const movedCenterX = anchorCenterX + anchorCanvasX - canvasX;
-	const movedCenterY = anchorCenterY + anchorCanvasY - canvasY;
+  const movedCenterX = anchorCenterX - (canvasX - anchorCanvasX);
+  const movedCenterY = anchorCenterY - (canvasY - anchorCanvasY);
   
   return { movedCenterX, movedCenterY };
 }
 
 vb.calcViewboxAfterMove = (event, viewbox, width, height, anchorMouseX, anchorMouseY, anchorViewbox, anchorCanvasX, anchorCanvasY) => {
-  const { mouseX, mouseY, canvasX, canvasY } = vb.getCanvasAndMouseCoords(event, viewbox, width, height);
+  const { mouseX, mouseY, canvasX, canvasY } = vb.getCanvasAndMouseCoords(event, anchorViewbox, width, height);
   const { centerX: anchorCenterX, centerY: anchorCenterY } = vb.getCenter(anchorViewbox);
   
   const { movedCenterX, movedCenterY } = vb.calcCenterAfterMove(anchorCenterX, anchorCenterY, anchorCanvasX, anchorCanvasY, canvasX, canvasY);
   const { spanX, spanY } = vb.getHalfSpan(anchorViewbox);
-
-  console.log({mouseX, mouseY, canvasX, canvasY, movedCenterX, movedCenterY, canvasX, canvasY, spanX, spanY, anchorViewbox})
   
   return vb.calcViewbox(movedCenterX, movedCenterY, spanX, spanY);
 }
