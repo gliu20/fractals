@@ -77,10 +77,10 @@ vb.calcHalfSpanAfterZoom = (spanX, spanY, zoomMultiplier) => {
 
 vb.calcCenterAfterZoom = (mouseX, mouseY, canvasX, canvasY, centerX, centerY, zoomedSpanX, zoomedSpanY, viewbox, width, height) => {
   const viewboxWithoutMouseOffset = vb.calcViewbox(centerX, centerY, zoomedSpanX, zoomedSpanY);
-  const { canvasX: zoomedCanvasX, canvasY: zoomedCanvasY } = vb.mouseCoordsToCanvasCoords(mouseX, mouseY, viewbox, width, height);
+  const { canvasX: zoomedCanvasX, canvasY: zoomedCanvasY } = vb.mouseCoordsToCanvasCoords(mouseX, mouseY, viewboxWithoutMouseOffset, width, height);
   
   const zoomedCenterX = centerX + (canvasX - zoomedCanvasX);
-	const zoomedCenterY = centerY + (canvasY - zoomedCanvasY);
+  const zoomedCenterY = centerY + (canvasY - zoomedCanvasY);
   
   return {
     zoomedCenterX,
