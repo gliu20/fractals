@@ -68,7 +68,7 @@
 
 	<script src="qfm.js?refresh=2840932894"></script>
 	<script src="fv.js?refresh=3284089234"></script>
-	<script src="vb.js?refresh=482309483209"></script>
+	<script src="vb.js?refresh=589043853904"></script>
 	<script src="cf.js?refresh=8359840925"></script>
 
 	<script>
@@ -161,9 +161,27 @@
 
 
 		
-		canvas.onwheel = async (e) => {
+		canvas.onwheel = async (event) => {
 			viewbox = vb.calcViewboxAfterZoom(event, viewbox, width, height);
 			refreshView();
+		}
+		
+		canvas.onmousedown = (event) => {
+			const { mouseX: anchorMouseX, mouseY: anchorMouseY,
+			       canvasX: anchorCanvasX, canvasY: anchorCanvasY
+			      } = vb.getCanvasAndMouseCoords(event, viewbox, width, height);
+			
+			const anchorViewbox = viewbox.slice(0);
+			
+			canvas.onmousemove = (event) => {
+				viewbox = vb.calcViewboxAfterMove(event, viewbox, width, height, anchorMouseX, anchorMouseY, anchorViewbox, anchorCanvasX, anchorCanvasY)
+			}
+			
+			
+		}
+		
+		canvas.onmouseup = () => {
+			canvas.onmousemove = null;
 		}
 
 
