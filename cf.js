@@ -6,27 +6,32 @@
 const cf = {};
 
 
-cf.rouge = (i,maxIterations) => {
+cf.rouge = (i,maxIterations, coloring) => {
+  const adjustedI = i * coloring.colorScale + coloring.offset;
   if (i === maxIterations) { return "#000000"; }
-  return "hsl(0,100%,"+(i % (maxIterations / 5))+"%)";
+  
+  return "hsl(0,100%,"+(adjustedI % 100)+"%)";
 }
 
-cf.yellow = (i,maxIterations) => {
+cf.grayScale = (i,maxIterations, coloring) => {
+  const adjustedI = i * coloring.colorScale + coloring.offset;
   if (i === maxIterations) { return "#000000"; }
-  return "hsl("+(i % 360)+",100%,"+(i % (maxIterations / 5))+"%)";
-}
-
-cf.green = (i,maxIterations) => {
-  if (i === maxIterations) { return "#000000"; }
-  return "hsl("+(i * 10 % 360)+",100%,"+(i % (maxIterations / 5))+"%)";
+  
+  return "hsl(0,0%,"+(adjustedI % 100)+"%)";
 }
 
 cf.blueOrange = (i,maxIterations) => {
+  const adjustedI = i * coloring.colorScale + coloring.offset;
+  const hue = adjustedI % 160;
+  const brightness = 4 * adjustedI ** 2 / 160 ** 2 - 4 * adjustedI / 160 + 1;
   if (i === maxIterations) { return "#000000"; }
-  return "hsl("+(i * 0.9 % 360)+",100%,50%)";
+  
+  return "hsl("+(hue + 40)+",100%,"+Math.floor(brightness * 100)+"%)";
 }
 
 cf.rainbow = (i,maxIterations) => {
+  const adjustedI = i * coloring.colorScale + coloring.offset;
   if (i === maxIterations) { return "#000000"; }
-  return "hsl("+(i * 10 % 360)+",100%,50%)";
+  
+  return "hsl("+(adjustedI % 360)+",100%,50%)";
 }
