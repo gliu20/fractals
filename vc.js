@@ -105,6 +105,9 @@ vc.makeColoring = (view) => {
   view.modifiers.changeColorOffset = (colorOffset) => {
     view.coloring.colorOffset = colorOffset;
   }
+  view.modifiers.switchColoring = () => {
+    view.modifiers.changeColoring((view.coloring.coloringIndex + 1) % view.coloring.coloringFunctions.length);
+  }
 }
 
 vc.makeLookup = async (view, onProgress) => {
