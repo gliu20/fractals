@@ -10,6 +10,15 @@ vb._avg = (a, b) => {
   return (a + b) / vb._two;
 }
 
+vb.getTouchCoords = (event) => {
+  const touchX1 = event.touches && event.touches[0] && event.touches[0].clientX || 0;
+  const touchY1 = event.touches && event.touches[0] && event.touches[0].clientY || 0;
+  const touchX2 = event.touches && event.touches[1] && event.touches[1].clientX || 0;
+  const touchY2 = event.touches && event.touches[1] && event.touches[1].clientY || 0;
+  
+  return { touchX1, touchY1, touchX2, touchY2 };
+}
+
 vb.getMouseCoords = (event) => {
   const ele = event.target;
   const bounds = ele.getBoundingClientRect();
