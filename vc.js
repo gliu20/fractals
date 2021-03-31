@@ -80,10 +80,36 @@ vc.makeJulia = (view) => {
 }
 
 vc.makeZoomable = (canvas, view) => {
-  canvas.onwheel = async (event) => {
+  const eventCache = {
+    prevDist: 0,
+    currDist: 0
+  };
+  
+  const handleSmartZoom = (event) => {
+    event.preventDefault();
+    
     view.dimensions.viewbox = vb.calcViewboxAfterZoom(event, view.dimensions.viewbox, view.dimensions.width, view.dimensions.height);
     view.modifiers.refreshView();
   }
+  
+  const handleDumbZoom = (event) => {
+    event.preventDefault();
+    
+    const { centerX, centerY } = vb.getCenter(view.dimensions.viewbox);
+    const { spanX, spanY } = vb.getHalfSpan(view.dimensions.viewbox);
+    
+    eventCache.prevDist = eventCache.currDist || vb.getTouchDist(event);
+    eventCache.currDist = vb.getTouchDist(event);
+    
+    const zoomMultiplier = (eventCache.currDist - eventCache.prevDist) / eventCache.prevDist;
+    const { zoomedSpanX, zoomedSpanY } = vb.calcHalfSpanAfterZoom(spanX, spanY, zoomMultiplier);
+    
+    view.dimensions.viewbox = vb.calcViewbox(centerX, centerY, zoomedSpanX, zoomedSpanY);
+    view.modifiers.refreshView();
+  }
+  
+  canvas.addEventListener("wheel", handleSmartZoom);
+  canvas.addEventListener("touchmove", handleDumbZoom, { passive: true });
 }
 
 vc.makeMovable = (canvas, view) => {
@@ -127,6 +153,7 @@ vc.makeMovable = (canvas, view) => {
   canvas.addEventListener("touchstart", handleDragStart);
   canvas.addEventListener("touchmove", handleDrag, { passive: true });
   canvas.addEventListener("touchend", handleDragEnd, { passive: true });
+  canvas.addEventListener("touchcancel", handleDragEnd, { passive: true });
   
   canvas.addEventListener("mousedown", handleDragStart);
   canvas.addEventListener("mousemove", handleDrag);
