@@ -19,7 +19,13 @@ vc.init = (canvas) => {
       lookupColoring: () => {},
     },
     coloring: {
-      coloringFunctions: [],
+      coloringFunctions: [
+        cf.rouge,
+        cf.yellow,
+        cf.green,
+        cf.blueOrange,
+        cf.rainbow
+      ],
       coloringIndex: 0,
       colorScale: 1,
       colorOffset: 0,
