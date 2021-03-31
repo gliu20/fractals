@@ -66,11 +66,11 @@
 	</div>
 
 
-	<script src="qfm.js?refresh=2840932894"></script>
-	<script src="fv.js?refresh=3284089234"></script>
-	<script src="vb.js?refresh=634634635"></script>
-	<script src="vc.js?refresh=634634635"></script>
-	<script src="cf.js?refresh=8359840925"></script>
+	<script src="qfm.js?refresh=84903284"></script>
+	<script src="fv.js?refresh=4382309840"></script>
+	<script src="vb.js?refresh=3284032984"></script>
+	<script src="vc.js?refresh=3432874923"></script>
+	<script src="cf.js?refresh=32894230"></script>
 
 	<script>
 		let viewInstance = {};
@@ -116,7 +116,8 @@
 			canvas.height = parseInt(prompt("Height?",800));
 
 			const view = await vc.init(canvas);
-
+			
+			vc.makeJulia(view);
 			vc.makeMandelbrot(view);
 			vc.makeInteractive(view);
 			vc.makeColoring(view);
