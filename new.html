@@ -66,9 +66,10 @@
 	</div>
 
 
-	<script src="qfm.js?refresh=49328409238904"></script>
-	<script src="fv.js?refresh=10928493220"></script>
-	<script src="cf.js?refresh=10928493220"></script>
+	<script src="qfm.js?refresh=2840932894"></script>
+	<script src="fv.js?refresh=3284089234"></script>
+	<script src="vb.js?refresh=482309483209"></script>
+	<script src="cf.js?refresh=8359840925"></script>
 
 	<script>
 		var testing = false;
@@ -159,88 +160,11 @@
 		}
 
 
-		function avg(a, b) {
-			const two = (a + a) / (a);
-			return (a + b) / two;
-		}
-		// TODO make func for convert to complex coords 
-
+		
 		canvas.onwheel = async (e) => {
-
-			// stackoverflow:
-			function getRelativeMousePosition(event, target) {
-				target = target || event.target;
-				var rect = target.getBoundingClientRect();
-
-				return {
-					x: event.clientX - rect.left,
-					y: event.clientY - rect.top,
-				}
-			}
-
-			// assumes target or event.target is canvas
-			function getNoPaddingNoBorderCanvasRelativeMousePosition(event, target) {
-				target = target || event.target;
-				var pos = getRelativeMousePosition(event, target);
-
-				pos.x = pos.x * target.width / canvas.clientWidth;
-				pos.y = pos.y * target.height / canvas.clientHeight;
-
-				return pos;
-			}//end stackoverflow
-
-			const mouseX = getNoPaddingNoBorderCanvasRelativeMousePosition(e).x;
-			const mouseY = getNoPaddingNoBorderCanvasRelativeMousePosition(e).y;
-
-
-
-			const currSpan = viewbox[1] - viewbox[0];
-
-			// convert to either -1 or 1
-			const scrollDelta = Math.min(Math.max(e.deltaY, -1), 1);
-			const scrollDeltaScaled = (1 + (scrollDelta * .2))
-
-			// target coordinates should still be where it is currently
-			const targetX = fv.map(mouseX, 0, width, viewbox[0], viewbox[1]);
-			const targetY = fv.map(mouseY, 0, height, viewbox[2], viewbox[3]);
-
-
-
-			const currCenterX = avg(viewbox[0], viewbox[1]);
-			const currCenterY = avg(viewbox[2], viewbox[3]);
-
-
-
-			const targetSpan = currSpan * scrollDeltaScaled;
-			const targetHalfSpan = targetSpan / 2;
-
-			const partialZoomedViewbox = [
-				currCenterX - targetHalfSpan,
-				currCenterX + targetHalfSpan,
-				currCenterY - targetHalfSpan,
-				currCenterY + targetHalfSpan,
-			]
-
-			const mouseXAfterZoom = fv.map(mouseX, 0, width, partialZoomedViewbox[0], partialZoomedViewbox[1]);
-			const mouseYAfterZoom = fv.map(mouseY, 0, height, partialZoomedViewbox[2], partialZoomedViewbox[3]);
-
-			const newCenterX = currCenterX + (targetX - mouseXAfterZoom);
-			const newCenterY = currCenterY + (targetY - mouseYAfterZoom);
-
-
-			viewbox = [
-				newCenterX - targetHalfSpan,
-				newCenterX + targetHalfSpan,
-				newCenterY - targetHalfSpan,
-				newCenterY + targetHalfSpan,
-			];
-
-
+			viewbox = vb.calcViewboxAfterZoom(event, viewbox, width, height);
 			refreshView();
 		}
-
-
-
 
 
 	</script>
