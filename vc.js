@@ -2,7 +2,7 @@ const vc = {};
 
 vc._zero = 0;
 
-vc.init = async (canvas, onProgress) => {
+vc.init = (canvas) => {
   const view = {
     canvas: canvas,
     ctx: canvas.getContext("2d", { alpha: false }),
@@ -13,8 +13,16 @@ vc.init = async (canvas, onProgress) => {
     },
     lookup: {
       lookupTable: [], 
+      lookupFunctions: [],
+      lookupIndex: 0,
       lookupFunction: () => {},
       lookupColoring: () => {},
+    },
+    coloring: {
+      coloringFunctions: [],
+      coloringIndex: 0,
+      colorScale: 1,
+      colorOffset: 0,
     },
     misc: { },
     modifiers: {
@@ -24,21 +32,16 @@ vc.init = async (canvas, onProgress) => {
     }
   }
   
-  view.lookup.lookupTable = await fv.genLookupTable(view.dimensions.width, view.dimensions.height, onProgress);
-  
   return view;
 }
 
 vc.makeMandelbrot = (view) => {
   view.misc.maxIterations = 1000;
   
-  view.lookup.lookupFunction = (x, y) => {
-    const xi = fv.map(x, vc._zero, view.dimensions.width, view.dimensions.viewbox[0], view.dimensions.viewbox[1]);
-    const yi = fv.map(y, vc._zero, view.dimensions.height, view.dimensions.viewbox[2], view.dimensions.viewbox[3]);
-    const i = qfm.mandelbrot(xi, yi, view.misc.maxIterations);
-
+  view.lookup.lookupIndex = -1 + view.lookup.lookupFunctions.push((x, y) => {
+    const i = qfm.mandelbrot(x, y, view.misc.maxIterations);
     return view.lookup.lookupColoring(i, view.misc.maxIterations);
-  }
+  });
   
   view.modifiers.changeMaxIterations = (maxIterations) => {
     view.misc.maxIterations = maxIterations;
@@ -80,6 +83,33 @@ vc.makeMovable = (canvas, view) => {
 vc.makeInteractive = (view) => {
   vc.makeZoomable(view.canvas, view);
   vc.makeMovable(view.canvas, view);
+}
+
+vc.makeColoring = (view) => {
+  view.lookup.lookupColoring = (...args) => { 
+    return view.coloring.coloringFunctions[view.coloring.coloringIndex](...args, view.coloring); 
+  };
+  
+  view.modifiers.changeColoring = (coloringIndex) => {
+    view.coloring.coloringIndex = coloringIndex;
+  }
+  view.modifiers.changeColorScale = (colorScale) => {
+    view.coloring.colorScale = colorScale;
+  }
+  view.modifiers.changeColorOffset = (colorOffset) => {
+    view.coloring.colorOffset = colorOffset;
+  }
+}
+
+vc.makeLookup = async (view, onProgress) => {
+  view.lookup.lookupFunction = (x,y) => {
+    const xi = fv.map(x, vc._zero, view.dimensions.width, view.dimensions.viewbox[0], view.dimensions.viewbox[1]);
+    const yi = fv.map(y, vc._zero, view.dimensions.height, view.dimensions.viewbox[2], view.dimensions.viewbox[3]);
+    
+    return view.lookup.lookupFunctions[view.lookup.lookupIndex](xi, yi);
+  }
+  
+  view.lookup.lookupTable = await fv.genLookupTable(view.dimensions.width, view.dimensions.height, onProgress);
 }
 
 vc.startView = async (view, onInfo) => {
