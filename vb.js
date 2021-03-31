@@ -116,9 +116,9 @@ vb.calcViewboxAfterMove = (event, viewbox, width, height, anchorMouseX, anchorMo
   const { centerX: anchorCenterX, centerY: anchorCenterY } = vb.getCenter(anchorViewbox);
   
   const { movedCenterX, movedCenterY } = vb.calcCenterAfterMove(anchorCenterX, anchorCenterY, anchorCanvasX, anchorCanvasY, canvasX, canvasY);
-  const { spanX, spanY } = vb.getHalfSpan(viewbox);
+  const { spanX, spanY } = vb.getHalfSpan(anchorViewbox);
 
-  console.log({mouseX, mouseY, canvasX, canvasY, movedCenterX, movedCenterY, canvasX, canvasY, spanX, spanY})
+  console.log({mouseX, mouseY, canvasX, canvasY, movedCenterX, movedCenterY, canvasX, canvasY, spanX, spanY, anchorViewbox})
   
-  return vb.calcViewbox(movedCenterX, movedCenterY, anchorCenterX, anchorCenterY, spanX, spanY);
+  return vb.calcViewbox(movedCenterX, movedCenterY, spanX, spanY);
 }
