@@ -89,7 +89,7 @@
 		var height = parseInt(prompt("Height?",800));
 
 		function changeMaxIterations () {
-			maxIterations = parseInt(prompt("MaxIterations?", 1000));
+			maxIterations = parseInt(prompt("MaxIterations?", maxIterations));
 		}
 
 		function displayInfo(averageDuration, fps, mergeInvocate, skippedInvocations, isIdle) {
