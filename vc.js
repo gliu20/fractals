@@ -34,7 +34,10 @@ vc.init = (canvas) => {
     modifiers: {
       refreshView: () => {},
       resetThrottle: () => {},
-      resetViewbox: () => { view.dimensions.viewbox = [-1, 1, -1, 1] },
+      resetViewbox: () => { 
+        view.dimensions.viewbox = [-1, 1, -1, 1];
+        view.modifiers.refreshView();
+      },
     }
   }
   
