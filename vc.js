@@ -54,6 +54,21 @@ vc.makeMandelbrot = (view) => {
   }
 }
 
+vc.makeJulia = (view) => {
+  view.misc.maxIterations = 1000;
+  view.misc.cx = -1;
+  view.misc.cy = 0;
+  
+  view.lookup.lookupIndex = -1 + view.lookup.lookupFunctions.push((x, y) => {
+    const i = qfm.julia(x, y, view.misc.cx, view.misc.cy, view.misc.maxIterations);
+    return view.lookup.lookupColoring(i, view.misc.maxIterations);
+  });
+  
+  view.modifiers.changeMaxIterations = (maxIterations) => {
+    view.misc.maxIterations = maxIterations;
+  }
+}
+
 vc.makeZoomable = (canvas, view) => {
   canvas.onwheel = async (event) => {
     view.dimensions.viewbox = vb.calcViewboxAfterZoom(event, view.dimensions.viewbox, view.dimensions.width, view.dimensions.height);
