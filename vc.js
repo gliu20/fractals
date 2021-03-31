@@ -87,28 +87,50 @@ vc.makeZoomable = (canvas, view) => {
 }
 
 vc.makeMovable = (canvas, view) => {
-  canvas.ontouchstart = canvas.onmousedown = (event) => {
-    const { 
-      mouseX: anchorMouseX, mouseY: anchorMouseY,
-      canvasX: anchorCanvasX, canvasY: anchorCanvasY
-    } = vb.getCanvasAndMouseCoords(
-      event, view.dimensions.viewbox, 
-      view.dimensions.width, view.dimensions.height
+  const eventCache = {
+    anchorMouseX: 0,
+    anchorMouseY: 0,
+    anchorCanvasX: 0,
+    anchorCanvasY: 0,
+    anchorViewbox: [],
+    inDrag: false
+  };
+  const handleDragStart = (event) => {
+    const coordsObj = vb.getCanvasAndMouseCoords(event, view.dimensions.viewbox, view.dimensions.width, view.dimensions.height);
+    
+    eventCache.anchorMouseX = coordsObj.mouseX;
+    eventCache.anchorMouseY = coordsObj.mouseY;
+    eventCache.anchorCanvasX = coordsObj.canvasX;
+    eventCache.anchorCanvasY = coordsObj.canvasY;
+    
+    eventCache.anchorViewbox = view.dimensions.viewbox.slice(0);
+    eventCache.inDrag = true;
+  }
+  
+  const handleDrag = (event) => {
+    if (!eventCache.inDrag) { return; }
+    
+    view.dimensions.viewbox = vb.calcViewboxAfterMove(
+      event, view.dimensions.viewbox, view.dimensions.width, view.dimensions.height, 
+      eventCache.anchorMouseX, eventCache.anchorMouseY, eventCache.anchorViewbox, 
+      eventCache.anchorCanvasX, eventCache.anchorCanvasY
     );
-			
-    const anchorViewbox = view.dimensions.viewbox.slice(0);
-			
-    canvas.ontouchmove = canvas.onmousemove = (event) => {
-      view.dimensions.viewbox = vb.calcViewboxAfterMove(
-        event, view.dimensions.viewbox, view.dimensions.width, view.dimensions.height, 
-        anchorMouseX, anchorMouseY, anchorViewbox, anchorCanvasX, anchorCanvasY
-      );
-      
-      view.modifiers.refreshView();
-    }
+
+    view.modifiers.refreshView();
   }
 
-  canvas.ontouchend = canvas.onmouseup = () => { canvas.ontouchmove = canvas.onmousemove = null; }
+  const handleDragEnd = (event) => { 
+    eventCache.inDrag = false;
+  }
+  
+  
+  canvas.addEventListener("touchstart", handleDragStart);
+  canvas.addEventListener("touchmove", handleDrag, { passive: true });
+  canvas.addEventListener("touchend", handleDragEnd, { passive: true });
+  
+  canvas.addEventListener("mousedown", handleDragStart);
+  canvas.addEventListener("mousemove", handleDrag);
+  canvas.addEventListener("mouseup", handleDragEnd);
 }
 
 vc.makeInteractive = (view) => {
