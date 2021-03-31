@@ -109,7 +109,7 @@ vc.makeZoomable = (canvas, view) => {
   }
   
   canvas.addEventListener("wheel", handleSmartZoom);
-  canvas.addEventListener("touchmove", handleDumbZoom, { passive: true });
+  canvas.addEventListener("touchmove", handleDumbZoom);
 }
 
 vc.makeMovable = (canvas, view) => {
