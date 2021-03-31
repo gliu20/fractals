@@ -69,34 +69,33 @@
 	<script src="qfm.js?refresh=2840932894"></script>
 	<script src="fv.js?refresh=3284089234"></script>
 	<script src="vb.js?refresh=634634635"></script>
+	<script src="vc.js?refresh=634634635"></script>
 	<script src="cf.js?refresh=8359840925"></script>
 
 	<script>
-		var testing = false;
-		var maxIterations = 500;
-		var lookupTable, lookupFunc;
-		var refreshView = function () { };
-		var resetThrottle = function () { };
+		window.onload = async () => {
+			const canvas = document.getElementById("viewer");
+		
+			canvas.width = parseInt(prompt("Width?",800));
+			canvas.height = parseInt(prompt("Height?",800));
+
+			const view = await vc.init(canvas, console.log);
+
+			vc.makeMandelbrot(view);
+			vc.makeInteractive(view);
+			vc.makeColoring(view);
+			
+			await vc.makeLookup(view, console.log);
+			await vc.startView(view, console.log);
+		}
+		
+		
+		/*
 
 
-		// xi, xf, yi, yf
-		var viewbox = [-2, 1, -1.5, 1.5];
 		const infoEle = document.querySelector("#info");
 		const progressInfoEle = document.querySelector("#progressInfo");
-		var coloringFuncIndex = 0;
-		var lookupColoringFunc = cf.rouge;
 		
-		var width = parseInt(prompt("Width?",800));
-		var height = parseInt(prompt("Height?",800));
-		
-		canvas.width = width;
-		canvas.height = height;
-
-		function changeMaxIterations () {
-			maxIterations = parseInt(prompt("MaxIterations?", maxIterations));
-			refreshView();
-		}
-
 		function displayInfo(averageDuration, fps, mergeInvocate, skippedInvocations, isIdle) {
 			infoEle.innerHTML = `
 				${isIdle ? "Idle." : "Running."} &nbsp;&nbsp;&nbsp;&nbsp;
@@ -121,12 +120,6 @@
 				}
 			});
 
-			const drawObj = await fv.draw(lookupFunc, lookupTable, ctx, displayInfo);
-
-			refreshView = drawObj.refreshView;
-			resetThrottle = drawObj.resetThrottle;
-
-			window.onfocus = resetThrottle;
 		}
 
 
@@ -148,19 +141,11 @@
 		}
 
 		function switchColorFunc() {
-			const colorFuncs = [
-				cf.rouge,
-				cf.yellow,
-				cf.green,
-				cf.blueOrange,
-				cf.rainbow
-			];
-
 			coloringFuncIndex = (coloringFuncIndex + 1) % colorFuncs.length;
 			lookupColoringFunc = colorFuncs[coloringFuncIndex];
 			refreshView();
 		}
-		
+		//////////// DONE///////////////////////////////////////
 		canvas.onwheel = async (event) => {
 			viewbox = vb.calcViewboxAfterZoom(event, viewbox, width, height);
 			refreshView();
@@ -182,7 +167,7 @@
 			
 		}
 		
-		canvas.onmouseleave = canvas.onmouseup = () => { canvas.onmousemove = null; }
+		canvas.onmouseleave = canvas.onmouseup = () => { canvas.onmousemove = null; }*/
 
 
 	</script>
