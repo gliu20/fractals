@@ -67,6 +67,11 @@ vc.makeJulia = (view) => {
   view.modifiers.changeMaxIterations = (maxIterations) => {
     view.misc.maxIterations = maxIterations;
   }
+  
+  view.modifiers.changeComplex = (cx, cy) => {
+    view.misc.cx = cx;
+    view.misc.cy = cy;
+  }
 }
 
 vc.makeZoomable = (canvas, view) => {
