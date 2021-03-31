@@ -7,7 +7,7 @@ vb._zero = 0;
 vb._two = 2;
 
 vb._avg = (a, b) => {
-	return (a + b) / vb._two;
+  return (a + b) / vb._two;
 }
 
 vb.getMouseCoords = (event) => {
@@ -21,7 +21,7 @@ vb.getMouseCoords = (event) => {
   
   // scales position to match canvas size
   coords.x = coords.x / ele.clientWidth * ele.width;
-	coords.y = coords.y / ele.clientHeight * ele.height;
+  coords.y = coords.y / ele.clientHeight * ele.height;
   
   return coords;
 }
@@ -47,19 +47,19 @@ vb.getCenter = (viewbox) => {
   return { centerX, centerY };
 }
 
-vb.calcViewbox = (centerX, centerY, spanX, spanY) => ([
-  centerX - spanX,
-  centerX + spanX,
-  centerY - spanY,
-  centerY + spanY
-])
-
 vb.getHalfSpan = (viewbox) => {
   const spanX = (viewbox[1] - viewbox[0]) / vb._two;
   const spanY = (viewbox[3] - viewbox[2]) / vb._two;
   
   return { spanX, spanY };
 }
+
+vb.calcViewbox = (centerX, centerY, spanX, spanY) => ([
+  centerX - spanX,
+  centerX + spanX,
+  centerY - spanY,
+  centerY + spanY
+])
 
 vb.calcZoomMultiplier = (event) => {
   const scrollDelta = Math.min(Math.max(event.deltaY, -1), 1);
@@ -102,4 +102,21 @@ vb.calcViewboxAfterZoom = (event, viewbox, width, height) => {
   );
   
   return vb.calcViewbox(zoomedCenterX, zoomedCenterY, zoomedSpanX, zoomedSpanY);
+}
+
+vb.calcCenterAfterMove = (anchorCenterX, anchorCenterY, anchorCanvasX, anchorCanvasY, canvasX, canvasY) => {
+  const movedCenterX = anchorCenterX + anchorCanvasX - canvasX;
+	const movedCenterY = anchorCenterY + anchorCanvasY - canvasY;
+  
+  return { movedCenterX, movedCenterY };
+}
+
+vb.calcViewboxAfterMove = (event, viewbox, width, height, anchorMouseX, anchorMouseY, anchorViewbox, anchorCanvasX, anchorCanvasY) => {
+  const { mouseX, mouseY, canvasX, canvasY } = vb.getCanvasAndMouseCoords(event, viewbox, width, height);
+  const { centerX: anchorCenterX, centerY: anchorCenterY } = vb.getCenter(anchorViewbox);
+  
+  const { movedCenterX, movedCenterY } = vb.calcCenterAfterMove = (anchorCenterX, anchorCenterY, anchorCanvasX, anchorCanvasY, canvasX, canvasY);
+  const { spanX, spanY } = vb.getHalfSpan(viewbox);
+  
+  return vb.calcViewbox(movedCenterX, movedCenterY, spanX, spanY);
 }
