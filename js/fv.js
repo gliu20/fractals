@@ -146,7 +146,7 @@ fv.draw = async (lookupFunc, lookupTable, ctx, infoCallback) => {
 			const h = yf - yi;
 
 			ctx.fillStyle = lookupFunc(xi, yi);
-			ctx.fillRect(xi + w / 2, yi + h / 2, w, h);
+			ctx.fillRect(xi, yi, w, h);
 
 			i++;
 			isIdle = false;
