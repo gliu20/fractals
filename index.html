@@ -71,7 +71,7 @@
 		<button onclick="viewInstance.modifiers.resetViewbox()">Reset viewbox</button>
 		<button onclick="viewInstance.modifiers.switchColoring()">Switch color function</button>
 		<button onclick="viewInstance.modifiers.changeColorOffset(parseInt(prompt('Color Offset?',viewInstance.coloring.colorOffset)))">Change color offset</button>
-		<button onclick="viewInstance.modifiers.changeColorScale(parseInt(prompt('Color Scale?',viewInstance.coloring.colorScale)))">Change color scale</button>
+		<button onclick="viewInstance.modifiers.changeColorScale(parseFloat(prompt('Color Scale?',viewInstance.coloring.colorScale)))">Change color scale</button>
 		<button onclick="viewInstance.modifiers.changeMaxIterations(parseInt(prompt('Max Iterations?',viewInstance.misc.maxIterations)))">Change maxIterations</button>
 		<button onclick="viewInstance.modifiers.changeComplex(parseInt(prompt('cx?',viewInstance.misc.cx)), parseInt(prompt('cy?',viewInstance.misc.cy)))">Change complex num (Julia set only)</button>
 		<button onclick="viewInstance.modifiers.changeLookup(parseInt(prompt('Julia or Mandelbrot?\n0 for Julia\n1 for Mandelbrot')));
@@ -100,7 +100,6 @@
 			return function (averageDuration, fps, mergeInvocate, skippedInvocations, isIdle) {
 				infoEle.innerHTML = `
 					${isIdle ? "Idle." : "Running."} &nbsp;&nbsp;&nbsp;&nbsp;
-					skipped frames: ${skippedInvocations} &nbsp;&nbsp;&nbsp;&nbsp;
 					pixels per frame: ${mergeInvocate} `;
 			};
 		})();
