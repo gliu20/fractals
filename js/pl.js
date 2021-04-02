@@ -3,14 +3,13 @@
  * lookups are done from the center out
  * to maximize usability
  */
-
 // spec
 // pixel x,y
 // start x,y
 // bound w,h
 // [px, py, sx, sy, w, h]
 
-var subdiv = (pixel, lookup) => {
+var genPartialLookup = (pixel, lookup) => {
 	const [_px, _py, sx, sy, w, h] = pixel;
 	
 	// we don't care about px, py
@@ -95,7 +94,7 @@ var subdiv = (pixel, lookup) => {
 	]);
 }
 
-subdiv([1.5,1.5,1,1,6,6],lookupTable = []);
+genPartialLookup([1.5,1.5,1,1,6,6],lookupTable = []);
 
 var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
@@ -129,6 +128,8 @@ setInterval(function () {
 
 	i = (i + 1) % (lookupTable.length + 5);
 }, 1000);
+
+
 
 
 
