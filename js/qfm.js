@@ -24,7 +24,7 @@ qfm.julia = (x,y,cx,cy,maxIterations) => {
       return smoothValue;
     }
     
-		smoothValue += Math.exp( - qfm.complexHalfNorm(z));
+    smoothValue += Math.exp( - qfm.complexHalfNorm(z));
     z = qfm.zSquaredPlusC(z,c);
   }
   
@@ -43,14 +43,14 @@ qfm.mandelbrot = (x,y,maxIterations) => {
     imag:y
   }
   
-	let smoothValue = Math.exp( - qfm.complexHalfNorm(z));
+  let smoothValue = Math.exp( - qfm.complexHalfNorm(z));
 
   for (let i = 0; i < maxIterations; i++) {
     if (qfm.complexHalfNorm(z) > 16) {
       return smoothValue;
     }
     
-		smoothValue += Math.exp( - qfm.complexHalfNorm(z));
+    smoothValue += Math.exp( - qfm.complexHalfNorm(z));
     z = qfm.zSquaredPlusC(z,c);
   }
   
