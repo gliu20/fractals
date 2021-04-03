@@ -24,10 +24,10 @@ vc.init = (canvas) => {
     },
     coloring: {
       coloringFunctions: [
-        cf.rouge,
-        cf.grayScale,
         cf.blueOrange,
-        cf.rainbow
+        cf.rainbow,
+        cf.rouge,
+        cf.grayScale
       ],
       coloringIndex: 0,
       colorScale: 1,
