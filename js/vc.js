@@ -1,3 +1,7 @@
+/** 
+ * View Controller Library
+ * @author github:gliu20
+ */
 const vc = {};
 
 vc._zero = 0;
