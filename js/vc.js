@@ -111,7 +111,7 @@ vc.makeZoomable = (canvas, view) => {
     eventCache.currDist = vb.getTouchDist(event);
     eventCache.deltaY = eventCache.prevDist - eventCache.currDist;
     
-    const zoomMultiplier = vb.calcZoomMultiplier(eventCache);
+    const zoomMultiplier = Math.sqrt(vb.calcZoomMultiplier(eventCache));
     
     const { zoomedSpanX, zoomedSpanY } = vb.calcHalfSpanAfterZoom(spanX, spanY, zoomMultiplier);
     
