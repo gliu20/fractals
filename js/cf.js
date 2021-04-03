@@ -10,14 +10,23 @@ cf.rouge = (i,maxIterations, coloring) => {
   const adjustedI = i * coloring.colorScale + coloring.colorOffset;
   if (i === maxIterations) { return "#000000"; }
   
-  return "hsl(0,100%,"+(adjustedI % 100)+"%)";
+  let colorValue = adjustedI % 400 / 2;
+  if (colorValue > 100) {
+    colorValue = 200 - colorValue;
+  }
+  
+  return "hsl(0,100%,"+colorValue+"%)";
 }
 
 cf.grayScale = (i,maxIterations, coloring) => {
   const adjustedI = i * coloring.colorScale + coloring.colorOffset;
   if (i === maxIterations) { return "#000000"; }
   
-  return "hsl(0,0%,"+(adjustedI % 100)+"%)";
+  let colorValue = adjustedI % 400 / 2;
+  if (colorValue > 100) {
+    colorValue = 200 - colorValue;
+  }
+  return "hsl(0,0%,"+colorValue+"%)";
 }
 
 cf.blueOrange = (i,maxIterations, coloring) => {
@@ -29,7 +38,7 @@ cf.blueOrange = (i,maxIterations, coloring) => {
   let colorValue = adjustedI % 400 / 2;
   
   // make blue orange circular
-	if (colorValue > 100) {
+  if (colorValue > 100) {
     colorValue = 200 - colorValue;
   }
 
