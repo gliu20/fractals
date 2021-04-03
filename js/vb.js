@@ -1,3 +1,7 @@
+/** 
+ * View Box Library
+ * @author github:gliu20
+ */
 const vb = {};
 
 
