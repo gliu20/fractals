@@ -165,7 +165,7 @@ fv.draw = async (lookupFunc, lookupTable, ctx, infoCallback) => {
 		refreshView: function () {
 			i = 0;
 		},
-		resetThrottle: fv._throttleAt(40, iterate, function (averageDuration, averageFps, mergeInvocate, skippedInvocations) {
+		resetThrottle: fv._throttleAt(20, iterate, function (averageDuration, averageFps, mergeInvocate, skippedInvocations) {
 			infoCallback(averageDuration, averageFps, mergeInvocate, skippedInvocations, isIdle);
 		})
 	}
