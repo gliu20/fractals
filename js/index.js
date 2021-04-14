@@ -3,10 +3,11 @@ let viewInstance = {};
 const onInfo = (function () {
   const infoEle = document.querySelector("#info");
 
-  return function (averageDuration, fps, mergeInvocate, skippedInvocations, isIdle) {
+  return function (mergeInvocate, skippedInvocations, isIdle, progress) {
     infoEle.innerHTML = `
       ${isIdle ? "Idle." : "Running."} &nbsp;&nbsp;&nbsp;&nbsp;
-      pixels per frame: ${mergeInvocate} `;
+      pixels per frame: ${mergeInvocate} 
+      progress: ${(progress * 100).toFixed(2)}`;
   };
 })();
 
@@ -46,7 +47,7 @@ window.onload = async () => {
   vc.makeColoring(view);
 
   await vc.makeLookup(view, onProgress);
-  await vc.startView(view, onInfo);
+  await vc.startView(view, cooldown.debounce(1000, onInfo));
   
   vc.makeInteractive(view);
 
