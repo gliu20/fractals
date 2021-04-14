@@ -7,7 +7,7 @@ void zSquaredPlusC (double zReal, double zImag,
     double *real, double *imag) {
 
     complexSquare(zReal, zImag, real, imag);
-    complexAdd(zReal, zImag, *real, *imag, real, imag);
+    complexAdd(*real, *imag, cReal, cImag, real, imag);
 }
 
 void complexSquare(double real1, double imag1,
@@ -27,7 +27,7 @@ void complexAdd (double real1, double imag1,
     double *real, double *imag) {
 
     *real = real1 + real2;
-    *imag = imag2 + imag2;
+    *imag = imag1 + imag2;
 }
 
 void complexMult (double real1, double imag1, 
@@ -43,11 +43,14 @@ void complexMult (double real1, double imag1,
     *imag = sumProd - realProd - imagProd;
 }
 
-int complexHalfNorm (double real, double imag) {
+double complexHalfNorm (double real, double imag) {
     return real * real + imag * imag;
 }
 
 int main() {
-    printf("hw!\n");
+    double real, imag;
+    zSquaredPlusC(1.414,2.1,-3.0,-2.0, &real, &imag);
+    
+    printf("%.20lf %.20lf\n", real,imag);
     return 0;
 }
