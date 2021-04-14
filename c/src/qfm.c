@@ -6,7 +6,12 @@
 
 
 double exp (double x) {
-    return 1 + x + x * x / 2;
+    const double x2 = x * x;
+    const double x3 = x2 * x;
+
+    // we are using a purposely bad approximation of exp
+    // so that it works reasonaly on the range of 0 to 2
+    return 1 + x + x2 / 2 + x3 / 4;
 }
 
 double complexHalfNorm (double real, double imag) {
@@ -105,7 +110,7 @@ double EMSCRIPTEN_KEEPALIVE julia (double x, double y, double cx, double cy, int
 int main() {
     printf("Performing sanity check\n");
     printf("Expected output:    2.27071596640298789538 0.40605124963960059770\n");
-    printf("ACtual output:      %.20lf %.20lf\n", mandelbrot(-1,-1,1000), julia(-1,-1,-1,-1,1000));
+    printf("Actual output:      %.20lf %.20lf\n", mandelbrot(-1,-1,1000), julia(-1,-1,-1,-1,1000));
 
     return 0;
 }
