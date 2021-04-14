@@ -4,18 +4,20 @@ cooldown.throttle = function (timeout, callback) {
   let instance;
   let lastRun = Date.now();
   
-  const wrappedCallback = function () { 
+  const wrappedCallback = function (...args) { 
     lastRun = Date.now();
-    callback();
+    callback(...args);
   };
   
-  return function () {
+  return function (...args) {
     clearTimeout(instance);
     if (Date.now() - lastRun >= timeout) {
-      wrappedCallback()
+      wrappedCallback(...args)
     }
     else {
-      instance = setTimeout(wrappedCallback, Date.now() - lastRun);
+      instance = setTimeout(function () {
+        wrappedCallback(...args)
+      }, Date.now() - lastRun);
     }
   }
 }
