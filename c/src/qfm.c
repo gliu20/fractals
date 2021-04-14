@@ -1,8 +1,13 @@
 #include <stdio.h>
-#include <math.h>
+//#include <math.h>
 #include <emscripten.h>
 
-#define ESCAPE_RADIUS 16
+#define ESCAPE_RADIUS 4
+
+
+double exp (double x) {
+    return 1 + x + x * x / 2;
+}
 
 double complexHalfNorm (double real, double imag) {
     return real * real + imag * imag;
