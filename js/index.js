@@ -47,7 +47,7 @@ window.onload = async () => {
   vc.makeColoring(view);
 
   await vc.makeLookup(view, onProgress);
-  await vc.startView(view, cooldown.throttle(1000, onInfo));
+  await vc.startView(view, cooldown.throttle(100, onInfo));
   
   vc.makeInteractive(view);
 
