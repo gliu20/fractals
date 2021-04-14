@@ -67,6 +67,9 @@ double EMSCRIPTEN_KEEPALIVE mandelbrot (double x, double y, int maxIterations) {
     double halfNorm = complexHalfNorm(zReal, zImag);
     double smoothValue = exp( - halfNorm);
 
+    double zRealOld = zReal;
+    double zImagOld = zImag;
+
     for (int i = 0; i < maxIterations; i++) {
         halfNorm = complexHalfNorm(zReal, zImag);
 
@@ -78,6 +81,10 @@ double EMSCRIPTEN_KEEPALIVE mandelbrot (double x, double y, int maxIterations) {
 
         // update z
         zSquaredPlusC(zReal, zImag, cReal, cImag, &zReal, &zImag);
+
+        // end whenever we found that it matches old values
+        if (zReal == zRealOld && zImag == zImagOld)
+            return maxIterations;
     }
 
     return maxIterations;
@@ -91,6 +98,9 @@ double EMSCRIPTEN_KEEPALIVE julia (double x, double y, double cx, double cy, int
     double halfNorm = complexHalfNorm(zReal, zImag);
     double smoothValue = exp( - halfNorm);
 
+    double zRealOld = zReal;
+    double zImagOld = zImag;
+
     for (int i = 0; i < maxIterations; i++) {
         halfNorm = complexHalfNorm(zReal, zImag);
 
@@ -102,6 +112,10 @@ double EMSCRIPTEN_KEEPALIVE julia (double x, double y, double cx, double cy, int
 
         // update z
         zSquaredPlusC(zReal, zImag, cReal, cImag, &zReal, &zImag);
+
+        // end whenever we found that it matches old values
+        if (zReal == zRealOld && zImag == zImagOld)
+            return maxIterations;
     }
 
     return maxIterations;
