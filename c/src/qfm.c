@@ -3,7 +3,7 @@
 #include <emscripten.h>
 
 #define ESCAPE_RADIUS 4
-
+#define MATCH_THRESHOLD 1e-154
 
 /*double exp (double x) {
     const double x2 = x * x;
@@ -13,6 +13,11 @@
     // so that it works reasonaly on the range of 0 to 2
     return 1 + x + x2 / 2 + x3 / 6;
 }*/
+
+double exp(double x) {
+    return (362880+x*(362880+x*(181440+x*(60480+x*(15120+x*(3024+x*(504+x*(72+x*(9+x)))))))))*2.75573192e-6;
+}
+
 
 double complexHalfNorm (double real, double imag) {
     return real * real + imag * imag;
@@ -84,7 +89,8 @@ double EMSCRIPTEN_KEEPALIVE mandelbrot (double x, double y, int maxIterations) {
 
         // end whenever we found that it roughly matches old values
         // since it is roughly periodic
-        if (fabs(zReal - zRealOld) < 1e-154 && fabs(zImag - zImagOld) < 1e-154)
+        if (fabs(zReal - zRealOld) < MATCH_THRESHOLD && 
+            fabs(zImag - zImagOld) < MATCH_THRESHOLD)
             return maxIterations;
     }
 
@@ -116,7 +122,8 @@ double EMSCRIPTEN_KEEPALIVE julia (double x, double y, double cx, double cy, int
 
         // end whenever we found that it roughly matches old values
         // since it is roughly periodic
-        if (fabs(zReal - zRealOld) < 1e-154 && fabs(zImag - zImagOld) < 1e-154)
+        if (fabs(zReal - zRealOld) < MATCH_THRESHOLD && 
+            fabs(zImag - zImagOld) < MATCH_THRESHOLD)
             return maxIterations;
     }
 
