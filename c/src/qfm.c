@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <math.h>
+#include <emscripten.h>
+
 #define ESCAPE_RADIUS 16
 
 double complexHalfNorm (double real, double imag) {
@@ -47,7 +49,7 @@ void zSquaredPlusC (double zReal, double zImag,
     complexAdd(*real, *imag, cReal, cImag, real, imag);
 }
 
-double mandelbrot (double x, double y, int maxIterations) {
+double EMSCRIPTEN_KEEPALIVE mandelbrot (double x, double y, int maxIterations) {
     double zReal = 0, zImag = 0;
     double cReal = x, cImag = y;
 
@@ -71,7 +73,7 @@ double mandelbrot (double x, double y, int maxIterations) {
     return maxIterations;
 }
 
-double julia (double x, double y, double cx, double cy, int maxIterations) {
+double EMSCRIPTEN_KEEPALIVE julia (double x, double y, double cx, double cy, int maxIterations) {
     double zReal = x, zImag = y;
     double cReal = cx, cImag = cy;
 

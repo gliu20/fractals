@@ -1867,6 +1867,12 @@ var asm = createWasm();
 var ___wasm_call_ctors = Module["___wasm_call_ctors"] = createExportWrapper("__wasm_call_ctors");
 
 /** @type {function(...*):?} */
+var _mandelbrot = Module["_mandelbrot"] = createExportWrapper("mandelbrot");
+
+/** @type {function(...*):?} */
+var _julia = Module["_julia"] = createExportWrapper("julia");
+
+/** @type {function(...*):?} */
 var _main = Module["_main"] = createExportWrapper("main");
 
 /** @type {function(...*):?} */
