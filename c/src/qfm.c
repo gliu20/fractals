@@ -1,18 +1,18 @@
 #include <stdio.h>
-//#include <math.h>
+#include <math.h>
 #include <emscripten.h>
 
 #define ESCAPE_RADIUS 4
 
 
-double exp (double x) {
+/*double exp (double x) {
     const double x2 = x * x;
     const double x3 = x2 * x;
 
     // we are using a purposely bad approximation of exp
     // so that it works reasonaly on the range of 0 to 2
-    return 1 + x + x2 / 2 + x3 / 4;
-}
+    return 1 + x + x2 / 2 + x3 / 6;
+}*/
 
 double complexHalfNorm (double real, double imag) {
     return real * real + imag * imag;
