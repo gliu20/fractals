@@ -84,7 +84,7 @@ double EMSCRIPTEN_KEEPALIVE mandelbrot (double x, double y, int maxIterations) {
 
         // end whenever we found that it roughly matches old values
         // since it is roughly periodic
-        if (zReal - zRealOld < 1e-154 && zImag - zImagOld < 1e-154)
+        if (zReal - zRealOld < 1e-308 && zImag - zImagOld < 1e-308)
             return maxIterations;
     }
 
@@ -116,7 +116,7 @@ double EMSCRIPTEN_KEEPALIVE julia (double x, double y, double cx, double cy, int
 
         // end whenever we found that it roughly matches old values
         // since it is roughly periodic
-        if (zReal - zRealOld < 1e-154 && zImag - zImagOld < 1e-154)
+        if (zReal - zRealOld < 1e-308 && zImag - zImagOld < 1e-308)
             return maxIterations;
     }
 
