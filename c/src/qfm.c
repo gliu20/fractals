@@ -96,8 +96,9 @@ double julia (double x, double y, double cx, double cy, int maxIterations) {
 }
 
 int main() {
-    double value = mandelbrot(-1,-1,1000);
-    double value2 = julia(-1,-1,-1,-1,1000);
-    printf("%.20lf %.20lf\n", value, value2);
+    printf("Performing sanity check\n");
+    printf("Expected output:    2.27071596640298789538 0.40605124963960059770\n");
+    printf("ACtual output:      %.20lf %.20lf\n", mandelbrot(-1,-1,1000), julia(-1,-1,-1,-1,1000));
+
     return 0;
 }
