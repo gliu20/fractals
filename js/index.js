@@ -43,11 +43,12 @@ window.onload = async () => {
 
   vc.makeJulia(view);
   vc.makeMandelbrot(view);
-  vc.makeInteractive(view);
   vc.makeColoring(view);
 
   await vc.makeLookup(view, onProgress);
   await vc.startView(view, onInfo);
+  
+  vc.makeInteractive(view);
 
   viewInstance = view;
 }
