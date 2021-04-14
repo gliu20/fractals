@@ -99,7 +99,7 @@ fv._throttleAt = (fps, callback, infoCallback) => {
 			// AIMD for merge invocate
 			// we're faster than the desired average fps so we group the callback together
 			if (calcFreq(averageDuration) > fps) {
-				mergeInvocate++;
+				mergeInvocate += 2;
 			}
 		}
 
