@@ -115,7 +115,7 @@ double fractalSet (double x, double y, double cx, double cy, int maxIterations, 
         halfNorm = complexHalfNorm(zReal, zImag);
 
         if (halfNorm > ESCAPE_RADIUS) {
-            return maxIterations;
+            return i;
         }
 
 
