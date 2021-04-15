@@ -130,6 +130,7 @@ vc.makeZoomable = (canvas, view) => {
     const zoomedCenterX = centerX + (canvasCenterX - zoomedCanvasX);
     const zoomedCenterY = centerY + (canvasCenterY - zoomedCanvasY);
     
+    view.dimensions.viewbox = vb.calcViewbox(zoomedCenterX, zoomedCenterY, zoomedSpanX, zoomedSpanY);
     view.modifiers.refreshView();
   }
   
