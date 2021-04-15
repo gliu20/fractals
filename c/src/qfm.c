@@ -74,6 +74,9 @@ double fractalSetSmooth (double x, double y, double cx, double cy, int maxIterat
     double zRealOld = zReal;
     double zImagOld = zImag;
 
+    int maxPeriodDetection = 2;
+    int period = 0;
+
     for (int i = 0; i < maxIterations; i++) {
         halfNorm = complexHalfNorm(zReal, zImag);
 
@@ -91,6 +94,13 @@ double fractalSetSmooth (double x, double y, double cx, double cy, int maxIterat
         if (fabs(zReal - zRealOld) < MATCH_THRESHOLD && 
             fabs(zImag - zImagOld) < MATCH_THRESHOLD)
             return maxIterations;
+
+        if (period++ > maxPeriodDetection) {
+            zRealOld = zReal;
+            zImagOld = zImag;
+            maxPeriodDetection += period / 4;
+            maxPeriodDetection++;
+        }
     }
 
     return maxIterations;
@@ -118,8 +128,6 @@ double fractalSet (double x, double y, double cx, double cy, int maxIterations, 
             return i;
         }
 
-
-
         // update z
         zSquaredPlusC(zReal, zImag, cReal, cImag, &zReal, &zImag);
 
@@ -127,7 +135,7 @@ double fractalSet (double x, double y, double cx, double cy, int maxIterations, 
         // since it is roughly periodic
         if (fabs(zReal - zRealOld) < MATCH_THRESHOLD && 
             fabs(zImag - zImagOld) < MATCH_THRESHOLD)
-            return period;
+            return maxIterations;
 
         if (period++ > maxPeriodDetection) {
             zRealOld = zReal;
