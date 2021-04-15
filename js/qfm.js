@@ -5,6 +5,8 @@
 
 const qfm = {}
 
+qfm.MATCH_THRESHOLD = 1e-77;
+
 qfm.julia = (x,y,cx,cy,maxIterations) => {
   let z = {
     real: x, 
@@ -20,7 +22,7 @@ qfm.julia = (x,y,cx,cy,maxIterations) => {
 
   
   for (let i = 0; i < maxIterations; i++) {
-    if (qfm.complexHalfNorm(z) > 16) {
+    if (qfm.complexHalfNorm(z) > 4) {
       return smoothValue;
     }
     
@@ -38,20 +40,43 @@ qfm.mandelbrot = (x,y,maxIterations) => {
     imag: y - y // purpose is to be type flexible
   }
   
+  let zOld = {
+    real:0,
+    imag:0
+  }
+  
+  let maxPeriodDetection = 2;
+  let period = 0;
+  
   const c = {
     real:x,
     imag:y
   }
   
-  let smoothValue = Math.exp( - qfm.complexHalfNorm(z));
+  //let smoothValue = Math.exp( - qfm.complexHalfNorm(z));
 
   for (let i = 0; i < maxIterations; i++) {
-    if (qfm.complexHalfNorm(z) > 16) {
-      return smoothValue;
+    if (qfm.complexHalfNorm(z) > 4) {
+      return i;
     }
     
-    smoothValue += Math.exp( - qfm.complexHalfNorm(z));
+    //smoothValue += Math.exp( - qfm.complexHalfNorm(z));
+  
+    
     z = qfm.zSquaredPlusC(z,c);
+    
+    if (Math.abs(z.real - zOld.real) < qfm.MATCH_THRESHOLD && 
+      Math.abs(z.imag - zOld.imag) < qfm.MATCH_THRESHOLD)
+      return maxIterations;
+
+    if (period++ > maxPeriodDetection) {
+      zOld.real = z.real;
+      zOld.imag = z.imag;
+      maxPeriodDetection += period / 4;
+      maxPeriodDetection++;
+    }
+    
+    
   }
   
   return maxIterations;
