@@ -5,8 +5,8 @@ emcc -O3 -flto -s ENVIRONMENT=web,worker src/qfm.c -o dist/index.html
 dist/index.wasm -o dist/index.min.wasm
 
 
-~/emsdk/upstream/bin/wasm-dis dist/index.wasm -o dist/index.wat
-~/emsdk/upstream/bin/wasm-dis dist/index.min.wasm -o dist/index.min.wat
+#~/emsdk/upstream/bin/wasm-dis dist/index.wasm -o dist/index.wat
+#~/emsdk/upstream/bin/wasm-dis dist/index.min.wasm -o dist/index.min.wat
 
 
 

@@ -3,7 +3,13 @@
 
 #define DEBUG 0
 #define ESCAPE_RADIUS 4
-#define MATCH_THRESHOLD 1e-154
+#define MATCH_THRESHOLD 1e-77
+
+#define TYPE_MANDELBROT 0
+#define TYPE_JULIA 1
+
+#define DISABLE_SMOOTHING 0
+#define ENABLE_SMOOTHING 1
 
 
 /*double exp(double x) {
@@ -56,10 +62,11 @@ void zSquaredPlusC (double zReal, double zImag,
     complexAdd(*real, *imag, cReal, cImag, real, imag);
 }
 
-double EMSCRIPTEN_KEEPALIVE mandelbrot (double x, double y, int maxIterations) {
-    double zReal = 0, zImag = 0;
-    double cReal = x, cImag = y;
-
+double fractalSetSmooth (double x, double y, double cx, double cy, int maxIterations, int type) {
+    double zReal = type == TYPE_MANDELBROT ? 0 : x;
+    double zImag = type == TYPE_MANDELBROT ? 0 : y;
+    double cReal = type == TYPE_MANDELBROT ? x : cx;
+    double cImag = type == TYPE_MANDELBROT ? y : cy;
     
     double halfNorm = complexHalfNorm(zReal, zImag);
     double smoothValue = exp( - halfNorm);
@@ -87,16 +94,17 @@ double EMSCRIPTEN_KEEPALIVE mandelbrot (double x, double y, int maxIterations) {
     }
 
     return maxIterations;
+
 }
 
-double EMSCRIPTEN_KEEPALIVE julia (double x, double y, double cx, double cy, int maxIterations) {
-    double zReal = x, zImag = y;
-    double cReal = cx, cImag = cy;
 
+double fractalSet (double x, double y, double cx, double cy, int maxIterations, int type) {
+    double zReal = type == TYPE_MANDELBROT ? 0 : x;
+    double zImag = type == TYPE_MANDELBROT ? 0 : y;
+    double cReal = type == TYPE_MANDELBROT ? x : cx;
+    double cImag = type == TYPE_MANDELBROT ? y : cy;
     
     double halfNorm = complexHalfNorm(zReal, zImag);
-    double smoothValue = exp( - halfNorm);
-
     double zRealOld = zReal;
     double zImagOld = zImag;
 
@@ -104,10 +112,8 @@ double EMSCRIPTEN_KEEPALIVE julia (double x, double y, double cx, double cy, int
         halfNorm = complexHalfNorm(zReal, zImag);
 
         if (halfNorm > ESCAPE_RADIUS) {
-            return smoothValue;
+            return i;
         }
-
-        smoothValue += exp( - halfNorm);
 
         // update z
         zSquaredPlusC(zReal, zImag, cReal, cImag, &zReal, &zImag);
@@ -120,6 +126,19 @@ double EMSCRIPTEN_KEEPALIVE julia (double x, double y, double cx, double cy, int
     }
 
     return maxIterations;
+
+}
+
+double EMSCRIPTEN_KEEPALIVE mandelbrot (double x, double y, int maxIterations, int useSmooth) {
+    return useSmooth ?
+        fractalSetSmooth(x, y, 0, 0, maxIterations, TYPE_MANDELBROT) :
+        fractalSet(x, y, 0, 0, maxIterations, TYPE_MANDELBROT);
+}
+
+double EMSCRIPTEN_KEEPALIVE julia (double x, double y, double cx, double cy, int maxIterations, int useSmooth) {
+    return useSmooth ? 
+        fractalSetSmooth(x, y, cx, cy, maxIterations, TYPE_JULIA) :
+        fractalSet(x, y, cx, cy, maxIterations, TYPE_JULIA);
 }
 
 int main() {
