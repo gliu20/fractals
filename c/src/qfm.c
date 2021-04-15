@@ -6,18 +6,10 @@
 #define ESCAPE_RADIUS 4
 #define MATCH_THRESHOLD 1e-154
 
-/*double exp (double x) {
-    const double x2 = x * x;
-    const double x3 = x2 * x;
 
-    // we are using a purposely bad approximation of exp
-    // so that it works reasonaly on the range of 0 to 2
-    return 1 + x + x2 / 2 + x3 / 6;
-}*/
-
-double exp(double x) {
+/*double exp(double x) {
     return (362880+x*(362880+x*(181440+x*(60480+x*(15120+x*(3024+x*(504+x*(72+x*(9+x)))))))))*2.75573192e-6;
-}
+}*/
 
 
 double complexHalfNorm (double real, double imag) {
