@@ -157,6 +157,8 @@ fv.draw = async (lookupFunc, lookupTable, ctx, infoCallback) => {
 			infoCallback(mergeInvocate, skippedInvocations, isIdle, i / lookupTable.length);
 		})
 	}
+	
+	return controlObj;
 
 }
 
