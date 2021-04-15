@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <math.h>
 #include <emscripten.h>
 
@@ -124,10 +123,5 @@ double EMSCRIPTEN_KEEPALIVE julia (double x, double y, double cx, double cy, int
 }
 
 int main() {
-    if (DEBUG) {
-        printf("Performing sanity check\n");
-        printf("Expected output:    2.27071596640298789538 0.40605124963960059770\n");
-        printf("Actual output:      %.20lf %.20lf\n", mandelbrot(-1,-1,1000), julia(-1,-1,-1,-1,1000));
-    }
     return 0;
 }

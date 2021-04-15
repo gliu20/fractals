@@ -1,34 +1,7 @@
 
 emcc -O3 -flto -s ENVIRONMENT=web,worker src/qfm.c -o dist/index.html
-~/emsdk/upstream/bin/wasm-opt -O4 -ffm -aimfs 1000 -ifwl \
---dce \
---dae-optimizing \
---directize \
---inlining-optimizing \
---licm \
--lmu \
---optimize-added-constants \
---optimize-added-constants-propagate \
---optimize-instructions \
---precompute \
---precompute-propagate \
---remove-memory \
---remove-unused-brs \
---remove-unused-names \
---remove-unused-module-elements \
---remove-unused-nonfunction-module-elements \
---reorder-functions \
---reorder-locals \
---simplify-globals \
---simplify-globals-optimizing \
---simplify-locals \
---simplify-locals-notee-nostructure \
---coalesce-locals \
---coalesce-locals-learning \
---merge-blocks \
---merge-locals \
+~/emsdk/upstream/bin/wasm-opt -O4 -ffm -ifwl \
 --vacuum \
---rse \
 dist/index.wasm -o dist/index.min.wasm
 
 
