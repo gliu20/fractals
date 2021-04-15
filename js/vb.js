@@ -15,10 +15,18 @@ vb._avg = (a, b) => {
 }
 
 vb.getTouchCoords = (event) => {
-  const touchX1 = event.touches && event.touches[0] && event.touches[0].clientX || 0;
-  const touchY1 = event.touches && event.touches[0] && event.touches[0].clientY || 0;
-  const touchX2 = event.touches && event.touches[1] && event.touches[1].clientX || 0;
-  const touchY2 = event.touches && event.touches[1] && event.touches[1].clientY || 0;
+  
+  const ele = event.target;
+  const bounds = ele.getBoundingClientRect();
+  
+  const touchX1 = ((event.touches && event.touches[0] && event.touches[0].clientX || 0) 
+                    - bounds.left) / ele.clientWidth * ele.width;
+  const touchY1 = ((event.touches && event.touches[0] && event.touches[0].clientY || 0) 
+                    - bounds.top) / ele.clientHeight * ele.height;
+  const touchX2 = ((event.touches && event.touches[1] && event.touches[1].clientX || 0) 
+                    - bounds.left) / ele.clientWidth * ele.width;
+  const touchY2 = ((event.touches && event.touches[1] && event.touches[1].clientY || 0) 
+                    - bounds.top) / ele.clientHeight * ele.height;
   
   return { touchX1, touchY1, touchX2, touchY2 };
 }
@@ -26,6 +34,14 @@ vb.getTouchCoords = (event) => {
 vb.getTouchDist = (event) => {
   const { touchX1, touchY1, touchX2, touchY2 } = vb.getTouchCoords(event);
   return Math.hypot(touchX2 - touchX1, touchY2 - touchY1);
+}
+
+vb.getTouchCenter = (event) => {
+  const { touchX1, touchY1, touchX2, touchY2 } = vb.getTouchCoords(event);
+  return {
+    x: vb._avg(touchX1, touchX2),
+    y: vb._avg(touchY1, touchY2)
+  };
 }
 
 vb.getMouseCoords = (event) => {
