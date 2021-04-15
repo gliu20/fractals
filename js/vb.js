@@ -39,8 +39,8 @@ vb.getTouchDist = (event) => {
 vb.getTouchCenter = (event) => {
   const { touchX1, touchY1, touchX2, touchY2 } = vb.getTouchCoords(event);
   return {
-    x: vb._avg(touchX1, touchX2),
-    y: vb._avg(touchY1, touchY2)
+    centerX: vb._avg(touchX1, touchX2),
+    centerY: vb._avg(touchY1, touchY2)
   };
 }
 
