@@ -112,7 +112,7 @@ double fractalSet (double x, double y, double cx, double cy, int maxIterations, 
         halfNorm = complexHalfNorm(zReal, zImag);
 
         if (halfNorm > ESCAPE_RADIUS) {
-            return i;
+            return maxIterations;
         }
 
         // update z
@@ -122,7 +122,7 @@ double fractalSet (double x, double y, double cx, double cy, int maxIterations, 
         // since it is roughly periodic
         if (fabs(zReal - zRealOld) < MATCH_THRESHOLD && 
             fabs(zImag - zImagOld) < MATCH_THRESHOLD)
-            return maxIterations;
+            return i;
     }
 
     return maxIterations;
