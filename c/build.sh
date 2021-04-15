@@ -28,7 +28,7 @@ emcc -O3 -flto -s ENVIRONMENT=web,worker src/qfm.c -o dist/index.html
 --merge-blocks \
 --merge-locals \
 --vacuum \
-
+--rse \
 dist/index.wasm -o dist/index.min.wasm
 
 
