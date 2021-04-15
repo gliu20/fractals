@@ -14,19 +14,6 @@ fv._throttleAt = (fps, callback, infoCallback) => {
 	let totalDuration = 0;
 	let skippedInvocations = 0;
 
-	function calcFreq(periodLength) {
-		// takes periodLength in ms; so need convert to sec
-		periodLength = periodLength / 1000;
-
-		// since periodLength is exactly 0, we get a NaN answer
-		// if we continue with answer so we break out
-		// and return Infinity
-		if (periodLength === 0) {
-			return Infinity;
-		}
-
-		return Math.floor((1 / periodLength) * 1000) / 1000;
-	}
 
 	function timeCallback(callback) {
 		skippedInvocations = 0;
@@ -56,8 +43,9 @@ fv._throttleAt = (fps, callback, infoCallback) => {
 	}
 
 	(async function loop() {
-
-		if (calcFreq(averageDuration) < fps) {
+		// averageDuration is in ms
+		// fps is converted to ms as well
+		if (averageDuration > 1000 / fps) {
 			// we're not meeting target fps
 			// hence, we have to throttle by skipping invocations
 			skippedInvocations++;
@@ -98,13 +86,11 @@ fv._throttleAt = (fps, callback, infoCallback) => {
 
 			// AIMD for merge invocate
 			// we're faster than the desired average fps so we group the callback together
-			if (calcFreq(averageDuration) > fps) {
-				mergeInvocate += 2;
-			}
+			mergeInvocate += 2;
 		}
 
 
-		infoCallback(averageDuration, calcFreq(averageDuration), mergeInvocate, skippedInvocations);
+		infoCallback(averageDuration, mergeInvocate, skippedInvocations);
 
 		// to avoid stack overflow by indirectly calling loop
 		setTimeout(loop, 0);
@@ -165,7 +151,7 @@ fv.draw = async (lookupFunc, lookupTable, ctx, infoCallback) => {
 		refreshView: function () {
 			i = 0;
 		},
-		resetThrottle: fv._throttleAt(40, iterate, function (averageDuration, averageFps, mergeInvocate, skippedInvocations) {
+		resetThrottle: fv._throttleAt(40, iterate, function (averageDuration, mergeInvocate, skippedInvocations) {
 			infoCallback(mergeInvocate, skippedInvocations, isIdle, i / lookupTable.length);
 		})
 	}
