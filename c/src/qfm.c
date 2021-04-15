@@ -108,12 +108,18 @@ double fractalSet (double x, double y, double cx, double cy, int maxIterations, 
     double zRealOld = zReal;
     double zImagOld = zImag;
 
+    const int maxPeriodDetection = maxIterations / 10;
+
+    int period = 0;
+
     for (int i = 0; i < maxIterations; i++) {
         halfNorm = complexHalfNorm(zReal, zImag);
 
         if (halfNorm > ESCAPE_RADIUS) {
             return maxIterations;
         }
+
+
 
         // update z
         zSquaredPlusC(zReal, zImag, cReal, cImag, &zReal, &zImag);
@@ -122,7 +128,13 @@ double fractalSet (double x, double y, double cx, double cy, int maxIterations, 
         // since it is roughly periodic
         if (fabs(zReal - zRealOld) < MATCH_THRESHOLD && 
             fabs(zImag - zImagOld) < MATCH_THRESHOLD)
-            return i;
+            return period;
+
+        if (period++ > maxPeriodDetection) {
+            zRealOld = zReal;
+            zImagOld = zImag;
+        }
+
     }
 
     return maxIterations;
