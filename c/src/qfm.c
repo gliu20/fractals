@@ -2,6 +2,7 @@
 #include <math.h>
 #include <emscripten.h>
 
+#define DEBUG 0
 #define ESCAPE_RADIUS 4
 #define MATCH_THRESHOLD 1e-154
 
@@ -131,9 +132,10 @@ double EMSCRIPTEN_KEEPALIVE julia (double x, double y, double cx, double cy, int
 }
 
 int main() {
-    printf("Performing sanity check\n");
-    printf("Expected output:    2.27071596640298789538 0.40605124963960059770\n");
-    printf("Actual output:      %.20lf %.20lf\n", mandelbrot(-1,-1,1000), julia(-1,-1,-1,-1,1000));
-
+    if (DEBUG) {
+        printf("Performing sanity check\n");
+        printf("Expected output:    2.27071596640298789538 0.40605124963960059770\n");
+        printf("Actual output:      %.20lf %.20lf\n", mandelbrot(-1,-1,1000), julia(-1,-1,-1,-1,1000));
+    }
     return 0;
 }
