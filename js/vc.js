@@ -104,7 +104,7 @@ vc.makeZoomable = (canvas, view) => {
       return;
     }
     
-    const { centerX, centerY } = vb.getCenter(view.dimensions.viewbox);
+    const { centerX, centerY } = vb.getTouchCenter(event);
     const { spanX, spanY } = vb.getHalfSpan(view.dimensions.viewbox);
     
     eventCache.prevDist = eventCache.currDist || vb.getTouchDist(event);
