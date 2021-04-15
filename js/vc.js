@@ -105,10 +105,7 @@ vc.makeZoomable = (canvas, view) => {
     }
     
     const { centerX: touchX, centerY: touchY } = vb.getTouchCenter(event);
-    const { 
-      canvasX: canvasCenterX, 
-      canvasY: canvasCenterY
-    } = vb.mouseCoordsToCanvasCoords(touchX, touchY, view.dimensions.viewbox, view.dimensions.width, view.dimensions.height);
+    const { canvasX, canvasY } = vb.mouseCoordsToCanvasCoords(touchX, touchY, view.dimensions.viewbox, view.dimensions.width, view.dimensions.height);
     
     const { centerX, centerY } = vb.getCenter(view.dimensions.viewbox);
     const { spanX, spanY } = vb.getHalfSpan(view.dimensions.viewbox);
@@ -120,16 +117,9 @@ vc.makeZoomable = (canvas, view) => {
     const zoomMultiplier = Math.sqrt(vb.calcZoomMultiplier(eventCache));
     const { zoomedSpanX, zoomedSpanY } = vb.calcHalfSpanAfterZoom(spanX, spanY, zoomMultiplier);
     
-    const scaledViewbox = vb.calcViewbox(canvasCenterX, canvasCenterY, zoomedSpanX, zoomedSpanY);
-    const { 
-      canvasX: zoomedCanvasX, 
-      canvasY: zoomedCanvasY 
-    } = vb.mouseCoordsToCanvasCoords(centerX, centerY, view.dimensions.viewbox, view.dimensions.width, view.dimensions.height);
+    const { zoomedCenterX, zoomedCenterY } = vb.calcCenterAfterZoom(touchX, touchY, canvasX, canvasY, centerX, centerY, zoomedSpanX, zoomedSpanY, view.dimensions.viewbox, view.dimensions.width, view.dimensions.height);
     
-    // now we have to put the touch center back where at it's original coordinates 
-    const zoomedCenterX = centerX + (canvasCenterX - zoomedCanvasX);
-    const zoomedCenterY = centerY + (canvasCenterY - zoomedCanvasY);
-    
+
     view.dimensions.viewbox = vb.calcViewbox(zoomedCenterX, zoomedCenterY, zoomedSpanX, zoomedSpanY);
     view.modifiers.refreshView();
   }
