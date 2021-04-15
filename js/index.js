@@ -4,7 +4,7 @@ const onInfo = (function () {
   const infoEle = document.querySelector("#info");
 
   return function (mergeInvocate, skippedInvocations, isIdle, progress) {
-    infoEle.innerHTML = `
+    infoEle.textContent = `
       ${isIdle ? "Idle." : "Running."}
       pixels per frame: ${mergeInvocate} 
       progress: ${Math.floor(progress * 10000) / 100}`;
