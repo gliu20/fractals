@@ -132,7 +132,8 @@ double fractalSet (double x, double y, double cx, double cy, int maxIterations, 
         if (period++ > maxPeriodDetection) {
             zRealOld = zReal;
             zImagOld = zImag;
-            maxPeriodDetection += period / 2;
+            maxPeriodDetection += period / 4;
+            maxPeriodDetection++;
         }
 
     }
