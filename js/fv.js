@@ -138,7 +138,9 @@ fv.draw = async (lookupFunc, lookupTable, ctx, infoCallback) => {
 			isIdle = false;
 		}
 		else {
-			// stop doing stuff
+			// stop doing stuff and force
+			// to reset throttle to prevent overloading
+			controlObj.resetThrottle();
 			isIdle = true;
 		}
 
@@ -147,7 +149,7 @@ fv.draw = async (lookupFunc, lookupTable, ctx, infoCallback) => {
 
 	
 
-	return {
+	const controlObj = {
 		refreshView: function () {
 			i = 0;
 		},
