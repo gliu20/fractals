@@ -56,7 +56,7 @@
 		}
 		
 		#info {
-			padding: 0;
+			padding: 2px 5px;
 			margin: 0;
 			background: black;
 			color:white;
@@ -78,8 +78,6 @@
 	<canvas id="viewer" width="1600" height="1600"></canvas>
 
 	<div id="controls">
-		<button onclick="document.getElementById('buttons').style.display = 'block';">Show Controls</button>
-		<button onclick="document.getElementById('buttons').style.display = 'none';">Hide Controls</button>
 
 		<div id="progressInfo">
 			<progress id="progress" value="0" min="0" max="100"></progress>
@@ -89,7 +87,12 @@
 			<br>
 		</div>
 
+
+		<button onclick="document.getElementById('buttons').style.display = 
+			document.getElementById('buttons').style.display === 'none' ? 'block' : 'none';">Toggle Controls</button>
+
 		<div id="buttons">
+			<button onclick="document.getElementById('viewer').style.filter = 'brightness('+prompt('Brightness?')+')'">Dim view</button>
 			<button onclick="viewInstance.modifiers.refreshView()">Refresh view</button>
 			<button onclick="viewInstance.modifiers.resetViewbox()">Reset viewbox</button>
 			<button onclick="viewInstance.modifiers.switchColoring()">Switch color function</button>
