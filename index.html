@@ -36,7 +36,8 @@
 		}
 
 		#controls {
-			background: white;
+			background: #090811;
+			color:white;
 			position: absolute;
 			font-family: sans-serif;
 			display:inline-block;
@@ -44,10 +45,28 @@
 			left:0;
 			z-index:1;
 		}
+
+		#controls {
+			border:none;
+			background: #333333;
+			color:white;
+			margin: 2px;
+			padding: 5px 10px;
+			border-radius:999px;
+		}
 		
 		#info {
 			padding: 0;
 			margin: 0;
+			background: black;
+			color:white;
+			position: absolute;
+			font-family: sans-serif;
+			font-size:14px;
+			display:inline-block;
+			bottom:0;
+			right:0;
+			z-index:1;
 		}
 	</style>
 
@@ -59,6 +78,9 @@
 	<canvas id="viewer" width="1600" height="1600"></canvas>
 
 	<div id="controls">
+		<button onclick="document.getElementById('buttons').style.display = 'block';">Show Controls</a>
+		<button onclick="document.getElementById('buttons').style.display = 'none';">Hide Controls</a>
+
 		<div id="progressInfo">
 			<progress id="progress" value="0" min="0" max="100"></progress>
 			<label for="progress" id="progresslabel"></label>
@@ -67,23 +89,25 @@
 			<br>
 		</div>
 
-		<button onclick="viewInstance.modifiers.refreshView()">Refresh view</button>
-		<button onclick="viewInstance.modifiers.resetViewbox()">Reset viewbox</button>
-		<button onclick="viewInstance.modifiers.switchColoring()">Switch color function</button>
-		<button onclick="viewInstance.modifiers.changeColorOffset(parseInt(prompt('Color Offset?',viewInstance.coloring.colorOffset)))">Change color offset</button>
-		<button onclick="viewInstance.modifiers.changeColorScale(parseFloat(prompt('Color Scale?',viewInstance.coloring.colorScale)))">Change color scale</button>
-		<button onclick="viewInstance.modifiers.changeMaxIterations(parseInt(prompt('Max Iterations?',viewInstance.misc.maxIterations)))">Change maxIterations</button>
-		<button onclick="viewInstance.modifiers.changeComplex(parseInt(prompt('cx?',viewInstance.misc.cx)), parseInt(prompt('cy?',viewInstance.misc.cy)))">Change complex num (Julia set only)</button>
-		<button onclick="viewInstance.modifiers.changeLookup(parseInt(prompt('Julia or Mandelbrot?\n0 for Julia\n1 for Mandelbrot')));
-				viewInstance.modifiers.changeComplex(
-					vb.getCenter(viewInstance.dimensions.viewbox).centerX,
-					vb.getCenter(viewInstance.dimensions.viewbox).centerY
-				);
-				 ">Change fractal</button>
+		<div id="buttons">
+			<button onclick="viewInstance.modifiers.refreshView()">Refresh view</button>
+			<button onclick="viewInstance.modifiers.resetViewbox()">Reset viewbox</button>
+			<button onclick="viewInstance.modifiers.switchColoring()">Switch color function</button>
+			<button onclick="viewInstance.modifiers.changeColorOffset(parseInt(prompt('Color Offset?',viewInstance.coloring.colorOffset)))">Change color offset</button>
+			<button onclick="viewInstance.modifiers.changeColorScale(parseFloat(prompt('Color Scale?',viewInstance.coloring.colorScale)))">Change color scale</button>
+			<button onclick="viewInstance.modifiers.changeMaxIterations(parseInt(prompt('Max Iterations?',viewInstance.misc.maxIterations)))">Change maxIterations</button>
+			<button onclick="viewInstance.modifiers.changeComplex(parseInt(prompt('cx?',viewInstance.misc.cx)), parseInt(prompt('cy?',viewInstance.misc.cy)))">Change complex num (Julia set only)</button>
+			<button onclick="viewInstance.modifiers.changeLookup(parseInt(prompt('Julia or Mandelbrot?\n0 for Julia\n1 for Mandelbrot')));
+					viewInstance.modifiers.changeComplex(
+						vb.getCenter(viewInstance.dimensions.viewbox).centerX,
+						vb.getCenter(viewInstance.dimensions.viewbox).centerY
+					);
+					">Change fractal</button>
+		</div>
 		
-		<p id="info"></p>
 	</div>
 
+	<p id="info"></p>
 
 	
 	<script src="c/dist/index.js?refresh=8432094"></script>
