@@ -3,7 +3,7 @@
 
 #define DEBUG 0
 #define ESCAPE_RADIUS 4
-#define MATCH_THRESHOLD 1e-77
+#define MATCH_THRESHOLD 1e-39
 
 #define TYPE_MANDELBROT 0
 #define TYPE_JULIA 1
