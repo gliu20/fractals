@@ -1,3 +1,10 @@
+
+const qfm = {};
+qfm.mandelbrot = Module._mandelbrot;
+qfm.julia = Module._julia;
+qfm.mandelbrotFlip = Module._mandelbrotFlip;
+qfm.juliaFlip = Module._juliaFlip;
+
 let viewInstance = {};
 
 const onInfo = (function () {
@@ -44,6 +51,8 @@ window.onload = async () => {
 
   vc.makeJulia(view);
   vc.makeMandelbrot(view);
+  vc.makeJuliaFlip(view);
+  vc.makeMandelbrotFlip(view);
   vc.makeColoring(view);
 
   await vc.makeLookup(view, onProgress);

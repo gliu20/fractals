@@ -108,6 +108,49 @@ double fractalSetSmooth (double x, double y, double cx, double cy, int maxIterat
 }
 
 
+double fractalSetInterior (double x, double y, double cx, double cy, int maxIterations, int type) {
+    double zReal = type == TYPE_MANDELBROT ? 0 : x;
+    double zImag = type == TYPE_MANDELBROT ? 0 : y;
+    double cReal = type == TYPE_MANDELBROT ? x : cx;
+    double cImag = type == TYPE_MANDELBROT ? y : cy;
+    
+    double halfNorm = complexHalfNorm(zReal, zImag);
+    double zRealOld = zReal;
+    double zImagOld = zImag;
+
+    int maxPeriodDetection = 2;
+    int period = 0;
+
+    for (int i = 0; i < maxIterations; i++) {
+        halfNorm = complexHalfNorm(zReal, zImag);
+
+        if (halfNorm > ESCAPE_RADIUS) {
+            return maxIterations;
+        }
+
+        // update z
+        zSquaredPlusC(zReal, zImag, cReal, cImag, &zReal, &zImag);
+
+        // end whenever we found that it roughly matches old values
+        // since it is roughly periodic
+        if (fabs(zReal - zRealOld) < MATCH_THRESHOLD && 
+            fabs(zImag - zImagOld) < MATCH_THRESHOLD)
+            return period;
+
+        if (period++ > maxPeriodDetection) {
+            zRealOld = zReal;
+            zImagOld = zImag;
+            maxPeriodDetection += period / 4;
+            maxPeriodDetection++;
+        }
+
+    }
+
+    return maxIterations;
+
+}
+
+
 double fractalSet (double x, double y, double cx, double cy, int maxIterations, int type) {
     double zReal = type == TYPE_MANDELBROT ? 0 : x;
     double zImag = type == TYPE_MANDELBROT ? 0 : y;
@@ -148,6 +191,15 @@ double fractalSet (double x, double y, double cx, double cy, int maxIterations, 
 
     return maxIterations;
 
+}
+
+double EMSCRIPTEN_KEEPALIVE mandelbrotFlip (double x, double y, int maxIterations) {
+    return fractalSetInterior(x, y, 0, 0, maxIterations, TYPE_MANDELBROT);
+}
+
+
+double EMSCRIPTEN_KEEPALIVE juliaFlip (double x, double y, double cx, double cy, int maxIterations) {
+    return fractalSetInterior(x, y, cx, cy, maxIterations, TYPE_MANDELBROT);
 }
 
 double EMSCRIPTEN_KEEPALIVE mandelbrot (double x, double y, int maxIterations, int useSmooth) {
