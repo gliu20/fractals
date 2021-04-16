@@ -199,7 +199,7 @@ double EMSCRIPTEN_KEEPALIVE mandelbrotFlip (double x, double y, int maxIteration
 
 
 double EMSCRIPTEN_KEEPALIVE juliaFlip (double x, double y, double cx, double cy, int maxIterations) {
-    return fractalSetInterior(x, y, cx, cy, maxIterations, TYPE_MANDELBROT);
+    return fractalSetInterior(x, y, cx, cy, maxIterations, TYPE_JULIA);
 }
 
 double EMSCRIPTEN_KEEPALIVE mandelbrot (double x, double y, int maxIterations, int useSmooth) {
