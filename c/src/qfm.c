@@ -141,7 +141,7 @@ double fractalSetInterior (double x, double y, double cx, double cy, int maxIter
             zRealOld = zReal;
             zImagOld = zImag;
             maxPeriodDetection += maxPeriodDetection / 2;
-            //maxPeriodDetection++;
+            maxPeriodDetection++;
         }
 
     }
