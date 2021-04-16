@@ -125,7 +125,7 @@ double fractalSetInterior (double x, double y, double cx, double cy, int maxIter
         halfNorm = complexHalfNorm(zReal, zImag);
 
         if (halfNorm > ESCAPE_RADIUS) {
-            return maxIterations;
+            return i;
         }
 
         // update z
@@ -135,7 +135,7 @@ double fractalSetInterior (double x, double y, double cx, double cy, int maxIter
         // since it is roughly periodic
         if (fabs(zReal - zRealOld) < MATCH_THRESHOLD && 
             fabs(zImag - zImagOld) < MATCH_THRESHOLD)
-            return period;
+            return i;
 
         if (period++ > maxPeriodDetection) {
             zRealOld = zReal;
