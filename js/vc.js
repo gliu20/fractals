@@ -84,11 +84,11 @@ vc.makeJulia = (view) => {
   }
 }
 
-vc.makeMandelbrotFlip = (view) => {
+vc.makeMandelbrotSmooth = (view) => {
   view.misc.maxIterations = 1000;
   
   view.lookup.lookupIndex = -1 + view.lookup.lookupFunctions.push((x, y) => {
-    const i = qfm.mandelbrotFlip(x, y, view.misc.maxIterations);
+    const i = qfm.mandelbrot(x, y, view.misc.maxIterations, true);
     return view.lookup.lookupColoring(i, view.misc.maxIterations);
   });
   
@@ -98,13 +98,13 @@ vc.makeMandelbrotFlip = (view) => {
   }
 }
 
-vc.makeJuliaFlip = (view) => {
+vc.makeJuliaSmooth = (view) => {
   view.misc.maxIterations = 1000;
   view.misc.cx = -1;
   view.misc.cy = 0;
   
   view.lookup.lookupIndex = -1 + view.lookup.lookupFunctions.push((x, y) => {
-    const i = qfm.juliaFlip(x, y, view.misc.cx, view.misc.cy, view.misc.maxIterations);
+    const i = qfm.julia(x, y, view.misc.cx, view.misc.cy, view.misc.maxIterations, true);
     return view.lookup.lookupColoring(i, view.misc.maxIterations);
   });
   

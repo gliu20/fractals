@@ -49,10 +49,11 @@ window.onload = async () => {
 
   const view = await vc.init(canvas);
 
+
+  vc.makeJuliaSmooth(view);
+  vc.makeMandelbrotSmooth(view);
   vc.makeJulia(view);
   vc.makeMandelbrot(view);
-  vc.makeJuliaFlip(view);
-  vc.makeMandelbrotFlip(view);
   vc.makeColoring(view);
 
   await vc.makeLookup(view, onProgress);
