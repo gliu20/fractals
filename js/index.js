@@ -2,8 +2,6 @@
 const qfm = {};
 qfm.mandelbrot = Module._mandelbrot;
 qfm.julia = Module._julia;
-qfm.mandelbrotFlip = Module._mandelbrotFlip;
-qfm.juliaFlip = Module._juliaFlip;
 
 let viewInstance = {};
 

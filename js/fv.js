@@ -39,7 +39,7 @@ fv._throttleAt = (fps, callback, infoCallback) => {
 		}
 	}
 
-	(async function loop() {
+	(function loop() {
 		// averageDuration is in ms
 		// fps is converted to ms as well
 		if (averageDuration > targetDuration) {
@@ -173,7 +173,7 @@ fv.genLookupTable = async (w, h, onprogress) => {
 
 	const iterationsX = Math.ceil(Math.log2(w));
 	const iterationsY = Math.ceil(Math.log2(h));
-	const maxIterations = Math.max(iterationsX, iterationsY)
+	const maxIterations = Math.max(iterationsX, iterationsY);
 
 	for (var i = 0; i < maxIterations; i++) {
 		const currLength = lookup.length;
@@ -209,11 +209,11 @@ fv.genLookupTable = async (w, h, onprogress) => {
 	// clean up time
 	for (var i = 0; i < lookup.length; i++) {
 
-		if (i % 150000 === 0) {
+		if (i % 30000 === 0) {
 			onprogress(i, lookup.length, 1, 1);
 		}
 
-		if (i % 50000 === 0) {
+		if (i % 15000 === 0) {
 			await fv._wait();
 		}
 
@@ -224,12 +224,13 @@ fv.genLookupTable = async (w, h, onprogress) => {
 			// mark as done
 			index[lookup[i].join(",")] = true;
 
+			// add shift mode so that the center
+			// is the most up to date
+			const xi = (lookup[i][0] + Math.floor(w / 2)) % w;
+			const yi = (lookup[i][1] + Math.floor(h / 2)) % h;
 
-			const xi = lookup[i][0];
-			const yi = lookup[i][1];
-
-			const xf = lookup[i][2];
-			const yf = lookup[i][3];
+			const xf = (lookup[i][2] + Math.floor(w / 2)) % w;
+			const yf = (lookup[i][3] + Math.floor(h / 2)) % h;
 
 			const w = xf - xi;
 			const h = yf - yi;
