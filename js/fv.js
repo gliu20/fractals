@@ -120,11 +120,8 @@ fv.draw = async (lookupFunc, lookupTable, ctx, infoCallback) => {
 			const xi = lookupTable[i][0];
 			const yi = lookupTable[i][1];
 
-			const xf = lookupTable[i][2];
-			const yf = lookupTable[i][3];
-
-			const w = xf - xi;
-			const h = yf - yi;
+			const w = lookupTable[i][2];
+			const h = lookupTable[i][3];
 
 			ctx.fillStyle = lookupFunc(xi, yi);
 			ctx.fillRect(xi, yi, w, h);
@@ -138,8 +135,6 @@ fv.draw = async (lookupFunc, lookupTable, ctx, infoCallback) => {
 			controlObj.resetThrottle();
 			isIdle = true;
 		}
-
-
 
 		return true;
 	}
@@ -174,7 +169,7 @@ fv.genLookupTable = async (w, h, onprogress) => {
 	const lookup = [[0, 0, w, h]];
 	const cleanLookup = [];
 
-	const index = {};
+	let index = {};
 
 	const iterationsX = Math.ceil(Math.log2(w));
 	const iterationsY = Math.ceil(Math.log2(h));
@@ -195,12 +190,12 @@ fv.genLookupTable = async (w, h, onprogress) => {
 				index[lookup[j].join(",")] = true;
 			}
 
-			if (i * j % 10000 === 0) {
+			if ((i * maxIterations + j) % 15000 === 0) {
 				onprogress(j, currLength, i, maxIterations);
 			}
 
 			// throttle genLookupTable every couple steps
-			if (i * j % 5000 === 0) {
+			if ((i * maxIterations + j) % 15000 === 0) {
 				await fv._wait();
 			}
 
@@ -208,7 +203,8 @@ fv.genLookupTable = async (w, h, onprogress) => {
 		}
 	}
 
-
+	// clear index
+	index = {};
 
 	// clean up time
 	for (var i = 0; i < lookup.length; i++) {
@@ -221,11 +217,27 @@ fv.genLookupTable = async (w, h, onprogress) => {
 			await fv._wait();
 		}
 
-
-		if (!index.hasOwnProperty(`${lookup[i][0]},${lookup[i][1]}`)) {
+		// this a new index for deduplicating
+		// unrelated to the before index
+		if (!index[lookup[i].join(",")]) {
 
 			// mark as done
-			index[`${lookup[i][0]},${lookup[i][1]}`] = true;
+			index[lookup[i].join(",")] = true;
+
+
+			const xi = lookup[i][0];
+			const yi = lookup[i][1];
+
+			const xf = lookup[i][2];
+			const yf = lookup[i][3];
+
+			const w = xf - xi;
+			const h = yf - yi;
+
+			// switch to using widths and heights
+			// so that later operations don't have to compute this
+			lookup[i][2] = w;
+			lookup[i][3] = h;
 
 			// move old lookup to cleanLookup
 			cleanLookup.push(lookup[i]);
