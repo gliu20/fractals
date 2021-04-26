@@ -103,11 +103,11 @@ fv._wait = () => {
 
 fv.draw = async (lookupFunc, lookupTable, ctx, infoCallback) => {
 	let i = 0;
+	let start = performance.now();
+	let end = performance.now();
 	let isIdle = false; 
 
 	function iterate() {
-
-
 
 		if (i < lookupTable.length) {
 			const xi = lookupTable[i][0];
@@ -132,6 +132,12 @@ fv.draw = async (lookupFunc, lookupTable, ctx, infoCallback) => {
 			isIdle = true;
 		}
 
+
+		if (i === 0)
+			start = performance.now();
+		if (i === lookupTable.length - 1)
+			end = performance.now();
+
 		return true;
 	}
 
@@ -142,7 +148,7 @@ fv.draw = async (lookupFunc, lookupTable, ctx, infoCallback) => {
 			i = 0;
 		},
 		resetThrottle: fv._throttleAt(60, iterate, function (averageDuration, mergeInvocate, skippedInvocations) {
-			infoCallback(mergeInvocate, skippedInvocations, isIdle, i / lookupTable.length);
+			infoCallback(mergeInvocate, skippedInvocations, isIdle, i / lookupTable.length, end - start);
 		})
 	}
 	

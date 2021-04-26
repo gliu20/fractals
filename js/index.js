@@ -10,11 +10,12 @@ let viewInstance = {};
 const onInfo = (function () {
   const infoEle = document.querySelector("#info");
 
-  return function (mergeInvocate, skippedInvocations, isIdle, progress) {
+  return function (mergeInvocate, skippedInvocations, isIdle, progress, renderTime) {
     infoEle.textContent = `
       ${isIdle ? "Idle." : "Running."}
-      pixels per frame: ${mergeInvocate} 
-      progress: ${Math.floor(progress * 10000) / 100}`;
+      Pixels per Frame: ${mergeInvocate} 
+      ${isIdle ? `Rendered in ${renderTime / 1000}s` : `Progress: ${Math.floor(progress * 10000) / 100}`}
+      `;
   };
 })();
 
