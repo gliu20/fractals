@@ -232,13 +232,14 @@ fv.genLookupTable = async (w, h, onprogress) => {
 			const xf = (lookup[i][2] + Math.floor(w / 2)) % w;
 			const yf = (lookup[i][3] + Math.floor(h / 2)) % h;
 
-			const w = xf - xi;
-			const h = yf - yi;
+			// pixel width and pixel height
+			const pw = xf - xi;
+			const ph = yf - yi;
 
 			// switch to using widths and heights
 			// so that later operations don't have to compute this
-			lookup[i][2] = w;
-			lookup[i][3] = h;
+			lookup[i][2] = pw;
+			lookup[i][3] = ph;
 
 			// move old lookup to cleanLookup
 			cleanLookup.push(lookup[i]);
