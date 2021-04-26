@@ -68,8 +68,9 @@ fv._throttleAt = (fps, callback, infoCallback) => {
 
 		// target executions calculated from this
 		// (totalDuration / mergeInvocate) * (desired num of executions) = targetDuration
-		targetExecutions = targetDuration * mergeInvocate / totalDuration;
+		targetExecutions = targetDuration * mergeInvocate / (totalDuration + 1);
 		mergeInvocate += 0.5 * (targetExecutions - mergeInvocate);
+		mergeInvocate = Math.floor(mergeInvocate);
 
 		// make sure merge invocate is 1 or higher
 		if (mergeInvocate < 1)
