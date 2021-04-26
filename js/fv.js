@@ -224,17 +224,19 @@ fv.genLookupTable = async (w, h, onprogress) => {
 			// mark as done
 			index[lookup[i].join(",")] = true;
 
-			// add shift mode so that the center
-			// is the most up to date
-			const xi = (lookup[i][0] + Math.floor(w / 2)) % w;
-			const yi = (lookup[i][1] + Math.floor(h / 2)) % h;
 
-			const xf = (lookup[i][2] + Math.floor(w / 2)) % w;
-			const yf = (lookup[i][3] + Math.floor(h / 2)) % h;
+			const xi = lookup[i][0];
+			const yi = lookup[i][1];
 
-			// pixel width and pixel height
+			const xf = lookup[i][2];
+			const yf = lookup[i][3];
+
 			const pw = xf - xi;
 			const ph = yf - yi;
+
+
+			lookup[i][0] = (lookup[i][0] + Math.floor(w / 2)) % w;
+			lookup[i][1] = (lookup[i][1] + Math.floor(h / 2)) % h;
 
 			// switch to using widths and heights
 			// so that later operations don't have to compute this
