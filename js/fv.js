@@ -14,81 +14,66 @@ fv._throttleAt = (fps, callback, infoCallback) => {
 	let totalDuration = 0;
 	let skippedInvocations = 0;
 
+	let targetExecutions = 10;
+	const targetDuration = 1000 / fps;
+
 
 	function timeCallback(callback) {
 		skippedInvocations = 0;
 
 		start = performance.now();
 
-		const shouldContinue = callback();
+		callback();
 
 		end = performance.now();
 
 		totalDuration = end - start;
 		averageDuration = totalDuration;
-
-		return shouldContinue;
 	}
 
 	function mergedCallback(callback, numInvocations) {
 		return function () {
 			for (var i = 0; i < numInvocations; i++) {
-				const shouldContinue = callback();
-				if (!shouldContinue) {
-					return false;
-				}
+				callback();
 			}
-			return true;
 		}
 	}
 
 	(async function loop() {
 		// averageDuration is in ms
 		// fps is converted to ms as well
-		if (averageDuration > 1000 / fps) {
+		if (averageDuration > targetDuration) {
 			// we're not meeting target fps
 			// hence, we have to throttle by skipping invocations
 			skippedInvocations++;
-
-			// the previous end time is this frame's start time
-			start = end;
-			end = performance.now();
-
-			// add duration of how long it took to display this frame
-			// the totalDuration measures how long one invocation 
-			// and all skipped invocations afterward took
-			totalDuration += end - start;
 			averageDuration = totalDuration / skippedInvocations;
+
 
 			// decrease mergedInvocate by the amount of skipped frames
 			// as more frames are skipped, mergeInvocate decreases
 			// exponentially
 			// so it's like AIMD
-			// we also decrease multiplicativly as well
-			mergeInvocate *= 0.99;
 			mergeInvocate -= skippedInvocations;
-			mergeInvocate = Math.floor(mergeInvocate);
-
-			// make sure merge invocate is 1 or higher
-			if (mergeInvocate < 1)
-				mergeInvocate = 1;
 		}
 		else {
 
 			// we're meeting targets so we can run the callback
 			// instead of waiting
-			const shouldContinue = timeCallback(mergedCallback(callback, mergeInvocate));
-
-			// if the callback wants us to stop there's no
-			// point in continuing to throttle so we break 
-			// out of the loop
-			if (!shouldContinue) { return; }
+			timeCallback(mergedCallback(callback, mergeInvocate));
 
 			// AIMD for merge invocate
 			// we're faster than the desired average fps so we group the callback together
 			mergeInvocate += 2;
 		}
 
+		// target executions calculated from this
+		// (totalDuration / mergeInvocate) * (desired num of executions) = targetDuration
+		targetExecutions = targetDuration * mergeInvocate / totalDuration;
+		mergeInvocate += 0.5 * (targetExecutions - mergeInvocate);
+
+		// make sure merge invocate is 1 or higher
+		if (mergeInvocate < 1)
+			mergeInvocate = 1;
 
 		infoCallback(averageDuration, mergeInvocate, skippedInvocations);
 
