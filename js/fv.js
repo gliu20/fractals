@@ -109,6 +109,13 @@ fv.draw = async (lookupFunc, lookupTable, ctx, infoCallback) => {
 
 	function iterate() {
 
+
+		if (i === 0)
+			start = performance.now();
+		if (i === lookupTable.length - 1)
+			end = performance.now();
+			
+
 		if (i < lookupTable.length) {
 			const xi = lookupTable[i][0];
 			const yi = lookupTable[i][1];
@@ -133,10 +140,6 @@ fv.draw = async (lookupFunc, lookupTable, ctx, infoCallback) => {
 		}
 
 
-		if (i === 0)
-			start = performance.now();
-		if (i === lookupTable.length - 1)
-			end = performance.now();
 
 		return true;
 	}
