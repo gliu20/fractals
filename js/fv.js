@@ -13,8 +13,8 @@ fv._throttleAt = (fps, callback, infoCallback) => {
 	let averageDuration = 0;
 	let totalDuration = 0;
 	let skippedInvocations = 0;
-
 	let targetExecutions = 10;
+
 	const targetDuration = 1000 / fps;
 
 
@@ -54,6 +54,7 @@ fv._throttleAt = (fps, callback, infoCallback) => {
 			// exponentially
 			// so it's like AIMD
 			mergeInvocate -= skippedInvocations;
+			window.statusText = "Skipping..."; 
 		}
 		else {
 
@@ -63,14 +64,14 @@ fv._throttleAt = (fps, callback, infoCallback) => {
 
 			// AIMD for merge invocate
 			// we're faster than the desired average fps so we group the callback together
-			mergeInvocate += 2;
+			mergeInvocate += 1;
+			window.statusText = "...Speeding";
 		}
 
 		// target executions calculated from this
 		// (totalDuration / mergeInvocate) * (desired num of executions) = targetDuration
 		targetExecutions = targetDuration * mergeInvocate / (totalDuration + 1);
-		mergeInvocate += 0.1 * (targetExecutions - mergeInvocate);
-		mergeInvocate = Math.floor(mergeInvocate);
+		mergeInvocate += (targetExecutions - mergeInvocate) >> 4;
 
 		// make sure merge invocate is 1 or higher
 		if (mergeInvocate < 1)
@@ -89,6 +90,7 @@ fv._throttleAt = (fps, callback, infoCallback) => {
 		averageDuration = 0;
 		totalDuration = 0;
 		skippedInvocations = 0;
+		targetExecutions = 10;
 	}
 }
 
@@ -139,7 +141,7 @@ fv.draw = async (lookupFunc, lookupTable, ctx, infoCallback) => {
 		refreshView: function () {
 			i = 0;
 		},
-		resetThrottle: fv._throttleAt(40, iterate, function (averageDuration, mergeInvocate, skippedInvocations) {
+		resetThrottle: fv._throttleAt(60, iterate, function (averageDuration, mergeInvocate, skippedInvocations) {
 			infoCallback(mergeInvocate, skippedInvocations, isIdle, i / lookupTable.length);
 		})
 	}
