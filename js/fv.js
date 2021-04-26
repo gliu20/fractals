@@ -219,10 +219,10 @@ fv.genLookupTable = async (w, h, onprogress) => {
 
 		// this a new index for deduplicating
 		// unrelated to the before index
-		if (!index[lookup[i].join(",")]) {
+		if (!index[lookup[i][0] + "," + lookup[i][1]]) {
 
 			// mark as done
-			index[lookup[i].join(",")] = true;
+			index[lookup[i][0] + "," + lookup[i][1]] = true;
 
 
 			const xi = lookup[i][0];
