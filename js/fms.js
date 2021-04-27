@@ -127,9 +127,9 @@ fms.genFitness = (n) => {
 
 fms.evalFitnessPartial = (matrix,fitness) => {
   const exactMatchReward = Math.exp(fms.sum(fms.mul(matrix,fitness)));
-  const meanSquaredError = fms.mul(fms.sub(matrix,fitness),fms.sub(matrix,fitness));
+  const meanSquaredError = fms.sum(fms.mul(fms.sub(matrix,fitness),fms.sub(matrix,fitness)));
 
-  return Math.exp(exactMatchReward + meanSquaredError);
+  return Math.exp(2 * exactMatchReward + meanSquaredError);
 }
 
 fms.evalFitness = (matrix,targetFitness) => {
