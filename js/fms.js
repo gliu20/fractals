@@ -170,7 +170,7 @@ fms.scoreCandidates = (shapeCandidates,targetFitness) => {
 fms.pruneCandidates = (shapeCandidates, threshold) => {
   for (let i = 0; i < shapeCandidates.length; i++) {
     const candidate = shapeCandidates[i];
-    if (Math.floor(Math.random() * (candidate.fitnessScore + threshold)) === 0) {
+    if (candidate.fitnessScore < (threshold * Math.random())) {
       // delete shape
       shapeCandidates.splice(i,1);
       i--;
@@ -183,9 +183,11 @@ fms.solve = (n) => {
   const enumeratedShapes = fms.enumerateShapes(n);
   const shapeCandidates = [...enumeratedShapes];
 
-  fms.genShapeCandidates(shapeCandidates,20);
-  fms.scoreCandidates(shapeCandidates,targetFitness);
-  fms.pruneCandidates(shapeCandidates, 10);
+  for (let i = 0; i < 100; i++) {
+    fms.genShapeCandidates(shapeCandidates,50);
+    fms.scoreCandidates(shapeCandidates,targetFitness);
+    fms.pruneCandidates(shapeCandidates, 1);
+  }
 
   console.log({targetFitness, shapeCandidates});
-} 
+}
