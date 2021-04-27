@@ -71,7 +71,8 @@ fms.genTargets = (n) => {
   for (let i = 0; i < (2 * n + 1); i++) {
     targets.push({
       diagonal: fms.createDiagonalMatrix(n,i),
-      reachedByShapes: {}
+//      targetScalar: 
+//      reachedByShapes: {}
     });
   }
   return targets;
@@ -85,7 +86,7 @@ fms.enumerateShapes = (n) => {
         for (let h = n - y; h >= 1; h--) {
           enumeratedShapes.push({
             shape: [x,y,w,h],
-            reachesTargets: {}
+//            reachesTargets: {}
           })
         }
       }
@@ -97,6 +98,8 @@ fms.enumerateShapes = (n) => {
 fms.solve = (n) => {
   const targets = fms.genTargets(n);
   const enumeratedShapes = fms.enumerateShapes(n);
+
+  
 
   console.log({targets, enumeratedShapes});
 } 
