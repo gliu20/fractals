@@ -5,6 +5,8 @@
 
 var fms = {};
 
+fms.sum = (...rest) => rest.reduce((a,b) => a + b); 
+
 fms.createDiagonalMatrix = (s,d) => {
   const w = s;
   const h = s;
@@ -68,10 +70,11 @@ fms.sub = (a, b) => {
 
 fms.genTargets = (n) => {
   const targets = [];
-  for (let i = 0; i < (2 * n + 1); i++) {
+  for (let i = 0; i < (2 * n - 1); i++) {
+    const diagonal = fms.createDiagonalMatrix(n,i);
     targets.push({
-      diagonal: fms.createDiagonalMatrix(n,i),
-//      targetScalar: 
+      diagonal: diagonal,
+      targetScalar: fms.sum(...diagonal.flat()),
 //      reachedByShapes: {}
     });
   }
