@@ -129,7 +129,7 @@ fms.evalFitnessPartial = (matrix,fitness,diagonal) => {
   //const exactMatchReward = fms.sum(fms.mul(matrix,fitness));
   const meanSquaredError = fms.sum(fms.mul(fms.sub(matrix,diagonal),fms.sub(matrix,diagonal)));
 
-  return Math.exp(2 - meanSquaredError);
+  return Math.exp(10 - meanSquaredError);
 }
 
 fms.evalFitness = (matrix,targetFitness) => {
@@ -178,6 +178,9 @@ fms.pruneCandidates = (shapeCandidates, threshold) => {
   }
 }
 
+fms.sortCandidates = (shapeCandidates) => 
+  shapeCandidates.sort((a,b) => b.fitnessScore - a.fitnessScore);
+
 fms.solve = (n) => {
   const targetFitness = fms.genFitness(n);
   const enumeratedShapes = fms.enumerateShapes(n);
@@ -186,8 +189,10 @@ fms.solve = (n) => {
   for (let i = 0; i < 100; i++) {
     fms.genShapeCandidates(shapeCandidates,50);
     fms.scoreCandidates(shapeCandidates,targetFitness);
-    fms.pruneCandidates(shapeCandidates, 1);
+    fms.pruneCandidates(shapeCandidates, 10);
   }
+
+  fms.sortCandidates(shapeCandidates);
 
   console.log({targetFitness, shapeCandidates});
 }
