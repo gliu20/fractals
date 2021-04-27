@@ -12,7 +12,7 @@ fms.createDiagonalMatrix = (s,d) => {
   for (var i = 0; i < h; i++) {
     arr.push([]);
     for (var j = 0; j < w; j++) {
-      arr[i][j] = (i + j) === d;
+      arr[i][j] = ((i + j) === d) | 0;
     }
   }
   return arr;
@@ -95,7 +95,7 @@ fms.enumerateShapes = (n) => {
 }
 
 fms.solve = (n) => {
-  const targets = genTargets(n);
+  const targets = fms.genTargets(n);
   const enumeratedShapes = fms.enumerateShapes(n);
 
   console.log({targets, enumeratedShapes});
