@@ -125,17 +125,17 @@ fms.genFitness = (n) => {
   return targets;
 }
 
-fms.evalFitnessPartial = (matrix,fitness) => {
-  const exactMatchReward = Math.exp(fms.sum(fms.mul(matrix,fitness)));
-  const meanSquaredError = fms.sum(fms.mul(fms.sub(matrix,fitness),fms.sub(matrix,fitness)));
+fms.evalFitnessPartial = (matrix,fitness,diagonal) => {
+  //const exactMatchReward = fms.sum(fms.mul(matrix,fitness));
+  const meanSquaredError = fms.sum(fms.mul(fms.sub(matrix,diagonal),fms.sub(matrix,diagonal)));
 
-  return Math.exp(2 * exactMatchReward - meanSquaredError);
+  return Math.exp(2 - meanSquaredError);
 }
 
 fms.evalFitness = (matrix,targetFitness) => {
   let fitness = 0;
   for (let target of targetFitness) {
-    fitness += Math.floor(fms.evalFitnessPartial(matrix,target.fitness));
+    fitness += Math.floor(fms.evalFitnessPartial(matrix,target.fitness,target.diagonal));
   }
   return fitness;
 }
