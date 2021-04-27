@@ -5,6 +5,19 @@
 
 var fms = {};
 
+fms.createDiagonalMatrix = (s,d) => {
+  const w = s;
+  const h = s;
+  const arr = [];
+  for (var i = 0; i < h; i++) {
+    arr.push([]);
+    for (var j = 0; j < w; j++) {
+      arr[i][j] = (i + j) === d;
+    }
+  }
+  return arr;
+}
+
 fms.createMatrix = (w,h) => {
   const arr = [];
   for (var i = 0; i < h; i++) {
@@ -52,3 +65,38 @@ fms.sub = (a, b) => {
   }
   return arr;
 }
+
+fms.genTargets = (n) => {
+  const targets = [];
+  for (let i = 0; i < (2 * n + 1); i++) {
+    targets.push({
+      diagonal: fms.createDiagonalMatrix(n,i),
+      reachedByShapes: {}
+    });
+  }
+  return targets;
+}
+
+fms.enumerateShapes = (n) => {
+  const enumeratedShapes = [];
+  for (let x = 0; x < n; x++) {
+    for (let w = n - x; w >= 1; w--) {
+      for (let y = 0; y < n; y++) {
+        for (let h = n - y; h >= 1; h--) {
+          enumeratedShapes.push({
+            shape: [x,y,w,h],
+            reachesTargets: {}
+          })
+        }
+      }
+    }
+  }
+  return enumeratedShapes;
+}
+
+fms.solve = (n) => {
+  const targets = genTargets(n);
+  const enumeratedShapes = fms.enumerateShapes(n);
+
+  console.log({targets, enumeratedShapes});
+} 
