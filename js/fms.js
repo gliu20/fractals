@@ -127,9 +127,12 @@ fms.genFitness = (n) => {
 
 fms.evalFitnessPartial = (matrix,fitness,diagonal) => {
   //const exactMatchReward = fms.sum(fms.mul(matrix,fitness));
+  const n = matrix.length;
+  const ones = fms.fillRect(fms.createMatrix(n,n),0,0,n,n);
+  const zeroNegPenalty = fms.sum(fms.mul(fms.sub(matrix,ones),fms.sub(matrix,ones)));
   const meanSquaredError = fms.sum(fms.mul(fms.sub(matrix,diagonal),fms.sub(matrix,diagonal)));
 
-  return Math.exp(10 - meanSquaredError);
+  return Math.exp(8 - 2 * meanSquaredError - zeroNegPenalty);
 }
 
 fms.evalFitness = (matrix,targetFitness) => {
