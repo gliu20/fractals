@@ -19,7 +19,7 @@ fms.createMatrix = (w,h) => {
 fms.fillRect = (matrix,x,y,w,h) => {
   for (var i = 0; i < h; i++) {
     for (var j = 0; j < w; j++) {
-      matrix[i + x][j + y] = 1;
+      matrix[i + y][j + x] = 1;
     }
   }
   return matrix;
