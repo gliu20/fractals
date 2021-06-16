@@ -2,5 +2,5 @@
 
 
 # Fractals
-Link to demo: https://gliu20.github.io/fractals/
-Link to project details: https://gliu20.github.io/projects/fractals/
+- Link to demo: https://gliu20.github.io/fractals/
+- Link to project details: https://gliu20.github.io/projects/fractals/
