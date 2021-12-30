@@ -2,7 +2,11 @@
  * Peripheral Lookup
  * lookups are done from the center out
  * to maximize usability
+ *
+ * (This is an experimental work in progress)
  */
+
+
 // spec
 // pixel x,y
 // start x,y
