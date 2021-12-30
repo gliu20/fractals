@@ -8,10 +8,10 @@
 - Link to project details: https://gliu20.github.io/projects/fractals/
 
 ## Key features
-- Progressive Refinement - The viewer starts with a pixelated image and iteratively increases the resolution of the output. This UX consideration gives the user immediate feedback
-- Gesture support - Uses touch APIs to support pinching in and out to zoom and dragging to move the image around
-- Adaptive throttling - adapts to your computer's hardware and/or workload to maintain responsiveness while rendering as many pixels as it can
-- Performance - Key code is run on WebAssembly for better performance, plus optimizations to escape iterations early to avoid doing unnecessary work 
+- **Progressive Refinement** - The viewer starts with a pixelated image and iteratively increases the resolution of the output. This UX consideration gives the user immediate feedback
+- **Gesture support** - Uses touch APIs to support pinching in and out to zoom and dragging to move the image around
+- **Adaptive throttling** - adapts to your computer's hardware and/or workload to maintain responsiveness while rendering as many pixels as it can
+- **Performance** - Key code is run on WebAssembly for better performance, plus optimizations to escape iterations early to avoid doing unnecessary work 
 
 ## Limitations
 - Arbitrary precision arithmetic is not yet supported 
