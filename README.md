@@ -2,8 +2,8 @@
 
 
 # Fractals
-A fractal viewer built on WebAssembly optimized for speed.
-
+ A quick WebAssembly-based fractal viewer for the Mandelbrot and Julia sets built with native web technologies 
+ 
 - Link to demo: https://gliu20.github.io/fractals/
 - Link to project details: https://gliu20.github.io/projects/fractals/
 
