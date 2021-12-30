@@ -1,6 +1,8 @@
 /**
  * Fast Math Solver
- * This code will attempt to get faster generalizations for Karatsuba's algorithm
+ * This code will attempt to get faster generalizations for Karatsuba's algorithm using a genetic algorithm.
+ * It's based on <https://gliu20.github.io/blog/programming/2021/04/23/fast-multiplication-devlog/>
+ * 
  */
 
 var fms = {};
