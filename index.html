@@ -97,11 +97,11 @@
 			<button onclick="viewInstance.modifiers.refreshView()">Refresh view</button>
 			<button onclick="viewInstance.modifiers.resetViewbox()">Reset viewbox</button>
 			<button onclick="viewInstance.modifiers.switchColoring()">Switch color function</button>
-			<button onclick="viewInstance.modifiers.changeColorOffset(parseInt(prompt('Color Offset?',viewInstance.coloring.colorOffset)))">Change color offset</button>
-			<button onclick="viewInstance.modifiers.changeColorScale(parseFloat(prompt('Color Scale?',viewInstance.coloring.colorScale)))">Change color scale</button>
-			<button onclick="viewInstance.modifiers.changeMaxIterations(parseInt(prompt('Max Iterations?',viewInstance.misc.maxIterations)))">Change maxIterations</button>
-			<button onclick="viewInstance.modifiers.changeComplex(parseInt(prompt('cx?',viewInstance.misc.cx)), parseInt(prompt('cy?',viewInstance.misc.cy)))">Change complex num (Julia set only)</button>
-			<button onclick="viewInstance.modifiers.changeLookup(parseInt(prompt('Julia or Mandelbrot?\n0 for Julia Smooth\n1 for Mandelbrot Smooth\n2 for Julia\n3 for Mandelbrot')));
+			<button onclick="viewInstance.modifiers.changeColorOffset(parseInt(prompt('Color Offset?',viewInstance.coloring.colorOffset)) || 0)">Change color offset</button>
+			<button onclick="viewInstance.modifiers.changeColorScale(parseFloat(prompt('Color Scale?',viewInstance.coloring.colorScale)) || 1)">Change color scale</button>
+			<button onclick="viewInstance.modifiers.changeMaxIterations(parseInt(prompt('Max Iterations?',viewInstance.misc.maxIterations)) || 1000)">Change maxIterations</button>
+			<button onclick="viewInstance.modifiers.changeComplex(parseInt(prompt('cx?',viewInstance.misc.cx) || 0), parseInt(prompt('cy?',viewInstance.misc.cy)) || 0)">Change complex num (Julia set only)</button>
+			<button onclick="viewInstance.modifiers.changeLookup(parseInt(prompt('Julia or Mandelbrot?\n0 for Julia Smooth\n1 for Mandelbrot Smooth\n2 for Julia\n3 for Mandelbrot')) || 0);
 					viewInstance.modifiers.changeComplex(
 						vb.getCenter(viewInstance.dimensions.viewbox).centerX,
 						vb.getCenter(viewInstance.dimensions.viewbox).centerY
