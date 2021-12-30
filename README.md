@@ -23,7 +23,7 @@ A fractal viewer built on WebAssembly optimized for speed.
 
 ## Key files
  - `cf.js` - collection of hand crafted functions to programatically determine the color of each pixel
- - 'fv.js' - responsible for generating the lookup tables for progressive refinement
+ - `fv.js` - responsible for generating the lookup tables for progressive refinement
  - `vb.js` - utilities for calculating viewboxes after zooming, panning, etc
  - `vc.js` - utilities for making the viewer interactive, aka handling touch and mouse inputs, changing fractals and colouring functions, etc.
  - `index.js` - glue code
