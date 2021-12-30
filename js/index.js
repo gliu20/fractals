@@ -43,8 +43,8 @@ const onProgress = (function () {
 window.onload = async () => {
   const canvas = document.getElementById("viewer");
 
-  canvas.width = parseInt(prompt("Width?",800));
-  canvas.height = parseInt(prompt("Height?",800));
+  canvas.width = parseInt(prompt("Width?",800)) || 800;
+  canvas.height = parseInt(prompt("Height?",800)) || 800;
 
   const view = await vc.init(canvas);
 
